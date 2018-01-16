@@ -1,0 +1,181 @@
+﻿@model online_store.Models.Object_os_for_view
+
+@{
+    ViewBag.Title = "Object_view";
+}
+
+<script>
+    function change_image(a) {
+        var main_image = document.getElementById("Object_view_main_image_id");
+        main_image.src =a.src;
+    }
+
+
+
+</script>
+
+<h2>Object_view</h2>
+<div>
+    <div class="div_inline_block Object_view_left_block">
+        <div class="Object_view_small_img_change_block div_inline_block">
+            @foreach (var i in Model.Images)
+            {
+
+                <div class="Object_view_small_img_change">
+                    <img onclick="change_image(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
+                </div>
+            }
+
+        </div>
+        <div class="Object_view_main_img_under div_inline_block">
+            <div class="Object_view_main_img div_inline_block">
+                @if (Model.Images.Count > 0)
+                {
+
+                    <img id="Object_view_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(Model.Images[0].Image)) />
+                }
+                @if (Model.Images.Count == 0)
+            {
+                    <img id="Object_view_main_image_id" src="/Content/images/camera_200.png" />
+                }
+
+            </div>
+            <div>
+                <div class="div_inline_block" id="Object_follow_block_all_id">
+                    @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
+                </div>
+                <div class="div_inline_block Object_add_basket_block_all_class" id="Object_add_basket_block_all_id">@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
+                <div id="Add_mark_for_object_partial_id" class="Object_view_mark_main">@Html.Action("Add_mark_for_object", "Home", new { id = Model.Db.Id })</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="div_inline_block Object_view_right_block">
+        <div>@Html.Label(Model.Db.Name)</div>
+        <div>@Html.Label("Артикул" + Model.Db.Id.ToString())</div>
+
+
+        <div>@Html.Label(Model.Db.Type)</div>
+        <div>@Html.Label(Model.Db.Category)</div>
+        <div>@Html.Label(Model.Db.Manufacturer)</div>
+        <div>@Html.Label(Model.Db.Price.ToString())</div>
+        <div>@Html.Label(Model.Db.Discount.ToString())</div>
+        <div>@Html.Label(Model.Db.Color)</div>
+        <div>@Html.Label(Model.Db.Composition)</div>
+        <div>@Html.Label(Model.Db.Description)</div>
+        <div>@Html.Label(Model.Db.Count_buy.ToString())</div>
+
+
+
+
+
+
+
+    </div>
+    <hr />
+    <h1>Комментарии:</h1>
+    <div>
+        @if (ViewBag.Can_commented == true)
+        {
+            <div>
+                <h2>Оставьте комментарий</h2>
+                @using (Html.BeginForm("Add_comment", "Home"))
+                {
+                    @Html.Hidden("id_object", Model.Db.Id)
+                    @Html.TextArea("text")
+                    @Html.Hidden("mark", "-1")
+                    <div>
+                        @{
+//TODO добавление оценки через звезды
+                        }
+                    </div>
+                    <input type="submit" class="submit" value="Отправить" />
+
+                            }
+            </div>
+                            }
+
+        <div>
+            @foreach (var i in Model.Comments)
+        {
+            <div id=@string.Concat("Object_view_one_comm_num_id",i.Db.Id.ToString()) class="Object_view_one_comment_block">
+
+                <div class="div_inline_block">
+                    <div>
+                        @if (i.Image_user != null && i.Image_user.Count() > 0)
+                        {
+                            <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
+                                <img id="Object_view_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image_user)) />
+                            </a>
+                        }
+                        @if (i.Image_user == null || i.Image_user.Count() < 0)
+                        {
+                            <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
+                                <img id="Object_view_main_image_id" src="/Content/images/camera_200.png" />
+                            </a>
+                        }
+
+
+                    </div>
+                    @if (!string.IsNullOrEmpty(i.User_name))
+                    {
+                        <div>
+                            <p>@i.User_name</p>
+                        </div>
+                    }
+                    @if (i.Db.Person_id == ViewBag.Person_id)
+                    {
+                        @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
+                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", i.Db.Id.ToString()) },
+                       new { })
+                    }
+
+                </div>
+                <div class="div_inline_block">
+                    @if (!string.IsNullOrEmpty(i.Db.Text))
+                    {
+                        <div>@Html.Label("", i.Db.Text)</div>
+                    }
+                    @if (i.Db.Mark != null)
+                    {
+                        <div class="Object_view_comm_block_mark">
+
+
+                            @for (int i1 = 1; i1 < 6; ++i1)
+                            {
+                                if (i.Db.Mark >= i1)
+                                {
+                                    <div class="Add_mark_for_object_yellow_star div_inline_block">
+                                    </div>
+                                }
+                                if (i.Db.Mark < i1)
+                                {
+                                    <div class="Add_mark_for_object_white_star div_inline_block">
+                                    </div>
+                                }
+
+                            }
+
+
+
+
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</div>

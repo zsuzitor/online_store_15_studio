@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<online_store.Models.Object_os_for_view>
+@{
+    int num = 0;
+}
+<div>
+    <ul class="List_objects_list_all">
+
+
+        @foreach (var i in Model)
+        {
+            <li>
+                <div class="List_objects_one_object">
+                    <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
+                        <div>
+                            <div>
+                                @if (i.Images.Count > 0)
+                                {
+
+                                    <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
+                                }
+                                @if (i.Images.Count == 0)
+                                {
+                                    <img src="/Content/images/camera_200.png" />
+                                }
+                            </div>
+                            <p>@i.Db.Name</p>
+                            <p>@i.Db.Type</p>
+                            <p>@i.Db.Category</p>
+                            <p>@i.Db.Manufacturer</p>
+                            <p>@i.Db.Price</p>
+                            <p>@i.Db.Discount</p>
+                            <p>@(@i.Db.Price * (1 - @i.Db.Discount))</p>
+
+                        </div>
+                    </a>
+                    <div>
+                        <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", num)>
+                            @Html.Action("Object_follow", "Home", new { id = i.Db.Id, num_block_for_list = num })
+                        </div>
+                        <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", num)>
+                            @Html.Action("Object_add_basket", "Home", new { id = i.Db.Id, num_block_for_list = num })
+                        </div>
+                        <div class="Add_mark_for_object_partial_class" id=@string.Concat("Add_mark_for_object_partial_id", num)>@Html.Action("Add_mark_for_object", "Home", new { id = i.Db.Id, num = num.ToString() })</div>
+                        @{
+                            num += 1;
+                        }
+                    </div>
+                </div>
+            </li>
+
+
+                            }
+    </ul>
+</div>
