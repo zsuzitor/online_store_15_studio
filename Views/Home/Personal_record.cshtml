@@ -32,45 +32,136 @@
 
         </div>
     </div>
-    <div>
+    <hr />
+@if (ViewBag.Baskets.Count > 0)
+{
+    <h1>В корзине:</h1>
+    <div class="div_scroll_y_block Personal_record_basket_block">
         @foreach (var i in ViewBag.Baskets)
             {
-            <div>
+           
                 @Html.Action("Basket_one_object_partial", "Home", new { id = i.Object_id })
-            </div>
+            
         }
 
     </div>
-    <div>
+    }
+    <hr />
+@if (ViewBag.Follow.Count > 0)
+{
+    <h1>В Избранном:</h1>
+    <div class="div_scroll_y_block Personal_record_follow_block">
         @foreach (var i in ViewBag.Follow)
         {
-            <div>
+            
                 @Html.Action("Follow_one_object_partial", "Home", new { id = i.Object_id })
-            </div>
+            
         }
 
     </div>
-    <div>
+    }
+    <hr />
+@if (Model.Comments.Count > 0)
+{
+    <h1>Ваши комментарии и оценки:</h1>
+    <div class="div_scroll_y_block Personal_record_comments_block">
         @foreach (var i in Model.Comments)
-            {
-            }
-    </div>
-    <div>
-        @{ 
-            /*@foreach (var i in Model.)
         {
-            ПОКУПКИ
-                }*/
+
+            <div id=@string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) class="Personal_record_one_comment_block">
+
+                <div class="div_inline_block">
+                    <div>
+                        @if (Model.Db.Image != null)
+                        {
+
+                            <img id="Personal_record_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(Model.Db.Image)) />
+
+                        }
+                        @if (Model.Db.Image == null)
+                        {
+
+                            <img id="Personal_record_main_image_id" src="/Content/images/camera_200.png" />
+
+                        }
+
+
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Db.Name))
+                    {
+                        <div>
+                            <p>@Model.Db.Name</p>
+                        </div>
+                    }
+                    
+
+                </div>
+                <div class="div_inline_block">
+                    @if (!string.IsNullOrEmpty(i.Db.Text))
+                    {
+                        <div>@Html.Label("", i.Db.Text)</div>
+                    }
+                    @if (i.Db.Mark != null)
+                    {
+                        <div class="Personal_record_comm_block_mark">
+
+
+                            @for (int i1 = 1; i1 < 6; ++i1)
+                            {
+                                if (i.Db.Mark >= i1)
+                                {
+                                    <div class="Add_mark_for_object_yellow_star div_inline_block">
+                                    </div>
+                                }
+                                if (i.Db.Mark < i1)
+                                {
+                                    <div class="Add_mark_for_object_white_star div_inline_block">
+                                    </div>
+                                }
+
+                            }
+
+
+
+
+
+                        </div>
+                    }
+
+                </div><div class="Personal_record_Delete_Comment_button div_inline_block">
+                          @if (i.Db.Person_id == ViewBag.Person_id)
+                          {
+                              @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
+          new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) },
+          new { })
+                          }
+                </div>
+            </div>
+
+
+
+
+
         }
-        
     </div>
+}
+    <hr />
+    @if (Model.Purchases.Count > 0)
+    {
+        <h1>Ваши покупки:</h1>
+        <div class="div_scroll_y_block Personal_record_purchases_block">
+
+            @foreach (var i in Model.Purchases)
+            {
+                <div>
+                    @Html.ActionLink("ID Покупки", "Purchase_view", "Home", new { id = i.Id }, new { })
+                </div>
+            }
 
 
-
-
-
-
-
+        </div>
+    }
+    
 
 
 

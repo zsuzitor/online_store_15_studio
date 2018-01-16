@@ -2,7 +2,7 @@
 
 @model online_store.Models.Object_os_for_view
 
-<div class="Follow_one_object_partial_one_block" id=@string.Concat("Follow_one_object_partial_one_block", Model.Db.Id)>
+<div class="Follow_one_object_partial_one_block" id=@string.Concat("Follow_one_object_partial_one_block_id", Model.Db.Id)>
     <div class="Follow_one_object_left_block div_inline_block">
 
         @if (Model.Images.Count > 0 && Model.Images[0].Image != null)

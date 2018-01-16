@@ -155,12 +155,21 @@ namespace online_store.Controllers
             return RedirectToAction("Add_mark_for_object", "Home", new { id = id, num = num_block_for_list });
         }
         //[Authorize]
+        public ActionResult Purchase_view(int id)
+        {
+            var res = db.Purchases.FirstOrDefault(x1=>x1.Id==id);
+
+
+            return View(res);
+        }
+        //[Authorize]
         public ActionResult Personal_record(string id)
         {
             id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;
+            ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
-            res.Comments.AddRange(db.Comments.Where(x1 => x1.Person_id == id).ToList());
+          
 
 
             //res.Images.AddRange(db.Images.Where(x1 => x1.What_something == "Person" && x1.Something_id == id).ToList());
@@ -196,6 +205,14 @@ namespace online_store.Controllers
 
            }
            */
+            var com = db.Comments.Where(x1 => x1.Person_id == id  ).ToList();
+            foreach (var i in com)
+            {
+                    res.Comments.Add(new Comment_view( i));
+            }
+
+            var prc = db.Purchases.Where(x1=>x1.Person_id==id);
+            res.Purchases.AddRange(prc);
 
             return View(res);
         }
@@ -244,7 +261,7 @@ namespace online_store.Controllers
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
 
             ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
-            ViewBag.All_price_small = summ_1.Sum(x1 => (x1.Price * (1 - x1.Discount)));
+            ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
 
             return View(res);
         }
@@ -252,6 +269,25 @@ namespace online_store.Controllers
         //[Authorize]
         public ActionResult Buy_basket()
         {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var bsk_obj = db.Baskets.Where(x1=>x1.Person_id==check_id).Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
+            if (bsk_obj.Count > 0)
+            {
+                var prc = new Purchase() { Person_id = check_id, Price = bsk_obj.Sum(x1 => (((int)(x1.Price * (1 - x1.Discount))))) };//мб в цикле прибалять
+                db.Purchases.Add(prc);
+                db.SaveChanges();
+                foreach (var i in bsk_obj)
+                {
+                    var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
+                    db.Purchases_connect.Add(tmp);
+                    db.SaveChanges();
+                }
+                db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
+                db.SaveChanges();
+                //TODO у всех объектов сделать количество -1
+            }
+            
+
 
             return View();
         }

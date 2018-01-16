@@ -82,21 +82,7 @@ namespace online_store.Models
             Image = null;
         }
     }
-    public class Purchase_connect
-    {
-        public int Id { get; set; }
-        public string Purchase_id { get; set; }
-        public int Object_id { get; set; }
-        public int Price { get; set; }
-        public Purchase_connect()
-        {
-            Id = 0;
-            Purchase_id = null;
-            Object_id = 0;
-            Price = 0;
-           
-        }
-    }
+ 
 
     public class Connect_basket
     {
@@ -110,6 +96,21 @@ namespace online_store.Models
             Object_id = 0;
             Person_id = "";
             // Price = 0;
+
+        }
+    }
+    public class Purchase_connect
+    {
+        public int Id { get; set; }
+        public int Purchase_id { get; set; }
+        public int Object_id { get; set; }
+        public int Price { get; set; }
+        public Purchase_connect()
+        {
+            Id = 0;
+            Purchase_id = 0;
+            Object_id = 0;
+            Price = 0;
 
         }
     }
@@ -147,26 +148,29 @@ namespace online_store.Models
     {
         public ApplicationUser Db { get; set; }
         public List<Connect_image> Images;
-        public List<Comment> Comments;
+        public List<Comment_view> Comments;
         public List<Object_os_for_view> Baskets;
         public List<Object_os_for_view> Follow;
+        public List<Purchase> Purchases;
 
 
         public Person()
         {
             Db = null;
             Images = new List<Connect_image>();
-            Comments = new List<Comment>();
+            Comments = new List<Comment_view>();
             Baskets = new List<Object_os_for_view>();
             Follow = new List<Object_os_for_view>();
+            Purchases = new List<Purchase>();
         }
         public Person(ApplicationUser a)
         {
             Db = a;
             Images = new List<Connect_image>();
-            Comments = new List<Comment>();
+            Comments = new List<Comment_view>();
             Baskets = new List<Object_os_for_view>();
             Follow = new List<Object_os_for_view>();
+            Purchases = new List<Purchase>();
         }
     }
 

@@ -257,6 +257,7 @@
     <Content Include="Views\Home\Work_with_images_object.cshtml" />
     <Content Include="Views\Home\Follow_one_object_partial.cshtml" />
     <Content Include="Views\Home\Delete_object_from_follow.cshtml" />
+    <Content Include="Views\Home\Buy_basket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

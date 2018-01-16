@@ -32,8 +32,10 @@ namespace online_store.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Connect_image> Images { get; set; }
         public DbSet<Connect_basket> Baskets { get; set; }
-        public DbSet<Purchase> Purchases { get; set; }
+       
         public DbSet<Follow_object> Follow_objects { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Purchase_connect> Purchases_connect { get; set; }
 
 
 

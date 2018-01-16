@@ -49,6 +49,9 @@ div.div_inline_block {
     display: inline-block;
     vertical-align: top;
 }
+div.div_scroll_y_block{
+    overflow-y: auto;
+}
 
 div.div_color_white {
     background-color: white;
@@ -310,6 +313,10 @@ div.Object_add_basket_follow_img_full {
 /*Basket_one_object*/
 div.Basket_one_object_partial_one_block{
     height:200px;
+     background-color:#fafde6;
+     margin-top:10px;
+      padding-left: 10px;
+    padding-top: 10px;
 }
 div.Basket_one_object_left_block{
     width:250px;
@@ -352,18 +359,22 @@ div.Basket_page_buy_but {
 
 
     /*Follow_one_object_partial*/
-    div.Basket_one_object_partial_one_block{
+    div.Follow_one_object_partial_one_block{
     height:200px;
+    background-color:#fafde6;
+    margin-top:10px;
+     padding-left: 10px;
+    padding-top: 10px;
 }
-div.Basket_one_object_left_block{
+div.Follow_one_object_left_block{
     width:250px;
     height:100%;
 }
-div.Basket_one_object_right_block {
+div.Follow_one_object_right_block {
     width: 55%;
     height: 100%;
 }
-div.Basket_one_object_delete_block {
+div.Follow_one_object_delete_block {
     width: 75px;
     height: 100%;
     float:right;
@@ -386,4 +397,32 @@ div.Personal_record_main_img_block {
     min-height: 200px;
     max-width: 300px;
     max-height: 300px;
+}
+div.Personal_record_one_comment_block {
+    /*border: 2px dashed #8fd4ff;*/
+    padding-left: 10px;
+    padding-top: 10px;
+    min-height: 250px;
+    max-height: 500px;
+    margin-top:10px;
+     background-color:#fafde6;
+}
+div.Personal_record_Delete_Comment_button{
+    float:right;
+    width:75px;
+    
+}
+div.Personal_record_basket_block{
+    max-height:450px;
+     background-color:#fafde6;
+}
+div.Personal_record_follow_block{
+     max-height:450px;
+
+}
+dic.Personal_record_comments_block{
+     max-height:450px;
+}
+div.Personal_record_purchases_block{
+     max-height:450px;
 }
