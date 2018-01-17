@@ -1,0 +1,27 @@
+﻿@model online_store.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Edit_personal_record";
+}
+
+<h2>Edit_personal_record</h2>
+<p>Обновить фотографию</p>
+@using (Html.BeginForm("Add_new_main_image", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <input type="file" name="uploadImage[0]" />
+                                                <input type="submit" class="submit" value="Обновить" />
+}
+<hr />
+@using (Html.BeginForm("Edit_personal_record", "Home"))
+{
+    <div>@Html.Label("Имя:")@Html.EditorFor(x1 => x1.Name)</div>
+    <div>@Html.Label("Возраст:")@Html.EditorFor(x1 => x1.Age)</div>
+    <div>@Html.Label("О себе:")@Html.TextAreaFor(x1 => x1.Info)</div>
+    
+    
+   
+
+
+    <input type="submit" class="submit" value="Отправить" />
+}

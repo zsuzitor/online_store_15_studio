@@ -26,7 +26,8 @@
             if (!b.prop("shown") && isVisible(b)) {
                 b.prop("shown", true);
                 var o = document.getElementById("Main_header_small_id")
-
+                var o1 = document.getElementById("Main_header_back_to_top_id")
+                o1.style.display = 'block';
 
                 o.style.display = 'block';
 
@@ -35,7 +36,8 @@
                 if (b.prop("shown") && !isVisible(b)) {
                     b.prop("shown", false);
                     var o = document.getElementById("Main_header_small_id")
-
+                    var o1 = document.getElementById("Main_header_back_to_top_id")
+                    o1.style.display = 'none';
                     o.style.display = 'none';
                 }
             }
@@ -84,4 +86,9 @@
     <div class="Main_header_small_name div_inline_block">@Html.ActionLink("Online store", "Index", "Home", new { }, new { @class = "link_standart_for_div link_without_prop" })</div>
     <div class="Main_header_small_basket div_inline_block">@Html.ActionLink("Корзина", "Basket_page", "Home", new { }, new { @class = "link_standart_for_div link_without_prop" })</div>
     @Html.Partial("_LoginPartial")
+</div>
+
+<div class="Main_header_back_to_top" id="Main_header_back_to_top_id">
+   
+
 </div>

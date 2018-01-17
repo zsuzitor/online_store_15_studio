@@ -1,0 +1,44 @@
+﻿@model online_store.Models.Purchase_view
+@{
+    ViewBag.Title = "Purchase_view";
+}
+
+<h2>Purchase_view</h2>
+<div>
+    <h1>Покупка @Html.ActionLink("Пользователя", "Personal_record","Home",new {id= Model.Db.Person_id})</h1>
+    <p>Дата и время покупки @Html.Label(Model.Db.Date_Time.ToString())</p>
+    <p>Итоговая цена @Model.Db.Price</p>
+    <hr />
+
+    @foreach(var i in Model.Objects)
+    {
+        <div class="Purchase_view_one_purchase_block">
+            <a class="link_standart_for_div" href=@Url.Action("Object_view","Home",new {id=i.Db.Id })>
+                <div>
+                    <div class="div_inline_block Purchase_view_one_purchase_block_img">
+                        @if (i.Images.Count > 0)
+                {
+
+                            <img id="" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
+                        }
+                        @if (i.Images.Count == 0)
+                        {
+                            <img id="" src="/Content/images/camera_200.png" />
+                        }
+                    </div>
+                    <div class="div_inline_block">
+                        <p>Цена: @i.Db.Price</p>
+                        <p>Скидка: @i.Db.Discount</p>
+                        <p>Цена с учетом скидки: @((int)(i.Db.Price * (1 - i.Db.Discount)))</p>
+
+                        
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
+
+
+    }
+</div>

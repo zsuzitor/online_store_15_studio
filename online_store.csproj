@@ -258,6 +258,8 @@
     <Content Include="Views\Home\Follow_one_object_partial.cshtml" />
     <Content Include="Views\Home\Delete_object_from_follow.cshtml" />
     <Content Include="Views\Home\Buy_basket.cshtml" />
+    <Content Include="Views\Home\Purchase_view.cshtml" />
+    <Content Include="Views\Home\Edit_personal_record.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

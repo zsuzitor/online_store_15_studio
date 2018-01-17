@@ -60,6 +60,7 @@
         <div>@Html.Label(Model.Db.Manufacturer)</div>
         <div>@Html.Label(Model.Db.Price.ToString())</div>
         <div>@Html.Label(Model.Db.Discount.ToString())</div>
+        <div>@Html.Label(((int)(Model.Db.Price * (1 - Model.Db.Discount))).ToString())</div>
         <div>@Html.Label(Model.Db.Color)</div>
         <div>@Html.Label(Model.Db.Composition)</div>
         <div>@Html.Label(Model.Db.Description)</div>
@@ -82,7 +83,7 @@
                 @using (Html.BeginForm("Add_comment", "Home"))
                 {
                     @Html.Hidden("id_object", Model.Db.Id)
-                    @Html.TextArea("text")
+                    @Html.TextArea("text",new {@class= "Object_view_text_area_comment" })
                     @Html.Hidden("mark", "-1")
                     <div>
                         @{

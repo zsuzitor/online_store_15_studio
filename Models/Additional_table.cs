@@ -53,17 +53,20 @@ namespace online_store.Models
         public Comment Db { get; set; }
         public byte[] Image_user { get; set; }
         public string User_name { get; set; }
+        public DateTime Date_Time { get; set; }
         public Comment_view()
         {
             Db = null;
             Image_user = null;
             User_name = null;
+            Date_Time = DateTime.Now;
         }
         public Comment_view(Comment a)
         {
             Db = a;
             Image_user = null;
             User_name = null;
+            Date_Time = DateTime.Now;
         }
     }
 
@@ -117,7 +120,7 @@ namespace online_store.Models
     public class Purchase
     {
         public int Id { get; set; }
-        
+        public DateTime Date_Time { get; set; }
         public string Person_id { get; set; }
         public int Price { get; set; }
         public Purchase()
@@ -125,9 +128,26 @@ namespace online_store.Models
             Id = 0;
             Price = 0;
              Person_id = null;
+            Date_Time = DateTime.Now;
 
         }
 
+    }
+    public class Purchase_view
+    {
+        public Purchase Db { get; set; }
+        public List<Object_os_for_view> Objects;
+
+        public Purchase_view()
+        {
+            Db = null;
+            Objects = new List<Object_os_for_view>();
+        }
+        public Purchase_view(Purchase a)
+        {
+            Db = a;
+            Objects = new List<Object_os_for_view>();
+        }
     }
     public class Follow_object
     {

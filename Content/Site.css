@@ -177,6 +177,17 @@ div.Main_header_small_basket {
 div.Main_header_one_section_block{
     margin-top:5px;
 }
+div.Main_header_back_to_top{
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    display: none;
+    top: 600px;
+    /*background-color: #cdfae0;*/
+    background-image: url(/Content/images/back_to_top.jpg);
+    min-width:960px;
+    z-index: 5;
+}
 
 /*List_objects*/
 div.List_objects_one_object {
@@ -258,6 +269,14 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
+.Object_view_text_area_comment{
+    width:100%;
+    min-width:300px;
+    height:150px;
+    min-height:100px;
+    max-height:400px;
+    max-width:100%;
+}
 div.Object_view_small_img_change {
     height: 100px;
     width: 70px;
@@ -425,4 +444,14 @@ dic.Personal_record_comments_block{
 }
 div.Personal_record_purchases_block{
      max-height:450px;
+}
+/*Purchase_view*/
+div.Purchase_view_one_purchase_block{
+    width:100%;
+    height:200px;
+}
+div.Purchase_view_one_purchase_block_img{
+     width:200px;
+    height:200px;
+    float:left;
 }

@@ -14,7 +14,13 @@ namespace online_store.Models
         public byte[] Image { get; set; }
         public string Info { get; set; }
 
-
+        public  void Eq(ApplicationUser a)
+        {
+            Name = a.Name;
+            Age = a.Age;
+           Info = a.Info;
+            return;
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -37,7 +43,7 @@ namespace online_store.Models
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Purchase_connect> Purchases_connect { get; set; }
 
-
+       
 
 
         public ApplicationDbContext()
