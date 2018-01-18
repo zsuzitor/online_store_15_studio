@@ -2,7 +2,40 @@
 @{
     ViewBag.Title = "Index";
 }
+<script>
+    var First_num_lider_1 = 0;
+    function Next_slider_1() {
+        var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
+        slider_1.innerHTML = "";
+        for (var i = First_num_lider_1; i < 6; ++i) {
+            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + i);
+            if (slider_1_block_1 != null) {
+                slider_1.innerHTML += slider_1_block_1.innerHTML;
+            }
+            
+        }
+        var tmp_s4et = First_num_lider_1 + 1 - 6;//след элемент
+        //мб еще 1 цикл дозагрузки до конца
+        First_num_lider_1 += 1;
+    }
+    function Prev_slider_1() {
+        var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
 
+
+
+    }
+    function Load_slider() {
+        var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
+        for (var i = 0; i < 6; ++i) {
+            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + i);
+            slider_1.innerHTML += slider_1_block_1.innerHTML;
+        }
+      
+
+    }
+
+    document.addEventListener("DOMContentLoaded", Load_slider);
+    </script>
 <h2>Index</h2>
 <div>
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
@@ -12,5 +45,44 @@
 
     <div class="Index_block_type_1">
 
+    </div>
+    <div >
+        <div onclick="Prev_slider_1()" class="Index_button_prev_slider_1"></div>
+        <div>
+            <div class="div_display_none">
+                @{ 
+                    int int_num_for_slider_1 = 0;
+                }
+                @foreach (var i in ViewBag.Object_for_slider_1)
+            {
+                <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid div_inline_block">
+                    <div class="div_inline_block Index_one_block_slider_1">
+                        <div class="Index_one_block_slider_1_img">
+                            <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
+                                @if (i.Images.Count > 0)
+                                {
+
+                                    <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
+                                }
+                                @if (i.Images.Count == 0)
+                                {
+                                    <img src="/Content/images/camera_200.png" />
+                                }
+                            </a>
+                        </div>
+                        <div>
+                            @Html.Label(((string)i.Db.Name))
+                            @Html.Label(((string)i.Db.Category))
+                        </div>
+                    </div>
+                </div>
+                    int_num_for_slider_1 += 1;
+                }
+        </div>
+            <div id="Index_one_block_slider_1_id_visible">
+
+            </div>
+        </div>
+        <div onclick="Next_slider_1()" class="Index_button_next_slider_1"></div>
     </div>
 </div>
