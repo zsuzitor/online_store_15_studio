@@ -85,13 +85,15 @@ namespace online_store.Controllers
 
             return View(res);
         }
-        //добавляет и извеняет коммент
+        //добавляет и изменяет коммент
         [HttpPost]
-        public ActionResult Edit_comment(int id_object, string text, int mark,string id_block)
+        public ActionResult Edit_comment(int id_object, string text, int mark,string from)
         {
             Work_with_comment(id_object, text, mark);
-
-            return PartialView();
+            if(from== "Object_view")
+            return RedirectToAction ("Object_view","Home",new {id= id_object });
+            else
+                return RedirectToAction("Personal_record","Home",new { });
         }
         [HttpPost]
         public ActionResult Add_comment(int id_object, string text, int mark)
@@ -104,8 +106,18 @@ namespace online_store.Controllers
         }
         public ActionResult Add_mark_for_object(int id, string num = "")
         {
+            //num для работы со списками объектов
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
             ViewBag.Num = num;
+            ViewBag.Mark_pers = 0;
+            if (check_id != null)//не комментить условие, должно быть так
+            {
+               
+                var mrk = db.Comments.FirstOrDefault(x1 => x1.Person_id == check_id&&x1.Mark!=null);
+                if(mrk!=null)
+                    ViewBag.Mark_pers = mrk.Mark;
+            }
             var marks = db.Comments.Where(x1 => x1.Object_id == id && x1.Mark != null).ToList();
             int mark = 0;
             if (marks.Count > 0)
@@ -119,6 +131,7 @@ namespace online_store.Controllers
         //[Authorize]
         public ActionResult Change_mark_for_object(int id, int num, string num_block_for_list = "")
         {
+            //num,num_block_for_list для работы со списками объектов
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
             if (marks == null)

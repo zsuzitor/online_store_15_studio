@@ -8,23 +8,15 @@
 <script>
     function Edit_One_comment(id_comm,id_obj) {
         var block = document.getElementById("Personal_record_one_comm_num_id" + id_comm);
-        var str = "<form action='/Home/Add_comment' method='post'><input id='id_object' name='id_object' type='hidden' value='";
+        var str = "<form action='/Home/Edit_comment' method='post'><input id='id_object' name='id_object' type='hidden' value='";
         str += id_obj + "' /><textarea class='Personal_record_text_area_comment' cols='20' id='text' name='text' rows='2'>";
 
         var block_text_b = document.getElementById("Personal_record_text_one_comment_id" + id_comm);
         var text = block_text_b.innerHTML;
-        str+=text+"</textarea><input id='mark' name='mark' type='hidden' value='-1' /><div></div><input type='submit' class='submit' value='Отправить' /></form>";
+        str += text + "</textarea><input id='mark' name='mark' type='hidden' value='-1' /><input id='from' name='from' type='hidden' value='Personal_record' />";
+        str += "<div></div><input type='submit' class='submit' value='Отправить' /></form>";
+
         block.innerHTML = str;
-
-
-        /*<form action='/Home/Add_comment' method='post'><input id='id_object' name='id_object' type='hidden' value="1" /><textarea class="Object_view_text_area_comment" cols='20' id='text' name='text' rows='2'>
-</textarea><input id='mark' name='mark' type='hidden' value='-1' />                    <div>
-
-                    </div>
-                    <input type="submit" class="submit" value="Отправить" />
-</form>  
-*/
-        
 
     }
 

@@ -6,18 +6,42 @@
 
 @for (int i = 1; i < 6; ++i)
 {
-    if (((int)ViewBag.Mark) >= i)
+    if (((int)ViewBag.Mark_pers) >= i && ((int)ViewBag.Mark) >= i  )
     {
-        <div class="Add_mark_for_object_yellow_star div_inline_block">
+        <div class="Add_mark_for_object_red_yellow_star div_inline_block">
             @Ajax.ActionLink(" ", "Change_mark_for_object", "Home", new { id = ViewBag.Id, num = i, num_block_for_list = ViewBag.Num }, new AjaxOptions { UpdateTargetId = string.Concat("Add_mark_for_object_partial_id", ViewBag.Num) }, new { @class = "link_standart_for_div" })
         </div>
     }
-    if (((int)ViewBag.Mark) < i)
+    if (((int)ViewBag.Mark_pers) < i && ((int)ViewBag.Mark) < i)
     {
         <div class="Add_mark_for_object_white_star div_inline_block">
             @Ajax.ActionLink(" ", "Change_mark_for_object", "Home", new { id = ViewBag.Id, num = i, num_block_for_list = ViewBag.Num }, new AjaxOptions { UpdateTargetId = string.Concat("Add_mark_for_object_partial_id", ViewBag.Num) }, new { @class = "link_standart_for_div" })
         </div>
     }
+    
+        if (((int)ViewBag.Mark_pers) >= i&& ((int)ViewBag.Mark) < i)
+        {
+            <div class="Add_mark_for_object_yellow_star div_inline_block">
+                @Ajax.ActionLink(" ", "Change_mark_for_object", "Home", new { id = ViewBag.Id, num = i, num_block_for_list = ViewBag.Num }, new AjaxOptions { UpdateTargetId = string.Concat("Add_mark_for_object_partial_id", ViewBag.Num) }, new { @class = "link_standart_for_div" })
+            </div>
+    }
+    if (((int)ViewBag.Mark_pers) < i && ((int)ViewBag.Mark) >= i)
+    {
+                <div class="Add_mark_for_object_red_star div_inline_block">
+                    @Ajax.ActionLink(" ", "Change_mark_for_object", "Home", new { id = ViewBag.Id, num = i, num_block_for_list = ViewBag.Num }, new AjaxOptions { UpdateTargetId = string.Concat("Add_mark_for_object_partial_id", ViewBag.Num) }, new { @class = "link_standart_for_div" })
+                </div>
+            }
+            /* if (((int)ViewBag.Mark) < i)
+            {
+                <div class="Add_mark_for_object_white_star div_inline_block">
+                    @Ajax.ActionLink(" ", "Change_mark_for_object", "Home", new { id = ViewBag.Id, num = i, num_block_for_list = ViewBag.Num }, new AjaxOptions { UpdateTargetId = string.Concat("Add_mark_for_object_partial_id", ViewBag.Num) }, new { @class = "link_standart_for_div" })
+                </div>
+            }*/
+
+
+        
+    
+
 
 }
 
