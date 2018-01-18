@@ -87,34 +87,17 @@ namespace online_store.Controllers
         }
         //добавляет и извеняет коммент
         [HttpPost]
+        public ActionResult Edit_comment(int id_object, string text, int mark,string id_block)
+        {
+            Work_with_comment(id_object, text, mark);
+
+            return PartialView();
+        }
+        [HttpPost]
         public ActionResult Add_comment(int id_object, string text, int mark)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == check_id);
-            if (marks == null)
-            {
-                var new_comm = new Comment() { Object_id = id_object, Person_id = check_id, Text = text };
-                if (mark > 0)
 
-                    new_comm.Mark = mark;
-
-                else
-                    new_comm.Mark = null;
-                db.Comments.Add(new_comm);
-                db.SaveChanges();
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(text))
-                {
-                    marks.Text = text;
-                    if (mark > 0)
-                        marks.Mark = mark;
-                    db.SaveChanges();
-                }
-
-            }
-
+            Work_with_comment(id_object, text, mark);
 
             return RedirectToAction("Object_view", "Home", new { id = id_object });
 
@@ -561,7 +544,40 @@ namespace online_store.Controllers
 
 
 
+        public bool Work_with_comment(int id_object, string text, int mark)
+        {
 
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == check_id);
+            if (marks == null)
+            {
+                var new_comm = new Comment() { Object_id = id_object, Person_id = check_id, Text = text };
+                if (mark > 0)
+
+                    new_comm.Mark = mark;
+
+                else
+                    new_comm.Mark = null;
+                db.Comments.Add(new_comm);
+                db.SaveChanges();
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(text))
+                {
+                    marks.Text = text;
+                    if (mark > 0)
+                        marks.Mark = mark;
+                    db.SaveChanges();
+                }
+
+            }
+
+
+
+
+            return true;
+        }
 
 
 

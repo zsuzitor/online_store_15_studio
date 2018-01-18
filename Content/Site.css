@@ -185,8 +185,9 @@ div.Main_header_back_to_top{
     top: 600px;
     /*background-color: #cdfae0;*/
     background-image: url(/Content/images/back_to_top.jpg);
-    min-width:960px;
+    background-size: 100% 100%;
     z-index: 5;
+    cursor:pointer;
 }
 
 /*List_objects*/
