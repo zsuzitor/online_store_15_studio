@@ -3,34 +3,93 @@
     ViewBag.Title = "Index";
 }
 <script>
-    var First_num_lider_1 = 0;
+    var First_num_slider_1 = 0;
+    var Count_block_for_slider_1 = 0;
+    var Count_in_list_slider_1 = 7;
     function Next_slider_1() {
+       
         var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
         slider_1.innerHTML = "";
-        for (var i = First_num_lider_1; i < 6; ++i) {
-            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + i);
+       
+        for (var i = 0; i < Count_block_for_slider_1; ++i) {
+            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + First_num_slider_1);
+           
             if (slider_1_block_1 != null) {
                 slider_1.innerHTML += slider_1_block_1.innerHTML;
+                ++First_num_slider_1;
+               
             }
-            
+            else {
+                First_num_slider_1 = 0;//First_num_slider_1 + 1 - 6
+                slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + First_num_slider_1);
+                if (slider_1_block_1 != null) {
+                    slider_1.innerHTML += slider_1_block_1.innerHTML;
+                    ++First_num_slider_1;
+                }
+                else {
+                    return;
+                }
+            }
         }
-        var tmp_s4et = First_num_lider_1 + 1 - 6;//след элемент
-        //мб еще 1 цикл дозагрузки до конца
-        First_num_lider_1 += 1;
+        //var tmp_s4et = First_num_slider_1 + 1 - 6;//след элемент
+        
+        if (First_num_slider_1>=1)
+        First_num_slider_1 -= 1;
     }
     function Prev_slider_1() {
+        var num = First_num_slider_1 + 1 - Count_block_for_slider_1;
+        if (num < 0)
+            num = Count_in_list_slider_1 + 2 + num;
+        //alert(num);
+        First_num_slider_1 -= Count_block_for_slider_1;
+        if (First_num_slider_1 < 0)
+            First_num_slider_1 = Count_in_list_slider_1 + 2 + First_num_slider_1;
         var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
+        slider_1.innerHTML = "";
+
+        for (var i = 0; i < Count_block_for_slider_1; ++i) {
+            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + num);
+
+            if (slider_1_block_1 != null) {
+                slider_1.innerHTML = slider_1_block_1.innerHTML + slider_1.innerHTML;
+                --num;
+
+            }
+            else {
+                num = Count_in_list_slider_1;//последний из списка
+                slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + num);
+                if (slider_1_block_1 != null) {
+                    slider_1.innerHTML = slider_1_block_1.innerHTML + slider_1.innerHTML;
+                    --num;
+                }
+                else {
+                    //First_num_slider_1 += 1;
+                    return;
+                }
+            }
+        }
+        //var tmp_s4et = First_num_slider_1 + 1 - 6;//след элемент
+        //мб еще 1 цикл дозагрузки до конца
+        //if (num >= 1)
+        First_num_slider_1 += 1;
 
 
 
     }
     function Load_slider() {
+        var width_ = document.documentElement.clientWidth;
+         Count_block_for_slider_1 = Math.trunc((width_ - 200) / 165)-1;
+        //alert(Count_block_for_slider_1);
+
+        /*
         var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
-        for (var i = 0; i < 6; ++i) {
+        for (var i = 0; i < Count_block_for_slider_1; ++i) {
             var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + i);
-            slider_1.innerHTML += slider_1_block_1.innerHTML;
-        }
-      
+            if (slider_1 != null && slider_1_block_1!=null) {
+                slider_1.innerHTML += slider_1_block_1.innerHTML;
+            }
+        }*/
+        Next_slider_1();
 
     }
 
@@ -41,48 +100,55 @@
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
     @Html.ActionLink("добавить продукт", "Add_object", "Home", new { }, new { })
     @Html.ActionLink("личная страница", "Personal_record", "Home", new { }, new { })
-
-
+    
     <div class="Index_block_type_1">
 
     </div>
-    <div >
-        <div onclick="Prev_slider_1()" class="Index_button_prev_slider_1"></div>
-        <div>
+    <div class="Index_slider_1">
+        <div onclick="Prev_slider_1()" class="div_inline_block Index_button_prev_slider_1"></div>
+        <div class="div_inline_block">
             <div class="div_display_none">
                 @{ 
                     int int_num_for_slider_1 = 0;
                 }
                 @foreach (var i in ViewBag.Object_for_slider_1)
             {
-                <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid div_inline_block">
+                <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid">
                     <div class="div_inline_block Index_one_block_slider_1">
-                        <div class="Index_one_block_slider_1_img">
-                            <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
-                                @if (i.Images.Count > 0)
-                                {
+                        <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
+                            <div>
+                                <div class="Index_one_block_slider_1_img">
 
-                                    <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
-                                }
-                                @if (i.Images.Count == 0)
-                                {
-                                    <img src="/Content/images/camera_200.png" />
-                                }
-                            </a>
-                        </div>
-                        <div>
-                            @Html.Label(((string)i.Db.Name))
-                            @Html.Label(((string)i.Db.Category))
-                        </div>
+                                    @if (i.Images.Count > 0)
+                                    {
+
+                                        <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
+                                    }
+                                    @if (i.Images.Count == 0)
+                                    {
+                                        <img src="/Content/images/camera_200.png" />
+                                    }
+
+                                </div>
+                                <div>
+                                    @Html.Label(((string)i.Db.Name))
+                                    @Html.Label(((string)i.Db.Category))
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                     int_num_for_slider_1 += 1;
                 }
         </div>
-            <div id="Index_one_block_slider_1_id_visible">
+           
+                <div id="Index_one_block_slider_1_id_visible">
 
-            </div>
+                </div>
+
+            
+           
         </div>
-        <div onclick="Next_slider_1()" class="Index_button_next_slider_1"></div>
+        <div onclick="Next_slider_1()" class="div_inline_block Index_button_next_slider_1"></div>
     </div>
 </div>
