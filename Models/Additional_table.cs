@@ -69,9 +69,60 @@ namespace online_store.Models
             Date_Time = DateTime.Now;
         }
     }
+    public class Section_main_header
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string line1_name { get; set; }
+        public string line1_link { get; set; }
+        public string line2_name { get; set; }
+        public string line2_link { get; set; }
+        public string line3_name { get; set; }
+        public string line3_link { get; set; }
+        public string line4_name { get; set; }
+        public string line4_link { get; set; }
+        public string line5_name { get; set; }
+        public string line5_link { get; set; }
+        public string line6_name { get; set; }
+        public string line6_link { get; set; }
+        public string line7_name { get; set; }
+        public string line7_link { get; set; }
+        public string line8_name { get; set; }
+        public string line8_link { get; set; }
+        public string line9_name { get; set; }
+        public string line9_link { get; set; }
+        public string line10_name { get; set; }
+        public string line10_link { get; set; }
+    
 
-    //
-    public class Connect_image
+        public Section_main_header()
+        {
+            Name = null;
+            line1_name = null;
+            line1_link = null;
+            line2_name = null;
+            line2_link = null;
+            line3_name = null;
+            line3_link = null;
+            line4_name = null;
+            line4_link = null;
+            line5_name = null;
+            line5_link = null;
+            line6_name = null;
+            line6_link = null;
+            line7_name = null;
+            line7_link = null;
+            line8_name = null;
+            line8_link = null;
+            line9_name = null;
+            line9_link = null;
+            line10_name = null;
+            line10_link = null;
+
+        }
+    }
+        //
+        public class Connect_image
     {
         public int Id { get; set; }
         public string Something_id { get; set; }

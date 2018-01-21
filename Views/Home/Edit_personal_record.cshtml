@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Add_new_main_image", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    <input type="file" name="uploadImage[0]" />
+    <input type="file"  name="uploadImage[0]" accept="image/*,image/jpeg,image/png" />
                                                 <input type="submit" class="submit" value="Обновить" />
 }
 <hr />

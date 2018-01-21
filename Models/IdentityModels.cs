@@ -42,8 +42,8 @@ namespace online_store.Models
         public DbSet<Follow_object> Follow_objects { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Purchase_connect> Purchases_connect { get; set; }
-
-       
+        public DbSet<Section_main_header> Section_in_main_header { get; set; }
+        
 
 
         public ApplicationDbContext()

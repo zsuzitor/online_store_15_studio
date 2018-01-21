@@ -31,6 +31,27 @@ namespace online_store.Models
             Price = 0;
             Discount = 0;
         }
+        public bool Seacrh(string str)
+        {
+            
+            if (Name.Contains(str))
+                return true;
+            if (Type.Contains(str))
+                return true;
+            if (Category.Contains(str))
+                return true;
+            if (Manufacturer.Contains(str))
+                return true;
+            if (Color.Contains(str))
+                return true;
+            if (Composition.Contains(str))
+                return true;
+            if (Description.Contains(str))
+                return true;
+
+
+            return false;
+        }
     }
 
     public class Object_os_for_view

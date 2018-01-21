@@ -20,6 +20,7 @@ namespace online_store.Controllers
         public ActionResult Index()
         {
             //TODO работа с object
+            try { 
             var objs = db.Objects.Take(10).ToList();
                  ViewBag.Object_for_slider_1 =new List<Object_os_for_view>();
             foreach (var i in objs)
@@ -30,27 +31,22 @@ namespace online_store.Controllers
                 tmp.Images.Add(img);
                 ViewBag.Object_for_slider_1.Add(tmp);
             }
-           
-           
+                ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
+            }
+            catch { }
+            
             return View();
         }
-        public ActionResult List_objects()
+        public ActionResult List_objects(string text_rearch = null)
         {
-            List<Object_os_for_view> res = new List<Object_os_for_view>();
-            var lst = db.Objects.ToList();
-            foreach (var i in lst)
-            {
-                var tmp = new Object_os_for_view(i);
-                tmp.Images.AddRange(db.Images.Where(x1 => x1.Something_id == i.Id.ToString() && x1.What_something == "Object"));
-
-
-                res.Add(tmp);
-            }
+            List<Object_os_for_view> res = Search(text_rearch);
+            
+            
             return PartialView(res);
         }
-        public ActionResult List_objects_type()
+        public ActionResult List_objects_type(string text_rearch=null)
         {
-
+            ViewBag.text_rearch = text_rearch;
 
             return View();
         }
@@ -351,6 +347,7 @@ namespace online_store.Controllers
             return PartialView(res);
 
         }
+       
         //[Authorize]
         public ActionResult Follow_one_object_partial(int id)
         {
@@ -555,17 +552,216 @@ namespace online_store.Controllers
         //-----------------------------------
         public ActionResult Main_header()
         {
-
+            /*
             ViewBag.List_class_for_header = new string[] { "Женщинам", "Мужчинам", "Детям", "Обувь", "Аксессуары", "Книги и диски", "Дом и дача", "Спорт",
-                "Игрушки", "Красота", "Новинки", "Электроника", "Ювелирные украшения", "Premium", "Подарки", "Зима"
+            "Игрушки", "Красота", "Новинки", "Электроника", "Ювелирные украшения", "Premium", "Подарки", "Зима"
             };
+        var block = new {
+                Name = "Женщинам",line1= "Обувь",
+                line2 = "Аксессуары",
+                line3 = "Спорт",
+                line4 = "Игрушки",
+                line5 = "Красота",
+                line6 = "Новинки",
+                line7 = "Ювелирные украшения",
+                 line8 = "Premium",
+                line9 = "Подарки",
+                line10 = "Зима"
+            };
+            var beatlesList =
+                       (new[] { block }).ToList();
 
+
+            ViewBag.List_class_for_header = beatlesList;*/
+            try
+            {
+
+           
+            var sect = db.Section_in_main_header.ToList();
+            if (sect == null || sect.Count == 0)
+            {
+                var tmp_woman = new Section_main_header() {Name= "Женщинам", line1_name = "Обувь",
+                    line2_name = "Аксессуары",
+                    line3_name = "Спорт",
+                    line4_name = "Игрушки",
+                    line5_name = "Красота",
+                    line6_name = "Новинки",
+                    line7_name = "Ювелирные украшения",
+                    line8_name = "Premium",
+                    line9_name = "Подарки",
+                    line10_name = "Зима",
+                    line1_link="",
+                    line2_link = "",
+                    line3_link = "",
+                    line4_link = "",
+                    line5_link = "",
+                    line6_link = "",
+                    line7_link = "",
+                    line8_link = "",
+                    line9_link = "",
+                    line10_link = "",
+                };
+                db.Section_in_main_header.Add(tmp_woman);
+                var tmp_man = new Section_main_header()
+                {
+                    Name = "Мужчинам",
+                    line1_name = "Обувь",
+                    line2_name = "Аксессуары",
+                    line3_name = "Спорт",
+                    line4_name = "Игрушки",
+                    line5_name = "Красота",
+                    line6_name = "Новинки",
+                    line7_name = "Ювелирные украшения",
+                    line8_name = "Premium",
+                    line9_name = "Подарки",
+                    line10_name = "Зима",
+                    line1_link = "",
+                    line2_link = "",
+                    line3_link = "",
+                    line4_link = "",
+                    line5_link = "",
+                    line6_link = "",
+                    line7_link = "",
+                    line8_link = "",
+                    line9_link = "",
+                    line10_link = "",
+                };
+                db.Section_in_main_header.Add(tmp_man);
+                var tmp_1 = new Section_main_header()
+                {
+                    Name = "Детям"
+                };
+                db.Section_in_main_header.Add(tmp_1);
+                var tmp_2 = new Section_main_header()
+                {
+                    Name = "Обувь"
+                };
+                db.Section_in_main_header.Add(tmp_2);
+                var tmp_3 = new Section_main_header()
+                {
+                    Name = "Аксессуары"
+                };
+                db.Section_in_main_header.Add(tmp_3);
+                var tmp_4 = new Section_main_header()
+                {
+                    Name = "Книги и диски"
+                };
+                db.Section_in_main_header.Add(tmp_4);
+                var tmp_5 = new Section_main_header()
+                {
+                    Name = "Дом и дача"
+                };
+                db.Section_in_main_header.Add(tmp_5);
+                var tmp_6 = new Section_main_header()
+                {
+                    Name = "Спорт"
+                };
+                db.Section_in_main_header.Add(tmp_6);
+                var tmp_7 = new Section_main_header()
+                {
+                    Name = "Игрушки"
+                };
+                db.Section_in_main_header.Add(tmp_7);
+                var tmp_8 = new Section_main_header()
+                {
+                    Name = "Красота"
+                };
+                db.Section_in_main_header.Add(tmp_8);
+                var tmp_9 = new Section_main_header()
+                {
+                    Name = "Новинки"
+                };
+                db.Section_in_main_header.Add(tmp_9);
+                var tmp_10 = new Section_main_header()
+                {
+                    Name = "Электроника"
+                };
+                db.Section_in_main_header.Add(tmp_10);
+                var tmp_11 = new Section_main_header()
+                {
+                    Name = "Ювелирные украшения"
+                };
+                db.Section_in_main_header.Add(tmp_11);
+                var tmp_12 = new Section_main_header()
+                {
+                    Name = "Premium"
+                };
+                db.Section_in_main_header.Add(tmp_12);
+                var tmp_13 = new Section_main_header()
+                {
+                    Name = "Подарки"
+                };
+                db.Section_in_main_header.Add(tmp_13);
+                var tmp_14 = new Section_main_header()
+                {
+                    Name = "Зима"
+                };
+                db.Section_in_main_header.Add(tmp_14);
+
+
+
+
+                db.SaveChanges();
+                 sect = db.Section_in_main_header.ToList();
+            }
+            
+            ViewBag.List_class_for_header = sect;
+            }
+            catch { }
             return PartialView();
         }
 
+        //------------------------------------------FUNCTIONS----------------------------------------------------------------------------------
+
+        public List<Object_os_for_view> Search(string text_rearch,int count_in_list=10, bool extends_src=false)
+        {
+            List<Object_os_for_view> res = new List<Object_os_for_view>();
+            var lst = new List<Object_os>();
+            if (string.IsNullOrEmpty(text_rearch))
+                lst=db.Objects.Take(count_in_list).ToList();
+            else
+            {
+                if (extends_src)
+                {
+                    //TODO скорее всего так нельзя
+                    var list_words = text_rearch.Split(' ');
+
+                    lst = db.Objects.AsEnumerable().Where(x1 => {//.AsEnumerable()
+                        var ret = false;
+                        foreach (var i in list_words)
+                        {
+                            ret = x1.Seacrh(i);
+                            if (ret)
+                                return ret;
+                        }
+                        return ret;
+                    }).ToList();
+
+                }
+                else
+                {
+                    //TODO не работает
+                     lst=db.Objects.Where(x1 => x1.Seacrh(text_rearch)).ToList();
+                }
+
+            }
 
 
 
+
+            foreach (var i in lst)
+            {
+                var tmp = new Object_os_for_view(i);
+                tmp.Images.AddRange(db.Images.Where(x1 => x1.Something_id == i.Id.ToString() && x1.What_something == "Object"));
+
+
+                res.Add(tmp);
+            }
+
+
+
+            return res;
+        }
 
 
 

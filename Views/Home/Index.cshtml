@@ -5,13 +5,13 @@
 <script>
     var First_num_slider_1 = 0;
     var Count_block_for_slider_1 = 0;
-    var Count_in_list_slider_1 = 7;
+    var Count_in_list_slider_1 = 0; 
     function Next_slider_1() {
        
         var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
         slider_1.innerHTML = "";
        
-        for (var i = 0; i < Count_block_for_slider_1; ++i) {
+        for (var i = 0; i < Count_block_for_slider_1 && i < Count_in_list_slider_1; ++i) {
             var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + First_num_slider_1);
            
             if (slider_1_block_1 != null) {
@@ -39,39 +39,10 @@
     function Prev_slider_1() {
         var num = First_num_slider_1 + 1 - Count_block_for_slider_1;
         if (num < 0)
-            num = Count_in_list_slider_1 + 2 + num;
-        //alert(num);
-        First_num_slider_1 -= Count_block_for_slider_1;
-        if (First_num_slider_1 < 0)
-            First_num_slider_1 = Count_in_list_slider_1 + 2 + First_num_slider_1;
-        var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
-        slider_1.innerHTML = "";
-
-        for (var i = 0; i < Count_block_for_slider_1; ++i) {
-            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + num);
-
-            if (slider_1_block_1 != null) {
-                slider_1.innerHTML = slider_1_block_1.innerHTML + slider_1.innerHTML;
-                --num;
-
-            }
-            else {
-                num = Count_in_list_slider_1;//последний из списка
-                slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + num);
-                if (slider_1_block_1 != null) {
-                    slider_1.innerHTML = slider_1_block_1.innerHTML + slider_1.innerHTML;
-                    --num;
-                }
-                else {
-                    //First_num_slider_1 += 1;
-                    return;
-                }
-            }
-        }
-        //var tmp_s4et = First_num_slider_1 + 1 - 6;//след элемент
-        //мб еще 1 цикл дозагрузки до конца
-        //if (num >= 1)
-        First_num_slider_1 += 1;
+            num = Count_in_list_slider_1  + num;
+        First_num_slider_1 = num;
+        Next_slider_1();
+       
 
 
 
@@ -89,6 +60,8 @@
                 slider_1.innerHTML += slider_1_block_1.innerHTML;
             }
         }*/
+         Count_in_list_slider_1 = +document.getElementById("count_obg_slider_1_id").value;
+         
         Next_slider_1();
 
     }
@@ -97,6 +70,7 @@
     </script>
 <h2>Index</h2>
 <div>
+    <div>@Html.Hidden("count_obg_slider_1_id", ((int)ViewBag.count_obg_slider_1).ToString())</div>
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
     @Html.ActionLink("добавить продукт", "Add_object", "Home", new { }, new { })
     @Html.ActionLink("личная страница", "Personal_record", "Home", new { }, new { })
@@ -104,6 +78,8 @@
     <div class="Index_block_type_1">
 
     </div>
+    @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
+    {
     <div class="Index_slider_1">
         <div onclick="Prev_slider_1()" class="div_inline_block Index_button_prev_slider_1"></div>
         <div class="div_inline_block">
@@ -111,6 +87,9 @@
                 @{ 
                     int int_num_for_slider_1 = 0;
                 }
+               
+
+                
                 @foreach (var i in ViewBag.Object_for_slider_1)
             {
                 <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid">
@@ -151,4 +130,5 @@
         </div>
         <div onclick="Next_slider_1()" class="div_inline_block Index_button_next_slider_1"></div>
     </div>
+                    }
 </div>

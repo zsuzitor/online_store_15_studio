@@ -7,7 +7,7 @@
     function add_new_block_img() {
 
         var block = document.getElementById("Work_with_images_object_block_adds_img");
-        var str = '<input type="file" name="uploadImage[' + num+']" />';
+        var str = '<input type="file" name="uploadImage[' + num + ']" accept="image/*,image/jpeg,image/png"/>';
         num += 1;
         block.innerHTML = block.innerHTML + str;
 
