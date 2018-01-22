@@ -49,13 +49,15 @@
 
 <div class="Main_header_big">
     <div class="Main_header_big_v2">
+        <div class="Main_header_big_home_link">@Html.ActionLink("Online store", "Index", "Home", new { }, new { @class = "link_standart_for_div link_without_prop" })</div>
 
         <div class="Main_header_search">
             @using (Html.BeginForm("List_objects_type", "Home"))
             {
-                @Html.Editor("text_rearch")
-
-                <input type="submit" class="submit" value="Искать" />
+               
+            <div class="Main_header_search_text_line div_inline_block">@Html.Editor("text_rearch")</div>
+            <div class="div_inline_block Main_header_search_submit_button"><input type="submit" class="submit" value="Искать" /></div>
+                
             }
 
         </div>

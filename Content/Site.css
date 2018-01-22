@@ -4,7 +4,9 @@
     background-color:gainsboro;
     min-width:960px;
 }
-
+#loginForm{
+    max-width:500px;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -22,7 +24,8 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
+    width:100%;
 }
 .link_standart_for_div {
     display: block; /* Ссылка как блочный элемент */
@@ -193,6 +196,14 @@ div.Main_header_back_to_top{
     z-index: 5;
     cursor:pointer;
 }
+div.Main_header_big_home_link{
+    position:absolute;
+    top:0;
+    left:0;
+     width:200px;
+    font-size:25pt;
+    font-style:italic;
+}
 
 /*List_objects*/
 div.List_objects_one_object {
@@ -250,6 +261,9 @@ div.Work_with_images_object_div_add_ph_button {
         border: 2px dashed black;
         background-color: aquamarine;
         transition: 1s;
+    }
+    div.Work_with_images_submit_button_1{
+        width:10%;
     }
 
 div.Add_mark_for_object_white_star {
@@ -323,12 +337,23 @@ div.Object_view_one_comment_block {
     padding: 10px;
     min-height: 250px;
     max-height: 500px;
+    position:relative;
+    width:100%;
 }
 div.Object_view_comm_block_mark{
 
 }
 div.Object_view_mark_main {
     border: 2px solid black;
+}
+.Object_view_one_comment_text_lable{
+   
+    word-break: break-all;
+    table-layout: fixed;
+    max-width:100%;
+}
+div.Object_view_one_comment_text{
+    max-width:70%;
 }
 /*Object_add_basket*/
 div.Object_add_basket_follow_img_empty {
@@ -420,6 +445,15 @@ div.Follow_one_object_delete_block {
 
 
 /*Personal_record*/
+.Personal_record_one_comment_text_lable{
+   
+    word-break: break-all;
+    table-layout: fixed;
+    max-width:100%;
+}
+div.Personal_record_one_comment_text{
+    max-width:63%;
+}
 div.Personal_record_right_block {
     width: 30%;
     float:right;
@@ -444,10 +478,18 @@ div.Personal_record_one_comment_block {
     max-height: 500px;
     margin-top:10px;
      background-color:#fafde6;
+     position:relative;
 }
 div.Personal_record_Delete_Comment_button{
     float:right;
+   position:relative;
     width:75px;
+  min-height: 230px;
+    
+}
+div.Personal_record_Edit_Comment_button{
+     position:absolute;
+    bottom:0;
     
 }
 div.Personal_record_basket_block{
@@ -458,7 +500,7 @@ div.Personal_record_follow_block{
      max-height:450px;
 
 }
-dic.Personal_record_comments_block{
+div.Personal_record_comments_block{
      max-height:450px;
 }
 div.Personal_record_purchases_block{
@@ -550,7 +592,7 @@ div.Main_header_one_section_block:hover div.Main_header_hover_section_for_block_
      opacity:1;
 }
 div.Main_header_hover_section_for_block_opac{
-    opacity:0;
+    opacity:0;Main_header_search
     transition:5s;
     
     width:100%;
@@ -563,9 +605,30 @@ div.Main_header_search{
     bottom: 0;
     left: 0;
     margin: auto;
-    width:300px;
+    width:45%;
+}
+div.Main_header_search_text_line{
+    width:80%;
+}
+div.Main_header_search_submit_button{
+width:19%;
+
 }
 
+
+
+/*Add_object*/
+div.Add_object_all_block{
+    width:50%;
+    min-width:300px;
+}
+div.Add_object_small_block{
+     width:50%;
+    min-width:100px;
+}
+div.Add_object_submit_block{
+    margin-top:30px;
+}
 
 
 

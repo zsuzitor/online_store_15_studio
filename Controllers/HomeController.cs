@@ -16,7 +16,7 @@ namespace online_store.Controllers
         //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
         //[Authorize(Roles="admin")] [Authorize]
 
-
+            [AllowAnonymous]
         public ActionResult Index()
         {
             //TODO работа с object
@@ -37,6 +37,7 @@ namespace online_store.Controllers
             
             return View();
         }
+        [AllowAnonymous]
         public ActionResult List_objects(string text_rearch = null)
         {
             List<Object_os_for_view> res = Search(text_rearch);
@@ -44,12 +45,14 @@ namespace online_store.Controllers
             
             return PartialView(res);
         }
+        [AllowAnonymous]
         public ActionResult List_objects_type(string text_rearch=null)
         {
             ViewBag.text_rearch = text_rearch;
 
             return View();
         }
+        [AllowAnonymous]
         public ActionResult Object_view(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -60,7 +63,8 @@ namespace online_store.Controllers
             res.Images = img.ToList();
             var com = db.Comments.Where(x1 => x1.Object_id == id && !string.IsNullOrEmpty(x1.Text)).ToList();
             var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
-            
+            //TODO определить админ ли зашел и если да передавать true
+            ViewBag.admin = true;
             
             foreach (var i in com)
             {
@@ -95,6 +99,7 @@ namespace online_store.Controllers
         }
         //добавляет и изменяет коммент
         [HttpPost]
+        [Authorize]
         public ActionResult Edit_comment(int id_object, string text, int mark,string from)
         {
             Work_with_comment(id_object, text, mark);
@@ -103,15 +108,17 @@ namespace online_store.Controllers
             else
                 return RedirectToAction("Personal_record","Home",new { });
         }
+        [Authorize]
         [HttpPost]
         public ActionResult Add_comment(int id_object, string text, int mark)
         {
 
             Work_with_comment(id_object, text, mark);
-
+            
             return RedirectToAction("Object_view", "Home", new { id = id_object });
 
         }
+        [Authorize]
         public ActionResult Add_mark_for_object(int id, string num = "")
         {
             //num для работы со списками объектов
@@ -136,7 +143,7 @@ namespace online_store.Controllers
             ViewBag.Mark = mark;
             return PartialView();
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Change_mark_for_object(int id, int num, string num_block_for_list = "")
         {
             //num,num_block_for_list для работы со списками объектов
@@ -159,7 +166,8 @@ namespace online_store.Controllers
             //white_star.png
             return RedirectToAction("Add_mark_for_object", "Home", new { id = id, num = num_block_for_list });
         }
-        //[Authorize]
+        //[Authorize]hz
+        [AllowAnonymous]
         public ActionResult Purchase_view(int id)
         {
             //TODO проверять если ли доступ
@@ -180,7 +188,7 @@ namespace online_store.Controllers
 
             return View(res);
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Edit_personal_record()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -191,7 +199,7 @@ namespace online_store.Controllers
             return View(res);
 
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult Edit_personal_record(ApplicationUser a)
         {
@@ -209,7 +217,10 @@ namespace online_store.Controllers
         //[Authorize]
         public ActionResult Personal_record(string id)
         {
+           
             id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;
+            if (string.IsNullOrEmpty(id))
+                return RedirectToAction("Index","Home",new { });
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
@@ -262,7 +273,7 @@ namespace online_store.Controllers
             res.Purchases.Reverse();
             return View(res);
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Object_follow(int id, bool? click, string num_block_for_list = "")
         {
 
@@ -297,7 +308,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Basket_page()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -312,7 +323,7 @@ namespace online_store.Controllers
             return View(res);
         }
         //TODO
-        //[Authorize]
+        [Authorize]
         public ActionResult Buy_basket()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -337,7 +348,8 @@ namespace online_store.Controllers
 
             return View();
         }
-        //[Authorize]
+        [Authorize]
+        [ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
         {
 
@@ -348,7 +360,7 @@ namespace online_store.Controllers
 
         }
        
-        //[Authorize]
+        [Authorize]
         public ActionResult Follow_one_object_partial(int id)
         {
 
@@ -358,7 +370,7 @@ namespace online_store.Controllers
             return PartialView(res);
 
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Object_add_basket(int id, bool? click, string num_block_for_list = "")
         {
             ViewBag.Id = id;
@@ -392,7 +404,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete_object_from_basket(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -408,7 +420,7 @@ namespace online_store.Controllers
             return PartialView();
 
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete_object_from_follow(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -429,13 +441,27 @@ namespace online_store.Controllers
         {
             db.Objects.Remove(db.Objects.First(x1 => x1.Id == id));
             db.Comments.RemoveRange(db.Comments.Where(x1 => x1.Object_id == id));
-
+            db.Images.RemoveRange(db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()));
+            db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Object_id == id));
+            db.Follow_objects.RemoveRange(db.Follow_objects.Where(x1 => x1.Object_id == id));
+            
+ 
+            db.SaveChanges();
             return RedirectToAction("Index", "Home", new { });
         }
         //[Authorize(Roles="admin")]
-        public ActionResult Add_object()
+        public ActionResult Add_object(int id=-1)
         {
-            Object_os res = new Object_os();
+            Object_os res = null;
+            if (id<0)//string.IsNullOrEmpty(id)
+            {
+                res = new Object_os();
+            }
+           else
+            {
+                //int int_id = Convert.ToInt32(id);
+                res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
+            }
 
             return View(res);
         }
@@ -443,13 +469,36 @@ namespace online_store.Controllers
         [HttpPost]
         public ActionResult Add_object(Object_os a)
         {
+            bool new_ = true;
             //проверки и тд
+            if(a.Price>0&&a.Discount>=0&& a.Discount < 1)
+            {
+                if(a.Id>0)
+                {
+                    var check = db.Objects.FirstOrDefault(x1 => x1.Id == a.Id);
+                    if (check != null)
+                    {
+                        new_ = false;
+                        check.Eq(a);
+                        db.SaveChanges();
+                    }
+                        
+                    else
+                        new_ = true;
+                }
+                if (new_)
+                {
+                    db.Objects.Add(a);
+                    db.SaveChanges();
+                    ViewBag.Id = a.Id;
+                }
+               
+                return RedirectToAction("Work_with_images_object","Home", new { id = a.Id });
+            }
 
-            db.Objects.Add(a);
-            db.SaveChanges();
-            ViewBag.Id = a.Id;
-            return RedirectToAction("Work_with_images_object", new { id = a.Id });
 
+
+            return RedirectToAction("Index","Home", new { });
             //return View();
         }
         //[Authorize(Roles="admin")]
@@ -470,7 +519,7 @@ namespace online_store.Controllers
 
 
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete_Comment(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -518,7 +567,7 @@ namespace online_store.Controllers
             return RedirectToAction("Object_view", "Home", new { id = id });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult Add_new_main_image(HttpPostedFileBase[] uploadImage)
         {
@@ -550,6 +599,7 @@ namespace online_store.Controllers
 
 
         //-----------------------------------
+        [ChildActionOnly]
         public ActionResult Main_header()
         {
             /*
@@ -764,7 +814,7 @@ namespace online_store.Controllers
         }
 
 
-
+        
         public bool Work_with_comment(int id_object, string text, int mark)
         {
 

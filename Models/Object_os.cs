@@ -31,6 +31,20 @@ namespace online_store.Models
             Price = 0;
             Discount = 0;
         }
+        public bool Eq(Object_os a)
+        {
+           
+            Name = a.Name;
+            Type = a.Type;
+            Manufacturer = a.Manufacturer;
+            Color = a.Color;
+            Composition = a.Composition;
+            Description = a.Description;
+            Count_buy = a.Count_buy;
+            Price = a.Price;
+            Discount = a.Discount;
+            return true;
+        }
         public bool Seacrh(string str)
         {
             

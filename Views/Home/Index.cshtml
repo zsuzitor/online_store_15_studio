@@ -3,9 +3,29 @@
     ViewBag.Title = "Index";
 }
 <script>
+    //
     var First_num_slider_1 = 0;
     var Count_block_for_slider_1 = 0;
-    var Count_in_list_slider_1 = 0; 
+    var Count_in_list_slider_1 = 0;
+    //
+    var timer_slider_1;
+    //
+
+
+    function Next_slider_1_click() {
+        Next_slider_1();
+        clearInterval(timer_slider_1);
+        var time = setTimeout(
+            Up_slider_1_time, 15000);
+    } 
+    function Prev_slider_1_click() {
+        Prev_slider_1();
+        clearInterval(timer_slider_1);
+        
+
+        var time = setTimeout(
+            Up_slider_1_time, 15000);
+    } 
     function Next_slider_1() {
        
         var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
@@ -37,33 +57,45 @@
         First_num_slider_1 -= 1;
     }
     function Prev_slider_1() {
-        var num = First_num_slider_1 + 1 - Count_block_for_slider_1;
+        var num = First_num_slider_1 + 2*(1 - Count_block_for_slider_1);
+        
         if (num < 0)
             num = Count_in_list_slider_1  + num;
         First_num_slider_1 = num;
+        
         Next_slider_1();
        
 
 
 
     }
+    function Up_slider_1_time() {
+        var time = setTimeout(function () {
+            timer_slider_1 = setInterval(function () {
+                Next_slider_1();
+            }, 6000);
+        }, 6000);
+    }
     function Load_slider() {
         var width_ = document.documentElement.clientWidth;
          Count_block_for_slider_1 = Math.trunc((width_ - 200) / 165)-1;
-        //alert(Count_block_for_slider_1);
-
-        /*
-        var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
-        for (var i = 0; i < Count_block_for_slider_1; ++i) {
-            var slider_1_block_1 = document.getElementById("Index_one_block_slider_1_id" + i);
-            if (slider_1 != null && slider_1_block_1!=null) {
-                slider_1.innerHTML += slider_1_block_1.innerHTML;
-            }
-        }*/
+       
          Count_in_list_slider_1 = +document.getElementById("count_obg_slider_1_id").value;
          
-        Next_slider_1();
+         Next_slider_1();
 
+         Up_slider_1_time();
+         if (Count_block_for_slider_1 < Count_in_list_slider_1) {
+
+
+         }
+
+    }
+    function Hide_prev_next_block_slider_1() {
+        var prev = document.getElementById("Index_button_prev_slider_1_id");
+        var next = document.getElementById("Index_button_next_slider_1_id");
+        prev.innerHTML = "";
+        next.innerHTML = "";
     }
 
     document.addEventListener("DOMContentLoaded", Load_slider);
@@ -81,7 +113,7 @@
     @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
     {
     <div class="Index_slider_1">
-        <div onclick="Prev_slider_1()" class="div_inline_block Index_button_prev_slider_1"></div>
+        <div onclick="Prev_slider_1_click()" id="Index_button_prev_slider_1_id" class="div_inline_block Index_button_prev_slider_1"></div>
         <div class="div_inline_block">
             <div class="div_display_none">
                 @{ 
@@ -128,7 +160,7 @@
             
            
         </div>
-        <div onclick="Next_slider_1()" class="div_inline_block Index_button_next_slider_1"></div>
+        <div onclick="Next_slider_1_click()" id="Index_button_next_slider_1_id" class="div_inline_block Index_button_next_slider_1"></div>
     </div>
                     }
 </div>

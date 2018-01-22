@@ -60,7 +60,14 @@
                 <div id="Add_mark_for_object_partial_id" class="Object_view_mark_main">@Html.Action("Add_mark_for_object", "Home", new { id = Model.Db.Id })</div>
             </div>
         </div>
-
+        @if (((bool)ViewBag.admin) == true)
+        {
+            <div>
+                @Html.ActionLink("Удалить", "Delete_object", "Home", new { id = Model.Db.Id }, new { })
+                @Html.ActionLink("Редактировать", "Add_object", "Home", new { id = Model.Db.Id }, new { })
+            </div>
+        }
+       
     </div>
     <div class="div_inline_block Object_view_right_block">
         <div>@Html.Label(Model.Db.Name)</div>
@@ -146,10 +153,12 @@
                     }
 
                 </div>
-                <div class="div_inline_block">
+                <div class="div_inline_block Object_view_one_comment_text">
                     @if (!string.IsNullOrEmpty(i.Db.Text))
                     {
-                        <div>@Html.Label("", i.Db.Text,new {id= "Object_view_text_one_comment_id"+ i.Db.Id.ToString() })</div>
+                        
+                        
+                        @Html.Label("", i.Db.Text,new {id= "Object_view_text_one_comment_id"+ i.Db.Id.ToString() ,@class= "Object_view_one_comment_text_lable" })
                     }
                     @if (i.Db.Mark != null)
                     {
