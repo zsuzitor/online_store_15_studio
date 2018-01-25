@@ -41,15 +41,12 @@ namespace online_store.Controllers
         public ActionResult List_objects(string text_rearch = null)
         {
             List<Object_os_for_view> res = Search(text_rearch);
-            
-            
             return PartialView(res);
         }
         [AllowAnonymous]
         public ActionResult List_objects_type(string text_rearch=null)
         {
             ViewBag.text_rearch = text_rearch;
-
             return View();
         }
         [AllowAnonymous]
@@ -68,32 +65,23 @@ namespace online_store.Controllers
             
             foreach (var i in com)
             {
-
                 if (i.Person_id != check_id)
                 {
                     var user = db.Users.First(x1 => x1.Id == i.Person_id);
                     var tmp = new Comment_view(i) { Image_user = user.Image, User_name = user.Name };
-
                     res.Comments.Add(tmp);
                 }
-
             }
             if (com_person == null)
                 ViewBag.Can_commented = true;
             else
             {
-                //if(string.IsNullOrEmpty(com_person.Text))
-                // ViewBag.Can_commented = true;
-                // else
                 ViewBag.Can_commented = false;
-                //
                 var user = db.Users.First(x1 => x1.Id == check_id);
                 var tmp = new Comment_view(com_person) { Image_user = user.Image, User_name = user.Name };
-
                 res.Comments.Add(tmp);
             }
             res.Comments.Reverse();
-
 
             return View(res);
         }
@@ -112,11 +100,8 @@ namespace online_store.Controllers
         [HttpPost]
         public ActionResult Add_comment(int id_object, string text, int mark)
         {
-
-            Work_with_comment(id_object, text, mark);
-            
+            Work_with_comment(id_object, text, mark);            
             return RedirectToAction("Object_view", "Home", new { id = id_object });
-
         }
         [Authorize]
         public ActionResult Add_mark_for_object(int id, string num = "")
@@ -127,19 +112,16 @@ namespace online_store.Controllers
             ViewBag.Num = num;
             ViewBag.Mark_pers = 0;
             if (check_id != null)//не комментить условие, должно быть так
-            {
-               
+            {               
                 var mrk = db.Comments.FirstOrDefault(x1 => x1.Person_id == check_id&&x1.Mark!=null);
                 if(mrk!=null)
                     ViewBag.Mark_pers = mrk.Mark;
             }
             var marks = db.Comments.Where(x1 => x1.Object_id == id && x1.Mark != null).ToList();
             int mark = 0;
-            if (marks.Count > 0)
-            {
+            if (marks.Count > 0)         
                 mark = (int)(marks.Sum(x1 => x1.Mark) / marks.Count);
-            }
-
+            
             ViewBag.Mark = mark;
             return PartialView();
         }
@@ -156,24 +138,17 @@ namespace online_store.Controllers
             }
             else
             {
-                //var mm=db.Comments.FirstOrDefault(x1 => x1.Object_id == id  && x1.Person_id == check_id);
-                //if (mm != null)
-                //{
                 marks.Mark = num;
                 db.SaveChanges();
-                //}
             }
-            //white_star.png
             return RedirectToAction("Add_mark_for_object", "Home", new { id = id, num = num_block_for_list });
         }
-        //[Authorize]hz
         [AllowAnonymous]
         public ActionResult Purchase_view(int id)
         {
             //TODO проверять если ли доступ
             var not_res = db.Purchases.FirstOrDefault(x1=>x1.Id==id);
             var obj = db.Purchases_connect.Where(x1=>x1.Purchase_id==id).Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
-            //TODO Object_os_for_view
             var obj_v = new List<Object_os_for_view>();
             foreach(var i in obj)
             {
@@ -194,10 +169,7 @@ namespace online_store.Controllers
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = db.Users.FirstOrDefault(x1=>x1.Id==check_id);
 
-
-
             return View(res);
-
         }
         [Authorize]
         [HttpPost]
@@ -211,10 +183,8 @@ namespace online_store.Controllers
                 db.SaveChanges();
             }
 
-
             return RedirectToAction("Personal_record","Home");
         }
-        //[Authorize]
         public ActionResult Personal_record(string id)
         {
            
@@ -224,44 +194,13 @@ namespace online_store.Controllers
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
-          
 
-
-            //res.Images.AddRange(db.Images.Where(x1 => x1.What_something == "Person" && x1.Something_id == id).ToList());
-            //
             ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Baskets.Reverse();
-            /* var bsk = db.Baskets.Where(x1 => x1.Person_id == id).Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
-             foreach (var i in bsk)
-             {
-                 var tmp_img = db.Images.First(x1 => x1.What_something == "Object" && x1.Something_id == i.Id.ToString());
-
-                 res.Baskets.Add(new Object_os_for_view(i) {
-                     Images = new List<Connect_image> {
-                tmp_img}
-             });
-
-
-             } */
-            //
 
             ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Follow.Reverse();
-            /*
-           var foll = db.Follow_objects.Where(x1=>x1.Person_id==id).Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
-           foreach (var i in foll)
-           {
-               var tmp_img = db.Images.First(x1 => x1.What_something == "Object" && x1.Something_id == i.Id.ToString());
 
-               res.Baskets.Add(new Object_os_for_view(i)
-               {
-                   Images = new List<Connect_image>{
-               tmp_img }
-           });
-
-
-           }
-           */
             var com = db.Comments.Where(x1 => x1.Person_id == id  ).ToList();
             foreach (var i in com)
             {
@@ -276,7 +215,6 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Object_follow(int id, bool? click, string num_block_for_list = "")
         {
-
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
             ViewBag.Follow = false;
@@ -287,7 +225,6 @@ namespace online_store.Controllers
                 if (foll != null)
                 {
                     ViewBag.Follow = true;
-
                 }
                 if (click == true)
                 {
@@ -304,8 +241,6 @@ namespace online_store.Controllers
                 }
             }
 
-
-
             return PartialView();
         }
         [Authorize]
@@ -313,10 +248,7 @@ namespace online_store.Controllers
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id);//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);
-            //var res = new List<Object_os_for_view>();
-            //var summ =res.Select(x1=>x1.Price).ToList();
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
-
             ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
 
@@ -343,32 +275,25 @@ namespace online_store.Controllers
                 db.SaveChanges();
                 //TODO у всех объектов сделать количество -1
             }
-            
-
-
             return View();
         }
         [Authorize]
         [ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
         {
-
             var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()).ToList();
             var obj = db.Objects.First(x1 => x1.Id == id);
             var res = new Object_os_for_view(obj) { Images = imgs };
             return PartialView(res);
-
         }
        
         [Authorize]
         public ActionResult Follow_one_object_partial(int id)
         {
-
             var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()).ToList();
             var obj = db.Objects.First(x1 => x1.Id == id);
             var res = new Object_os_for_view(obj) { Images = imgs };
             return PartialView(res);
-
         }
         [Authorize]
         public ActionResult Object_add_basket(int id, bool? click, string num_block_for_list = "")
@@ -383,7 +308,6 @@ namespace online_store.Controllers
                 if (bask != null)
                 {
                     ViewBag.InBasket = true;
-
                 }
                 if (click == true)
                 {
@@ -399,7 +323,6 @@ namespace online_store.Controllers
                     ViewBag.InBasket = !ViewBag.InBasket;
                 }
             }
-
 
 
             return PartialView();
@@ -418,7 +341,6 @@ namespace online_store.Controllers
             else
                 ViewBag.Message = "Ошибка";
             return PartialView();
-
         }
         [Authorize]
         public ActionResult Delete_object_from_follow(int id)
@@ -444,8 +366,6 @@ namespace online_store.Controllers
             db.Images.RemoveRange(db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()));
             db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Object_id == id));
             db.Follow_objects.RemoveRange(db.Follow_objects.Where(x1 => x1.Object_id == id));
-            
- 
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { });
         }
@@ -459,7 +379,6 @@ namespace online_store.Controllers
             }
            else
             {
-                //int int_id = Convert.ToInt32(id);
                 res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
             }
 
@@ -482,7 +401,6 @@ namespace online_store.Controllers
                         check.Eq(a);
                         db.SaveChanges();
                     }
-                        
                     else
                         new_ = true;
                 }
@@ -499,7 +417,6 @@ namespace online_store.Controllers
 
 
             return RedirectToAction("Index","Home", new { });
-            //return View();
         }
         //[Authorize(Roles="admin")]
         public ActionResult Work_with_images_object(int id)
@@ -518,13 +435,11 @@ namespace online_store.Controllers
         }
 
 
-
         [Authorize]
         public ActionResult Delete_Comment(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
-
             var com = db.Comments.FirstOrDefault(x1 => x1.Id == id);
             Comment_view res = null;
             if (com != null)
@@ -540,16 +455,11 @@ namespace online_store.Controllers
                     ViewBag.Message = "Удалить невозможно";
                     var user = db.Users.First(x1 => x1.Id == com.Person_id);
                     res = new Comment_view(com) { Image_user = user.Image, User_name = user.Name };
-
                 }
             }
 
-
-
             return PartialView(res);
         }
-
-
 
 
         //[Authorize(Roles="admin")]  админ объектам, юзерам юзеры
@@ -562,7 +472,6 @@ namespace online_store.Controllers
                 db.Images.Add(new Connect_image() { Something_id = id, What_something = from, Image = i });
                 db.SaveChanges();
             }
-
 
             return RedirectToAction("Object_view", "Home", new { id = id });
         }
@@ -580,16 +489,8 @@ namespace online_store.Controllers
                 db.SaveChanges();
             }
 
-
             return RedirectToAction("Personal_record", "Home", new { id = check_id });
         }
-
-
-
-
-
-
-
 
 
 
@@ -852,10 +753,6 @@ namespace online_store.Controllers
 
 
 
-
-
-
-
         public List<byte[]> Get_photo_post(HttpPostedFileBase[] uploadImage)
         {
 
@@ -872,7 +769,6 @@ namespace online_store.Controllers
             List<byte[]> res = new List<byte[]>();
             if (uploadImage != null)
             {
-
                 foreach (var i in uploadImage)
                 {
                     try
@@ -885,20 +781,11 @@ namespace online_store.Controllers
                         }
                         // установка массива байтов
                         res.Add(imageData);
-
                     }
                     catch
-                    {
-
-                    }
-
-
-
+                    {}
                 }
-
             }
-
-
             return res;
         }
     }
