@@ -14,7 +14,7 @@
         var block_text_b = document.getElementById("Personal_record_text_one_comment_id" + id_comm);
         var text = block_text_b.innerHTML;
         str += text + "</textarea><input id='mark' name='mark' type='hidden' value='-1' /><input id='from' name='from' type='hidden' value='Personal_record' />";
-        str += "<div></div><input type='submit' class='submit' value='Отправить' /></form>";
+        str += "<div></div><input type='submit' class='submit' style='margin-top:15px;' value='Отправить' /></form>";
 
         block.innerHTML = str;
 
@@ -90,22 +90,22 @@
             <div id=@string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) class="Personal_record_one_comment_block">
 
                 <div class="div_inline_block">
-                    <div>
-                        @if (Model.Db.Image != null)
+                    <div class="Personal_record_comment_one_img_block">
+                        @if (i.Image_object != null)
                         {
-
-                            <img id="Personal_record_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(Model.Db.Image)) />
-
+                            <a href=@Url.Action("Object_view","Home",new {id=i.Db.Object_id })>
+                                <img id="Personal_record_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image_object)) />
+                            </a>
                         }
-                        @if (Model.Db.Image == null)
+                        @if (i.Image_object == null)
                         {
-
-                            <img id="Personal_record_main_image_id" src="/Content/images/camera_200.png" />
-
+                            <a href=@Url.Action("Object_view","Home",new {id=i.Db.Object_id })>
+                                <img id="Personal_record_main_image_id" src="/Content/images/camera_200.png" />
+                            </a>
                         }
 
 
-                    </div>
+</div>
                     @if (!string.IsNullOrEmpty(Model.Db.Name))
                     {
                         <div>

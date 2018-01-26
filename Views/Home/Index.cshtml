@@ -81,19 +81,23 @@
          Count_block_for_slider_1 = Math.trunc((width_ - 200) / 165)-1;
        
          Count_in_list_slider_1 = +document.getElementById("count_obg_slider_1_id").value;
-         
          Next_slider_1();
-
-         Up_slider_1_time();
+         
+        
          if (Count_block_for_slider_1 < Count_in_list_slider_1) {
+            
 
-
+             Up_slider_1_time();
+             
+         }
+         else {
+             Hide_prev_next_block_slider_1();
          }
 
     }
     function Hide_prev_next_block_slider_1() {
-        var prev = document.getElementById("Index_button_prev_slider_1_id");
-        var next = document.getElementById("Index_button_next_slider_1_id");
+        var prev = document.getElementById("Index_external_button_prev_slider_1_id");
+        var next = document.getElementById("Index_external_button_next_slider_1_id");
         prev.innerHTML = "";
         next.innerHTML = "";
     }
@@ -113,7 +117,9 @@
     @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
     {
     <div class="Index_slider_1">
-        <div onclick="Prev_slider_1_click()" id="Index_button_prev_slider_1_id" class="div_inline_block Index_button_prev_slider_1"></div>
+        <div id="Index_external_button_prev_slider_1_id" class="div_inline_block Index_external_button_prev_slider_1">
+            <div onclick="Prev_slider_1_click()" id="Index_button_prev_slider_1_id" class="Index_button_prev_slider_1"></div>
+        </div>
         <div class="div_inline_block">
             <div class="div_display_none">
                 @{ 
@@ -160,7 +166,9 @@
             
            
         </div>
-        <div onclick="Next_slider_1_click()" id="Index_button_next_slider_1_id" class="div_inline_block Index_button_next_slider_1"></div>
+        <div id="Index_external_button_next_slider_1_id" class="Index_external_button_next_slider_1 div_inline_block">
+            <div onclick="Next_slider_1_click()" id="Index_button_next_slider_1_id" class="Index_button_next_slider_1"></div>
+        </div>
     </div>
                     }
 </div>

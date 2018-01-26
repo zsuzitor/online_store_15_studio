@@ -260,6 +260,7 @@
     <Content Include="Views\Home\Buy_basket.cshtml" />
     <Content Include="Views\Home\Purchase_view.cshtml" />
     <Content Include="Views\Home\Edit_personal_record.cshtml" />
+    <Content Include="Views\Home\Not_found_page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

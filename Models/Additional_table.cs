@@ -52,12 +52,14 @@ namespace online_store.Models
     {
         public Comment Db { get; set; }
         public byte[] Image_user { get; set; }
+        public byte[] Image_object { get; set; }
         public string User_name { get; set; }
         public DateTime Date_Time { get; set; }
         public Comment_view()
         {
             Db = null;
             Image_user = null;
+            Image_object = null;
             User_name = null;
             Date_Time = DateTime.Now;
         }
@@ -65,6 +67,7 @@ namespace online_store.Models
         {
             Db = a;
             Image_user = null;
+            Image_object = null;
             User_name = null;
             Date_Time = DateTime.Now;
         }

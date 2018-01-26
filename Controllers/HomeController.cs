@@ -55,6 +55,10 @@ namespace online_store.Controllers
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
             var not_res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
+            if (not_res == null)
+            {
+                return RedirectToAction("Not_found_page","Home",new { });
+            }
             Object_os_for_view res = new Object_os_for_view(not_res);
             var img = db.Images.Where(x1 => x1.Something_id == id.ToString() && x1.What_something == "Object");
             res.Images = img.ToList();
@@ -163,6 +167,12 @@ namespace online_store.Controllers
 
             return View(res);
         }
+        [AllowAnonymous]
+        public ActionResult Not_found_page()
+        {
+
+            return View();
+        }
         [Authorize]
         public ActionResult Edit_personal_record()
         {
@@ -188,9 +198,9 @@ namespace online_store.Controllers
         public ActionResult Personal_record(string id)
         {
            
-            id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;
+            id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;//hz mb ostavit tak   
             if (string.IsNullOrEmpty(id))
-                return RedirectToAction("Index","Home",new { });
+                return RedirectToAction("Not_found_page", "Home",new { });
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
@@ -204,7 +214,12 @@ namespace online_store.Controllers
             var com = db.Comments.Where(x1 => x1.Person_id == id  ).ToList();
             foreach (var i in com)
             {
-                    res.Comments.Add(new Comment_view( i));
+                var tmp = new Comment_view(i);
+                //var obj = db.Objects.FirstOrDefault(x1 => x1.Id == i.Object_id);
+                var img = db.Images.FirstOrDefault(x1 => x1.What_something == "Object" && x1.Something_id == i.Object_id.ToString());
+                if (img != null)
+                    tmp.Image_object = img.Image;
+                res.Comments.Add(tmp);
             }
             res.Comments.Reverse();
             var prc = db.Purchases.Where(x1=>x1.Person_id==id);

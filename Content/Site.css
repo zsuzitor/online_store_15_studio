@@ -4,6 +4,9 @@
     background-color:gainsboro;
     min-width:960px;
 }
+#RememberMe{
+    max-width:50px;
+}
 #loginForm{
     max-width:500px;
 }
@@ -130,10 +133,10 @@ div.Main_header_right_block {
     height: 100%;
 }
 div.Main_header_basket_link {
-    /*float:right;*/
-    margin-left:24%;
-    margin-top:70px;
-    width: 50%;
+    /*float:right; margin-left:24%; margin-top:20px;*/
+    
+    
+    width: 49%;
     height: 50px;
     background-color: white;
     transition: 1s;
@@ -143,7 +146,28 @@ div.Main_header_basket_link {
     div.Main_header_basket_link:hover {
         background-color: antiquewhite;
         transition: 1s;
-    }div.Main_header_sections_view {
+    }
+    div.Main_header_pers_rec_link {
+    /*float:right; margin-left:24%; margin-top:20px;*/
+    
+   
+    width: 49%;
+    height: 50px;
+    background-color: white;
+    transition: 1s;
+    text-align:center;
+    font-size:25pt;
+}
+    div.Main_header_pers_rec_link:hover {
+        background-color: antiquewhite;
+        transition: 1s;
+    }
+    
+    div.Main_header_bask_rec_div{
+        height:50px;
+        margin-top:70px;
+    }
+    div.Main_header_sections_view {
     }
 
 ul.Main_header_sections_list_ul li {
@@ -302,6 +326,7 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
+
 .Object_view_text_area_comment{
     width:100%;
     min-width:300px;
@@ -354,6 +379,9 @@ div.Object_view_mark_main {
 }
 div.Object_view_one_comment_text{
     max-width:70%;
+      position:relative;
+       max-height: 480px;
+    overflow-y: auto;
 }
 /*Object_add_basket*/
 div.Object_add_basket_follow_img_empty {
@@ -420,7 +448,7 @@ div.Basket_page_buy_but {
         background-color:gainsboro;
     }
 
-
+   
     /*Follow_one_object_partial*/
     div.Follow_one_object_partial_one_block{
     height:200px;
@@ -445,6 +473,9 @@ div.Follow_one_object_delete_block {
 
 
 /*Personal_record*/
+.Personal_record_text_area_comment{
+    min-height:100px;
+}
 .Personal_record_one_comment_text_lable{
    
     word-break: break-all;
@@ -479,6 +510,7 @@ div.Personal_record_one_comment_block {
     margin-top:10px;
      background-color:#fafde6;
      position:relative;
+     overflow-y: auto;
 }
 div.Personal_record_Delete_Comment_button{
     float:right;
@@ -494,7 +526,7 @@ div.Personal_record_Edit_Comment_button{
 }
 div.Personal_record_basket_block{
     max-height:450px;
-     background-color:#fafde6;
+    
 }
 div.Personal_record_follow_block{
      max-height:450px;
@@ -505,6 +537,10 @@ div.Personal_record_comments_block{
 }
 div.Personal_record_purchases_block{
      max-height:450px;
+}
+div.Personal_record_comment_one_img_block{
+    width:250px;
+    height:190px;
 }
 /*Purchase_view*/
 div.Purchase_view_one_purchase_block{
@@ -535,22 +571,32 @@ div.Index_one_block_slider_1_img{
 
 }
 div.Index_button_prev_slider_1{
-    position:relative;
+   
     cursor:pointer;
-    top:20%;
-    height:50%;
-    width:50px;
+     height:100%;
+    width:100%;
     background-image: url(/Content/images/prev_button.png);
     background-size: 100% 100%;
 }
-div.Index_button_next_slider_1{
+div.Index_external_button_prev_slider_1{
      position:relative;
+     top:20%;
+    height:50%;
+    width:50px;
+}
+div.Index_button_next_slider_1{
+     
     cursor:pointer;
+     height:100%;
+    width:100%;
+    background-image: url(/Content/images/next_button.png);
+    background-size: 100% 100%;
+}
+div.Index_external_button_next_slider_1{
+    position:relative;
     top:20%;
      height:50%;
     width:50px;
-    background-image: url(/Content/images/next_button.png);
-    background-size: 100% 100%;
 }
 div.Index_slider_1{
     position:relative;
@@ -592,7 +638,7 @@ div.Main_header_one_section_block:hover div.Main_header_hover_section_for_block_
      opacity:1;
 }
 div.Main_header_hover_section_for_block_opac{
-    opacity:0;Main_header_search
+    opacity:0;/*Main_header_search*/
     transition:5s;
     
     width:100%;
@@ -631,4 +677,15 @@ div.Add_object_submit_block{
 }
 
 
-
+div.Not_found_page_main_div_img{
+    height:400px;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width:45%;
+    background-image: url(/Content/images/not_found_404.jpg);
+    background-size: 100% 100%;
+}
