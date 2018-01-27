@@ -113,8 +113,8 @@
         @if (((bool)ViewBag.admin) == true)
         {
             <div>
-                @Html.ActionLink("Удалить", "Delete_object", "Home", new { id = Model.Db.Id }, new { })
-                @Html.ActionLink("Редактировать", "Add_object", "Home", new { id = Model.Db.Id }, new { })
+                @Html.ActionLink("Удалить", "Delete_object", "Admin", new { id = Model.Db.Id }, new { })
+                @Html.ActionLink("Редактировать", "Add_object", "Admin", new { id = Model.Db.Id }, new { })
             </div>
         }
        

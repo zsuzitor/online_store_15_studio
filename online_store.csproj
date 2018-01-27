@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -175,6 +176,8 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Additional_table.cs" />
+    <Compile Include="Models\DataBase.cs" />
+    <Compile Include="Models\Functions_project.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Object_os.cs" />
@@ -241,11 +244,9 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Add_mark_for_object.cshtml" />
-    <Content Include="Views\Home\Add_object.cshtml" />
     <Content Include="Views\Home\Basket_one_object_partial.cshtml" />
     <Content Include="Views\Home\Basket_page.cshtml" />
     <Content Include="Views\Home\Delete_Comment.cshtml" />
-    <Content Include="Views\Home\Delete_img_block.cshtml" />
     <Content Include="Views\Home\Delete_object_from_basket.cshtml" />
     <Content Include="Views\Home\List_objects.cshtml" />
     <Content Include="Views\Home\List_objects_type.cshtml" />
@@ -254,13 +255,15 @@
     <Content Include="Views\Home\Object_follow.cshtml" />
     <Content Include="Views\Home\Object_view.cshtml" />
     <Content Include="Views\Home\Personal_record.cshtml" />
-    <Content Include="Views\Home\Work_with_images_object.cshtml" />
     <Content Include="Views\Home\Follow_one_object_partial.cshtml" />
     <Content Include="Views\Home\Delete_object_from_follow.cshtml" />
     <Content Include="Views\Home\Buy_basket.cshtml" />
     <Content Include="Views\Home\Purchase_view.cshtml" />
     <Content Include="Views\Home\Edit_personal_record.cshtml" />
     <Content Include="Views\Home\Not_found_page.cshtml" />
+    <Content Include="Views\Admin\Add_object.cshtml" />
+    <Content Include="Views\Admin\Work_with_images_object.cshtml" />
+    <Content Include="Views\Admin\Delete_img_block.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,17 +8,23 @@ using Microsoft.AspNet.Identity;
 using online_store.Models;
 using System.IO;
 
+//
+using static online_store.Models.Functions_project;
+using static online_store.Models.DataBase;
+//
+
 namespace online_store.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+       
         //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
         //[Authorize(Roles="admin")] [Authorize]
 
             [AllowAnonymous]
         public ActionResult Index()
         {
+           
             //TODO работа с object
             try { 
             var objs = db.Objects.Take(10).ToList();
@@ -40,7 +46,7 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult List_objects(string text_rearch = null)
         {
-            List<Object_os_for_view> res = Search(text_rearch);
+            List<Object_os_for_view> res = Search(text_rearch).Take(20).ToList();
             return PartialView(res);
         }
         [AllowAnonymous]
@@ -67,7 +73,7 @@ namespace online_store.Controllers
             //TODO определить админ ли зашел и если да передавать true
             ViewBag.admin = true;
             
-            foreach (var i in com)
+            foreach (var i in com.Take(20))
             {
                 if (i.Person_id != check_id)
                 {
@@ -211,7 +217,7 @@ namespace online_store.Controllers
             ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Follow.Reverse();
 
-            var com = db.Comments.Where(x1 => x1.Person_id == id  ).ToList();
+            var com = db.Comments.Where(x1 => x1.Person_id == id  ).Take(10).ToList();
             foreach (var i in com)
             {
                 var tmp = new Comment_view(i);
@@ -373,81 +379,7 @@ namespace online_store.Controllers
             return PartialView();
 
         }
-        //[Authorize(Roles="admin")]
-        public ActionResult Delete_object(int id)
-        {
-            db.Objects.Remove(db.Objects.First(x1 => x1.Id == id));
-            db.Comments.RemoveRange(db.Comments.Where(x1 => x1.Object_id == id));
-            db.Images.RemoveRange(db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()));
-            db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Object_id == id));
-            db.Follow_objects.RemoveRange(db.Follow_objects.Where(x1 => x1.Object_id == id));
-            db.SaveChanges();
-            return RedirectToAction("Index", "Home", new { });
-        }
-        //[Authorize(Roles="admin")]
-        public ActionResult Add_object(int id=-1)
-        {
-            Object_os res = null;
-            if (id<0)//string.IsNullOrEmpty(id)
-            {
-                res = new Object_os();
-            }
-           else
-            {
-                res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
-            }
-
-            return View(res);
-        }
-        //[Authorize(Roles="admin")]
-        [HttpPost]
-        public ActionResult Add_object(Object_os a)
-        {
-            bool new_ = true;
-            //проверки и тд
-            if(a.Price>0&&a.Discount>=0&& a.Discount < 1)
-            {
-                if(a.Id>0)
-                {
-                    var check = db.Objects.FirstOrDefault(x1 => x1.Id == a.Id);
-                    if (check != null)
-                    {
-                        new_ = false;
-                        check.Eq(a);
-                        db.SaveChanges();
-                    }
-                    else
-                        new_ = true;
-                }
-                if (new_)
-                {
-                    db.Objects.Add(a);
-                    db.SaveChanges();
-                    ViewBag.Id = a.Id;
-                }
-               
-                return RedirectToAction("Work_with_images_object","Home", new { id = a.Id });
-            }
-
-
-
-            return RedirectToAction("Index","Home", new { });
-        }
-        //[Authorize(Roles="admin")]
-        public ActionResult Work_with_images_object(int id)
-        {
-            ViewBag.Id = id;
-            var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString());
-            ViewBag.Images = imgs.ToList();
-            return View();
-        }
-        //[Authorize(Roles="admin")]
-        public ActionResult Delete_img_block(int id)
-        {
-            db.Images.Remove(db.Images.First(x1 => x1.Id == id));
-            db.SaveChanges();
-            return PartialView();
-        }
+        
 
 
         [Authorize]
@@ -477,19 +409,7 @@ namespace online_store.Controllers
         }
 
 
-        //[Authorize(Roles="admin")]  админ объектам, юзерам юзеры
-        [HttpPost]
-        public ActionResult Add_new_image(HttpPostedFileBase[] uploadImage, string id,string from)
-        {
-            var imgs = Get_photo_post(uploadImage);
-            foreach (var i in imgs)
-            {
-                db.Images.Add(new Connect_image() { Something_id = id, What_something = from, Image = i });
-                db.SaveChanges();
-            }
-
-            return RedirectToAction("Object_view", "Home", new { id = id });
-        }
+       
 
         [Authorize]
         [HttpPost]
@@ -679,129 +599,6 @@ namespace online_store.Controllers
 
         //------------------------------------------FUNCTIONS----------------------------------------------------------------------------------
 
-        public List<Object_os_for_view> Search(string text_rearch,int count_in_list=10, bool extends_src=false)
-        {
-            List<Object_os_for_view> res = new List<Object_os_for_view>();
-            var lst = new List<Object_os>();
-            if (string.IsNullOrEmpty(text_rearch))
-                lst=db.Objects.Take(count_in_list).ToList();
-            else
-            {
-                if (extends_src)
-                {
-                    //TODO скорее всего так нельзя
-                    var list_words = text_rearch.Split(' ');
-
-                    lst = db.Objects.AsEnumerable().Where(x1 => {//.AsEnumerable()
-                        var ret = false;
-                        foreach (var i in list_words)
-                        {
-                            ret = x1.Seacrh(i);
-                            if (ret)
-                                return ret;
-                        }
-                        return ret;
-                    }).ToList();
-
-                }
-                else
-                {
-                    //TODO не работает
-                     lst=db.Objects.Where(x1 => x1.Seacrh(text_rearch)).ToList();
-                }
-
-            }
-
-
-
-
-            foreach (var i in lst)
-            {
-                var tmp = new Object_os_for_view(i);
-                tmp.Images.AddRange(db.Images.Where(x1 => x1.Something_id == i.Id.ToString() && x1.What_something == "Object"));
-
-
-                res.Add(tmp);
-            }
-
-
-
-            return res;
-        }
-
-
         
-        public bool Work_with_comment(int id_object, string text, int mark)
-        {
-
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == check_id);
-            if (marks == null)
-            {
-                var new_comm = new Comment() { Object_id = id_object, Person_id = check_id, Text = text };
-                if (mark > 0)
-
-                    new_comm.Mark = mark;
-
-                else
-                    new_comm.Mark = null;
-                db.Comments.Add(new_comm);
-                db.SaveChanges();
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(text))
-                {
-                    marks.Text = text;
-                    if (mark > 0)
-                        marks.Mark = mark;
-                    db.SaveChanges();
-                }
-
-            }
-
-
-
-
-            return true;
-        }
-
-
-
-        public List<byte[]> Get_photo_post(HttpPostedFileBase[] uploadImage)
-        {
-
-            /* сохранение картинок как файл ...
-              HttpPostedFileBase image = Request.Files["fileInput"];
-            
-            if (image != null && image.ContentLength > 0 && !string.IsNullOrEmpty(image.FileName))
-            {
-                string fileName = image.FileName;
-                image.SaveAs(Path.Combine(Server.MapPath("Images"), fileName));
-            }
-             
-             * */
-            List<byte[]> res = new List<byte[]>();
-            if (uploadImage != null)
-            {
-                foreach (var i in uploadImage)
-                {
-                    try
-                    {
-                        byte[] imageData = null;
-                        // считываем переданный файл в массив байтов
-                        using (var binaryReader = new BinaryReader(i.InputStream))
-                        {
-                            imageData = binaryReader.ReadBytes(i.ContentLength);
-                        }
-                        // установка массива байтов
-                        res.Add(imageData);
-                    }
-                    catch
-                    {}
-                }
-            }
-            return res;
-        }
     }
 }

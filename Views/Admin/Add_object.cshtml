@@ -1,0 +1,61 @@
+﻿@model online_store.Models.Object_os
+
+@{
+    ViewBag.Title = "Add_object";
+}
+
+<h2>Add_object</h2>
+
+@using (Html.BeginForm("Add_object", "Admin"))
+{
+    <div class="Add_object_all_block">
+        <div>
+            @Html.Label("", "Название")
+            @Html.EditorFor(x1 => x1.Name)
+        </div>
+        <div>
+            @Html.Label("", "Категория")
+            @Html.EditorFor(x1 => x1.Category)
+        </div>
+        <div>
+            @Html.Label("", "Цвета")
+            @Html.EditorFor(x1 => x1.Color)
+        </div>
+        <div>
+            @Html.Label("", "Состав")
+            @Html.EditorFor(x1 => x1.Composition)
+        </div>
+
+        <div>
+            @Html.Label("", "Описание")
+            @Html.EditorFor(x1 => x1.Description)
+        </div>
+
+        <div>
+            @Html.Label("", "Производитель")
+            @Html.EditorFor(x1 => x1.Manufacturer)
+        </div>
+        <div>
+            @Html.Label("", "Тип")
+            @Html.EditorFor(x1 => x1.Type)
+        </div>
+
+        <div class="Add_object_small_block">
+            @Html.Label("", "Цена")
+            @Html.EditorFor(x1 => x1.Price)
+        </div>
+        @Html.Label("", "Скидка (дробное от 0 до 1 (Пример для скидки в 15%: 0,15))")
+        <div class="Add_object_small_block">
+
+            @Html.EditorFor(x1 => x1.Discount)
+        </div>
+        <div class="Add_object_submit_block">
+            <input type="submit" class="submit" value="Отправить" />
+        </div>
+
+    </div>
+
+
+
+}
+
