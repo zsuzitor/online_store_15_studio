@@ -5,9 +5,26 @@
 }
 
 <script>
+    var timer_slider_1;
+    var current_slider_1_id = 0;
+    var time_slider_1; 
+    //-------------
+    function change_image_click(a) {
+        change_image(a);
+        clearTimeout(time_slider_1);
+        clearInterval(timer_slider_1);
+         time_slider_1 = setTimeout(
+            Up_slider_1_time, 6000);
+    }
     function change_image(a) {
         var main_image = document.getElementById("Object_view_main_image_id");
-        main_image.src =a.src;
+        //alert(a.id);
+        main_image.src = a.src;
+        
+
+        var arr_id = a.id.split('Object_view_img_for_main_id');
+        current_slider_1_id = arr_id[1];
+       
     }
 
     function Edit_One_comment(id_comm, id_obj) {
@@ -23,19 +40,52 @@
         block.innerHTML = str;
 
     }
+    //--------------------------SLIDERS------------------
 
+    function Load_slider() {
+        //var curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
+        //change_image(curr_block_img);
+            Up_slider_1_time();
+
+    }
+    function Up_slider_1_time() {
+         time_slider_1 = setTimeout(function () {
+            timer_slider_1 = setInterval(function () {
+                Next_slider_1();
+            }, 6000);
+        }, 6000);
+    }
+    function Next_slider_1() {
+        current_slider_1_id =+current_slider_1_id+ 1;
+        var curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
+        //alert("Object_view_img_for_main_id" + current_slider_1_id);
+        if (curr_block_img == null) {
+            current_slider_1_id = 0;
+            curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
+        }
+        change_image(curr_block_img);
+    }
+
+
+
+
+    document.addEventListener("DOMContentLoaded", Load_slider);
 </script>
 
 <h2>Object_view</h2>
 <div>
     <div class="div_inline_block Object_view_left_block">
         <div class="Object_view_small_img_change_block div_inline_block">
+            @{ 
+                int s4_img_slider_main = 0;
+            }
             @foreach (var i in Model.Images)
             {
 
                 <div class="Object_view_small_img_change">
-                    <img onclick="change_image(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
+                    <img id=@string.Concat("Object_view_img_for_main_id",s4_img_slider_main) onclick="change_image_click(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
                 </div>
+                s4_img_slider_main += 1;
             }
 
         </div>

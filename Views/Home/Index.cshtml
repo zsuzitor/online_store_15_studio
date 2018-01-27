@@ -9,21 +9,24 @@
     var Count_in_list_slider_1 = 0;
     //
     var timer_slider_1;
+    var time_slider_1;
     //
 
 
     function Next_slider_1_click() {
         Next_slider_1();
+        clearTimeout(time_slider_1);
         clearInterval(timer_slider_1);
-        var time = setTimeout(
+        time_slider_1 = setTimeout(
             Up_slider_1_time, 15000);
     } 
     function Prev_slider_1_click() {
         Prev_slider_1();
+        clearTimeout(time_slider_1);
         clearInterval(timer_slider_1);
         
 
-        var time = setTimeout(
+        time_slider_1 = setTimeout(
             Up_slider_1_time, 15000);
     } 
     function Next_slider_1() {
@@ -70,7 +73,7 @@
 
     }
     function Up_slider_1_time() {
-        var time = setTimeout(function () {
+        time_slider_1 = setTimeout(function () {
             timer_slider_1 = setInterval(function () {
                 Next_slider_1();
             }, 6000);

@@ -274,6 +274,9 @@ div.Object_follow_follow_img_red {
 }
 /**/
 /*Work_with_images_object*/
+div.Work_with_images_object_block_adds_img_class{
+    max-width:300px;
+}
 div.Work_with_images_object_div_add_ph_button {
     border: 2px solid black;
     background-color: aqua;
