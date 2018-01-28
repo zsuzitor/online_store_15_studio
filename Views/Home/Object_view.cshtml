@@ -62,10 +62,20 @@
         if (curr_block_img == null) {
             current_slider_1_id = 0;
             curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
+            if (curr_block_img == null) {
+                clearTimeout(time_slider_1);
+                clearInterval(timer_slider_1);
+                return;
+            }
         }
         change_image(curr_block_img);
     }
-
+    //--------------------------------------------
+    function OnSuccess_load_comments() {
+        var block1 = document.getElementById("count_comment_on_page");
+        var block2 = document.getElementById("count_comment_from_one_load");
+        block1.value = +block1.value + +block2.value;
+    }
 
 
 
@@ -145,7 +155,7 @@
     <hr />
     <h1>Комментарии:</h1>
     <div>
-        @if (ViewBag.Can_commented == true)
+        @if (ViewBag.Can_commented <0)
         {
             <div>
                 <h2>Оставьте комментарий</h2>
@@ -165,85 +175,22 @@
             </div>
                             }
 
-        <div>
-            @foreach (var i in Model.Comments)
-        {
-            <div id=@string.Concat("Object_view_one_comm_num_id",i.Db.Id.ToString()) class="Object_view_one_comment_block">
-
-                <div class="div_inline_block">
-                    <div>
-                        @if (i.Image_user != null && i.Image_user.Count() > 0)
-                        {
-                            <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
-                                <img id="Object_view_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image_user)) />
-                            </a>
-                        }
-                        @if (i.Image_user == null || i.Image_user.Count() < 0)
-                        {
-                            <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
-                                <img id="Object_view_main_image_id" src="/Content/images/camera_200.png" />
-                            </a>
-                        }
-
-
-                    </div>
-                    @if (!string.IsNullOrEmpty(i.User_name))
-                    {
-                        <div>
-                            <p>@i.User_name</p>
-                        </div>
-                    }
-                    @if (i.Db.Person_id == ViewBag.Person_id)
-                    {
-                        @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
-                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", i.Db.Id.ToString()) },
-                       new { })
-                        <a style="cursor:pointer;float:right;" onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
-                        
-                    }
-
-                </div>
-                <div class="div_inline_block Object_view_one_comment_text">
-                    @if (!string.IsNullOrEmpty(i.Db.Text))
-                    {
-                        
-                        
-                        @Html.Label("", i.Db.Text,new {id= "Object_view_text_one_comment_id"+ i.Db.Id.ToString() ,@class= "Object_view_one_comment_text_lable" })
-                    }
-                    @if (i.Db.Mark != null)
-                    {
-                        <div class="Object_view_comm_block_mark">
-
-
-                            @for (int i1 = 1; i1 < 6; ++i1)
-                            {
-                                if (i.Db.Mark >= i1)
-                                {
-                                    <div class="Add_mark_for_object_yellow_star div_inline_block">
-                                    </div>
-                                }
-                                if (i.Db.Mark < i1)
-                                {
-                                    <div class="Add_mark_for_object_white_star div_inline_block">
-                                    </div>
-                                }
-
-                            }
-
-
-
-
-
-                        </div>
-                    }
-
-                </div>
-
-            </div>
-
-        }
+        <div id="Object_view_all_comment_block_id_load">
+           @Html.Action("Load_comment_for_object_view","Home",new { com_us_id= (int)ViewBag.Can_commented, object_id =Model.Db.Id, count_comment_from_one_load= ((int)ViewBag.Take_comment) })
     </div>
+        <div class="Object_view_load_comments_block">
+           
+           
+            @using (Ajax.BeginForm("Load_comment_for_object_view", "Home", new AjaxOptions { UpdateTargetId = "Object_view_all_comment_block_id_load", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess_load_comments" }, new { }))
+            {
+                @Html.Hidden("object_id", Model.Db.Id)
+                        @Html.Hidden("count_comment_on_page", ((int)ViewBag.Take_comment))
+                @Html.Hidden("count_comment_from_one_load", ((int)ViewBag.Take_comment))
+                        <input type='submit' class='submit' value='Загрузить еще' />
+            }
 
+
+        </div>
 
 
 </div>

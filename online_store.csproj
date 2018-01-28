@@ -264,6 +264,7 @@
     <Content Include="Views\Admin\Add_object.cshtml" />
     <Content Include="Views\Admin\Work_with_images_object.cshtml" />
     <Content Include="Views\Admin\Delete_img_block.cshtml" />
+    <Content Include="Views\Home\Load_comment_for_object_view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

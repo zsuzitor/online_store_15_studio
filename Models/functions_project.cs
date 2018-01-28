@@ -13,12 +13,12 @@ namespace online_store.Models
 {
     public static class Functions_project
     {
-        public static List<Object_os_for_view> Search(string text_rearch, int count_in_list = 10, bool extends_src = false)
+        public static List<Object_os_for_view> Search(string text_rearch,int count_skip=0, int count_return = 10, bool extends_src = false)
         {
             List<Object_os_for_view> res = new List<Object_os_for_view>();
             var lst = new List<Object_os>();
             if (string.IsNullOrEmpty(text_rearch))
-                lst = db.Objects.Take(count_in_list).ToList();
+                lst = db.Objects.OrderBy(x1 => x1.Id).Skip(count_skip).Take(count_return).ToList();
             else
             {
                 if (extends_src)
@@ -35,13 +35,13 @@ namespace online_store.Models
                                 return ret;
                         }
                         return ret;
-                    }).ToList();
+                    }).OrderBy(x1=>x1.Id).Skip(count_skip).Take(count_return).ToList();
 
                 }
                 else
                 {
                     //TODO не работает
-                    lst = db.Objects.Where(x1 => x1.Seacrh(text_rearch)).ToList();
+                    lst = db.Objects.Where(x1 => x1.Seacrh(text_rearch)).OrderBy(x1 => x1.Id).Skip(count_skip).Take(count_return).ToList();
                 }
 
             }

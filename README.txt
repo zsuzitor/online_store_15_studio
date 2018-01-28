@@ -2,8 +2,15 @@
 
 как пример https://www.wildberries.ru/
 
+//
 Admin@mail.ru 1Admin1 qwer1!Z
+//
+Admin1@mail.ru 1Admin1 qwer1!Z
+Admin2@mail.ru 1Admin1 qwer1!Z
+Admin3@mail.ru 1Admin1 qwer1!Z
+Admin4@mail.ru 1Admin1 qwer1!Z
 
+//
 при загрузке картинок разрешить загрузку ТОЛЬКО картинок  accept="image/*,image/jpeg,image/png"
 
 [ChildActionOnly]
@@ -17,6 +24,17 @@ https://webformyself.com/animaciya-ot-display-block-do-display-none/
 
 
 TODO:
+оценки для комментов(полезный забавный и тд)
+мб убирать кнопку загрузки когда закончилось то что можно дозагрузить
+добавление комментов кнопки загрузки и добавления сделать с расстоянием+ они на всю ширину
+загружать не весь список(допустим комментов и потом дозагружать)(+Object_view,+List_objects,-Personal_record(комменты 10),)
+отправка форм дозагрузки из js при достижении блока?
+элемент загрузки для ajax?
+
+
+Object_view,List_objects много всего отправлялось в модели чекнуть и почистить мб
+
+разобраться с ролями
 -такое main header там везде контроллер home в списке
 -такое Delete_Comment проверять свой ли коммент и мб сделать еще метод для админа в контроллере
 
@@ -28,7 +46,7 @@ Add_new_image в admincontroller сейчас только для админов но для юзеров тоже дол
 
 
 TODO Object_view определять админ ли зашел и передавать флаг для управления
-загружать не весь список(допустим комментов и потом дозагружать)(Object_view,List_objects,Personal_record(комменты 10),)
+
 index сделать
 мб коммент когда добавляет юзер сделать ajax замену но это если без прикрепления картинок
 пробежать по TODO

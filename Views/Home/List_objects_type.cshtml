@@ -2,7 +2,34 @@
 @{
     ViewBag.Title = "List_objects_type";
 }
+<script>
+    function OnSuccess_load_objects() {
+        var block1 = document.getElementById("count_object_on_page");
+        var block2 = document.getElementById("count_object_from_one_load");
+        block1.value = +block1.value + +block2.value;
+    }
 
+
+</script>
 <h2>List_objects_type</h2>
 
-@Html.Action("List_objects", "Home", new { text_rearch= ViewBag.text_rearch })
+
+<div id="List_objects_type_all_object_block_id">
+     @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch, count_object_from_one_load = ViewBag.Take_object })
+</div>
+
+
+
+<div class="List_objects_type_load_object_block">
+
+
+    @using (Ajax.BeginForm("List_objects", "Home", new AjaxOptions { UpdateTargetId = "List_objects_type_all_object_block_id", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess_load_objects" }, new { }))
+            {
+        
+        @Html.Hidden("count_object_on_page", ((int)ViewBag.Take_object))
+        @Html.Hidden("count_object_from_one_load", ((int)ViewBag.Take_object))
+        <input type='submit' class='submit' value='Загрузить еще' />
+    }
+
+
+</div>

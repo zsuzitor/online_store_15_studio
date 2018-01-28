@@ -237,12 +237,21 @@ div.List_objects_one_object {
     display: inline-block;
     border:1px solid black;
 }
-
+div.List_objects_one_object_empty {
+    margin-top: 10px;
+    width: 250px;
+    height: 500px;
+    display: inline-block;
+    border:1px solid black;
+      background-image: url(/Content/images/wasted_vert.png);
+    background-size: 100% 100%
+}
+/*
 ul.List_objects_list_all li {
     display: inline-block;
     vertical-align: top;
     margin-left: 10px;
-}
+}*/
 div.Object_follow_follow_img {
     /*height:50px;
     width:50px;*/
@@ -329,7 +338,9 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
-
+div.Object_view_load_comments_block{
+    margin-top:50px;
+}
 .Object_view_text_area_comment{
     width:100%;
     min-width:300px;
@@ -367,6 +378,16 @@ div.Object_view_one_comment_block {
     max-height: 500px;
     position:relative;
     width:100%;
+}
+div.Object_view_one_comment_block_empty {
+    border: 2px dashed #8fd4ff;
+    padding: 10px;
+    min-height: 250px;
+    max-height: 500px;
+    position:relative;
+    width:100%;
+     background-image: url(/Content/images/wasted_hor.png);
+    background-size: 100% 100%;
 }
 div.Object_view_comm_block_mark{
 

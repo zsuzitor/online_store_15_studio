@@ -27,7 +27,7 @@ namespace online_store.Controllers
            
             //TODO работа с object
             try { 
-            var objs = db.Objects.Take(10).ToList();
+            var objs = db.Objects.OrderBy(x1 => x1.Id).Take(10).ToList();
                  ViewBag.Object_for_slider_1 =new List<Object_os_for_view>();
             foreach (var i in objs)
             {
@@ -44,15 +44,16 @@ namespace online_store.Controllers
             return View();
         }
         [AllowAnonymous]
-        public ActionResult List_objects(string text_rearch = null)
+        public ActionResult List_objects(string text_rearch = null,int count_object_from_one_load=10, int count_object_on_page=0)
         {
-            List<Object_os_for_view> res = Search(text_rearch).Take(20).ToList();
+            List<Object_os_for_view> res = Search(text_rearch, count_skip: count_object_on_page, count_return: count_object_from_one_load);
             return PartialView(res);
         }
         [AllowAnonymous]
         public ActionResult List_objects_type(string text_rearch=null)
         {
             ViewBag.text_rearch = text_rearch;
+            ViewBag.Take_object = 1;
             return View();
         }
         [AllowAnonymous]
@@ -68,30 +69,21 @@ namespace online_store.Controllers
             Object_os_for_view res = new Object_os_for_view(not_res);
             var img = db.Images.Where(x1 => x1.Something_id == id.ToString() && x1.What_something == "Object");
             res.Images = img.ToList();
-            var com = db.Comments.Where(x1 => x1.Object_id == id && !string.IsNullOrEmpty(x1.Text)).ToList();
-            var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
+            var com_person = db.Comments.FirstOrDefault(x1 => x1.Object_id == id &&x1.Person_id== check_id && !string.IsNullOrEmpty(x1.Text));
+            //var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
             //TODO определить админ ли зашел и если да передавать true
             ViewBag.admin = true;
+            ViewBag.Take_comment =10;
             
-            foreach (var i in com.Take(20))
-            {
-                if (i.Person_id != check_id)
-                {
-                    var user = db.Users.First(x1 => x1.Id == i.Person_id);
-                    var tmp = new Comment_view(i) { Image_user = user.Image, User_name = user.Name };
-                    res.Comments.Add(tmp);
-                }
-            }
+            
             if (com_person == null)
-                ViewBag.Can_commented = true;
+                ViewBag.Can_commented = -1;
             else
             {
-                ViewBag.Can_commented = false;
-                var user = db.Users.First(x1 => x1.Id == check_id);
-                var tmp = new Comment_view(com_person) { Image_user = user.Image, User_name = user.Name };
-                res.Comments.Add(tmp);
+                ViewBag.Can_commented = com_person.Id;
+                
             }
-            res.Comments.Reverse();
+            
 
             return View(res);
         }
@@ -217,7 +209,7 @@ namespace online_store.Controllers
             ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Follow.Reverse();
 
-            var com = db.Comments.Where(x1 => x1.Person_id == id  ).Take(10).ToList();
+            var com = db.Comments.Where(x1 => x1.Person_id == id  ).OrderBy(x1 => x1.Id).Take(10).ToList();
             foreach (var i in com)
             {
                 var tmp = new Comment_view(i);
@@ -407,9 +399,53 @@ namespace online_store.Controllers
 
             return PartialView(res);
         }
+        [AllowAnonymous]
+        public ActionResult Load_comment_for_object_view(int object_id,int count_comment_on_page=0,int count_comment_from_one_load=20, int com_us_id=-1)
+        {
+            var res = new List<Comment_view>();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            ViewBag.Person_id = check_id;
+            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page);
+           
+            //TODO определить админ ли зашел и если да передавать true
+           
+           
+            //TODO мб переместить
+            foreach (var i in com.Take(count_comment_from_one_load).ToList())
+            {
+                if (i.Person_id != check_id)
+                {
+                    var user = db.Users.FirstOrDefault(x1 => x1.Id == i.Person_id);
+                    if (user != null)
+                    {
+                        var tmp = new Comment_view(i) { Image_user = user.Image, User_name = user.Name };
+                        res.Add(tmp);
+                    }
+                    
+                }
+            }
+            if (com_us_id > 0&& count_comment_on_page==0)
+            {
+                var user = db.Users.First(x1 => x1.Id == check_id);
+                var pers_com = db.Comments.FirstOrDefault(x1 => x1.Id == com_us_id);
+                if (pers_com != null)
+                {
+                    var tmp = new Comment_view(pers_com) { Image_user = user.Image, User_name = user.Name };
+                    res.Add(tmp);
+                }
+               
+            }
+            res.Reverse();
+            return PartialView(res);
+
+            //var user = db.Users.First(x1 => x1.Id == check_id);
+            //var tmp = new Comment_view(com_person) { Image_user = user.Image, User_name = user.Name };
+            //res.Comments.Add(tmp);
+            //res.Comments.Reverse();
+        }
 
 
-       
+
 
         [Authorize]
         [HttpPost]
@@ -597,7 +633,7 @@ namespace online_store.Controllers
             return PartialView();
         }
 
-        //------------------------------------------FUNCTIONS----------------------------------------------------------------------------------
+     
 
         
     }
