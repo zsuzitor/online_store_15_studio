@@ -193,6 +193,7 @@ namespace online_store.Controllers
 
             return RedirectToAction("Personal_record","Home");
         }
+        [AllowAnonymous]
         public ActionResult Personal_record(string id)
         {
            
@@ -202,28 +203,50 @@ namespace online_store.Controllers
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
-
+            ViewBag.count_comment_from_one_load = 10;
             ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Baskets.Reverse();
 
             ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Follow.Reverse();
 
-            var com = db.Comments.Where(x1 => x1.Person_id == id  ).OrderBy(x1 => x1.Id).Take(10).ToList();
-            foreach (var i in com)
+            var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
+            if (com != null)
+                ViewBag.have_comments = true;
+           
+            var prc = db.Purchases.Where(x1=>x1.Person_id==id);
+            res.Purchases.AddRange(prc);
+            res.Purchases.Reverse();
+            return View(res);
+        }
+        [AllowAnonymous]
+        public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
+        {
+
+            var res = new List<Comment_view>();
+            //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            ViewBag.Person_id = id;
+            ViewBag.Person_name =db.Users.First(x1=>x1.Id==id).Name;
+            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page);
+
+
+
+
+            foreach (var i in com.Take(count_comment_from_one_load).ToList())
             {
+
                 var tmp = new Comment_view(i);
                 //var obj = db.Objects.FirstOrDefault(x1 => x1.Id == i.Object_id);
                 var img = db.Images.FirstOrDefault(x1 => x1.What_something == "Object" && x1.Something_id == i.Object_id.ToString());
                 if (img != null)
                     tmp.Image_object = img.Image;
-                res.Comments.Add(tmp);
+                res.Add(tmp);
+
+
             }
-            res.Comments.Reverse();
-            var prc = db.Purchases.Where(x1=>x1.Person_id==id);
-            res.Purchases.AddRange(prc);
-            res.Purchases.Reverse();
-            return View(res);
+           
+            res.Reverse();
+            return PartialView(res);
         }
         [Authorize]
         public ActionResult Object_follow(int id, bool? click, string num_block_for_list = "")
@@ -410,7 +433,7 @@ namespace online_store.Controllers
             //TODO определить админ ли зашел и если да передавать true
            
            
-            //TODO мб переместить
+            
             foreach (var i in com.Take(count_comment_from_one_load).ToList())
             {
                 if (i.Person_id != check_id)

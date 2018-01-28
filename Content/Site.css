@@ -536,6 +536,18 @@ div.Personal_record_one_comment_block {
      position:relative;
      overflow-y: auto;
 }
+div.Personal_record_one_comment_block_empty{
+     padding-left: 10px;
+    padding-top: 10px;
+    min-height: 250px;
+    max-height: 500px;
+    margin-top:10px;
+     background-color:#fafde6;
+     position:relative;
+     overflow-y: auto;
+      background-image: url(/Content/images/wasted_hor.png);
+    background-size: 100% 100%;
+}
 div.Personal_record_Delete_Comment_button{
     float:right;
    position:relative;
