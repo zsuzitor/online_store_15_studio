@@ -35,7 +35,18 @@
                     <p>@((string)ViewBag.Person_name)</p>
                 </div>
             }
+            <div class="Personal_record_Delete_Comment_button div_inline_block">
+                @if (i.Db.Person_id == ViewBag.Person_id)
+                {
+                    @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
+          new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) },
+          new { })
+                    <div class="Personal_record_Edit_Comment_button"><button onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Ред.</button></div>
 
+                }
+
+
+            </div>
 
         </div>
         <div class="div_inline_block Personal_record_one_comment_text">
@@ -70,16 +81,16 @@
                 </div>
             }
 
-        </div><div class="Personal_record_Delete_Comment_button div_inline_block">
-            @if (i.Db.Person_id == ViewBag.Person_id)
-            {
-                @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
-          new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) },
-          new { })
-                <div class="Personal_record_Edit_Comment_button"><button onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Ред.</button></div>
-
-            }
         </div>
+       
+            <div id="Mark_for_comment_replace_mark_block">
+                @Html.Action("Mark_for_comment", "Home", new { comment_id = i.Db.Id, click = false, mark = -1 })
+            </div>
+        @{ 
+// <div class="Personal_record_mark_comment_block">
+        }
+        
+       
     </div>
 
 

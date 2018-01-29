@@ -36,6 +36,7 @@ namespace online_store.Models
 
         public DbSet<Object_os> Objects { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Mark_for_comment> Mark_for_comment { get; set; }
         public DbSet<Connect_image> Images { get; set; }
         public DbSet<Connect_basket> Baskets { get; set; }
        

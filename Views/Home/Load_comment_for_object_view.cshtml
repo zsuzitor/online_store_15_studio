@@ -77,7 +77,9 @@
             }
 
         </div>
-
+        <div class="div_inline_block" id="Mark_for_comment_replace_mark_block">
+            @Html.Action("Mark_for_comment", "Home", new { comment_id = i.Db.Id, click = false, mark = -1 })
+        </div>
     </div>
 
 }

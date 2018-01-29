@@ -55,6 +55,10 @@ namespace online_store.Models
         public byte[] Image_object { get; set; }
         public string User_name { get; set; }
         public DateTime Date_Time { get; set; }
+        //public List<Mark_for_comment> Mark_comment;
+        //public int Count_good_mark { get; set; }
+        //public int Count_bad_mark { get; set; }
+        //public int Count_funny_mark { get; set; }
         public Comment_view()
         {
             Db = null;
@@ -62,6 +66,9 @@ namespace online_store.Models
             Image_object = null;
             User_name = null;
             Date_Time = DateTime.Now;
+           // Count_good_mark = 0;
+            //Count_bad_mark = 0;
+            //Count_funny_mark = 0;
         }
         public Comment_view(Comment a)
         {
@@ -184,6 +191,28 @@ namespace online_store.Models
              Person_id = null;
             Date_Time = DateTime.Now;
 
+        }
+        
+    }
+    public class Mark_for_comment
+    {
+       
+      //TODO мб и не нужно
+        public  enum Mark_en { Good = 1, Funny = 2,  Bad= 3};
+        //
+        public int Id { get; set; }
+        public int Mark { get; set; }
+        public string Person_id { get; set; }
+       
+        public int Comment_id { get; set; }
+        public Mark_for_comment()
+        {
+            Id = 0;
+            Mark = 0;
+            Person_id = null;
+           
+            Comment_id = 0;
+           
         }
 
     }

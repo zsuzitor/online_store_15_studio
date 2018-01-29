@@ -222,7 +222,7 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
         {
-
+            
             var res = new List<Comment_view>();
             //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = id;
@@ -237,6 +237,8 @@ namespace online_store.Controllers
 
                 var tmp = new Comment_view(i);
                 //var obj = db.Objects.FirstOrDefault(x1 => x1.Id == i.Object_id);
+               
+
                 var img = db.Images.FirstOrDefault(x1 => x1.What_something == "Object" && x1.Something_id == i.Object_id.ToString());
                 if (img != null)
                     tmp.Image_object = img.Image;
@@ -276,6 +278,48 @@ namespace online_store.Controllers
                     ViewBag.Follow = !ViewBag.Follow;
                 }
             }
+
+            return PartialView();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Mark_for_comment( int comment_id, bool?click ,int mark=0)
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            ViewBag.Person_id = check_id;
+            ViewBag.Comment_id = comment_id;
+            if (click ==true&& check_id!=null)
+            {
+                if (mark > 0)
+                {
+                    var mark_db = db.Mark_for_comment.FirstOrDefault(x1 => x1.Comment_id == comment_id && x1.Person_id == check_id);
+                    if (mark_db == null)
+                    {
+                        mark_db = new Mark_for_comment() { Mark=mark, Person_id=check_id, Comment_id= comment_id };
+                        db.Mark_for_comment.Add(mark_db);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        if (mark_db.Mark == mark)
+                        {
+                            db.Mark_for_comment.Remove(mark_db);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            mark_db.Mark = mark;
+                        }
+                       
+                    }
+                }
+                    
+            }
+            ViewBag.Count_good_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 1).Count();
+            ViewBag.Count_bad_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 3).Count();
+            ViewBag.Count_funny_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 2).Count();
+            var person_mark = db.Mark_for_comment.FirstOrDefault(x1=>x1.Comment_id == comment_id && x1.Person_id == check_id);
+            ViewBag.person_mark = person_mark == null ? "" : person_mark.Mark.ToString();
 
             return PartialView();
         }
@@ -414,6 +458,7 @@ namespace online_store.Controllers
                 }
                 else
                 {
+                    //TODO хз может бурать(просто отображение пустого блока с сообщением) или доделать там оценки комментов
                     ViewBag.Message = "Удалить невозможно";
                     var user = db.Users.First(x1 => x1.Id == com.Person_id);
                     res = new Comment_view(com) { Image_user = user.Image, User_name = user.Name };
@@ -442,6 +487,7 @@ namespace online_store.Controllers
                     if (user != null)
                     {
                         var tmp = new Comment_view(i) { Image_user = user.Image, User_name = user.Name };
+                        
                         res.Add(tmp);
                     }
                     
@@ -454,6 +500,7 @@ namespace online_store.Controllers
                 if (pers_com != null)
                 {
                     var tmp = new Comment_view(pers_com) { Image_user = user.Image, User_name = user.Name };
+                    
                     res.Add(tmp);
                 }
                

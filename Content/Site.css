@@ -234,14 +234,14 @@ div.List_objects_one_object {
     margin-top: 10px;
     width: 250px;
     height: 500px;
-    display: inline-block;
+   
     border:1px solid black;
 }
 div.List_objects_one_object_empty {
     margin-top: 10px;
     width: 250px;
     height: 500px;
-    display: inline-block;
+  
     border:1px solid black;
       background-image: url(/Content/images/wasted_vert.png);
     background-size: 100% 100%
@@ -497,6 +497,10 @@ div.Follow_one_object_delete_block {
 
 
 /*Personal_record*/
+/*div.Personal_record_mark_comment_block{
+    top:100px;
+    position:relative;
+}*/
 .Personal_record_text_area_comment{
     min-height:100px;
 }
@@ -507,7 +511,7 @@ div.Follow_one_object_delete_block {
     max-width:100%;
 }
 div.Personal_record_one_comment_text{
-    max-width:63%;
+    max-width:62%;
 }
 div.Personal_record_right_block {
     width: 30%;
@@ -549,15 +553,16 @@ div.Personal_record_one_comment_block_empty{
     background-size: 100% 100%;
 }
 div.Personal_record_Delete_Comment_button{
-    float:right;
+    top:50px;
+   width:100%;
    position:relative;
-    width:75px;
-  min-height: 230px;
+   /* width:75px;
+  min-height: 230px; float:right;*/
     
 }
 div.Personal_record_Edit_Comment_button{
-     position:absolute;
-    bottom:0;
+    /**/ position:absolute;
+    top:60px;
     
 }
 div.Personal_record_basket_block{
@@ -724,4 +729,52 @@ div.Not_found_page_main_div_img{
     width:45%;
     background-image: url(/Content/images/not_found_404.jpg);
     background-size: 100% 100%;
+}
+
+
+/*Mark_for_comment*/
+div.Mark_for_comment_good_mark_block{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_good.png);
+    background-size: 100% 100%;
+}
+div.Mark_for_comment_funny_mark_block{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_funny.png);
+    background-size: 100% 100%;
+}
+div.Mark_for_comment_bad_mark_block{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_bad.png);
+    background-size: 100% 100%;
+
+}
+div.Mark_for_comment_good_mark_blockg{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_good.png);
+    background-size: 100% 100%;
+    background-color:green;
+}
+div.Mark_for_comment_funny_mark_blockg{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_funny.png);
+    background-size: 100% 100%;
+    background-color:green;
+}
+div.Mark_for_comment_bad_mark_blockg{
+    width:30px;
+    height:30px;
+    background-image: url(/Content/images/mark_bad.png);
+    background-size: 100% 100%;
+    background-color:green;
+}
+#Mark_for_comment_replace_mark_block{
+    right:0;
+    position:absolute;
+    top:0;
 }
