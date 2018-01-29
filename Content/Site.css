@@ -534,7 +534,7 @@ div.Personal_record_one_comment_block {
     padding-left: 10px;
     padding-top: 10px;
     min-height: 250px;
-    max-height: 500px;
+   /* max-height: 500px;*/
     margin-top:10px;
      background-color:#fafde6;
      position:relative;
@@ -565,20 +565,31 @@ div.Personal_record_Edit_Comment_button{
     top:60px;
     
 }
-div.Personal_record_basket_block{
+/*div.Personal_record_basket_block{
     max-height:450px;
     
+}*/
+div.Personal_record_basket_block_hidden{
+    padding-left:30px;
 }
-div.Personal_record_follow_block{
+div.Personal_record_follow_block_hidden{
+padding-left:30px;
+}
+div.Personal_record_show_basket_button{
+    cursor:pointer;
+}
+/*div.Personal_record_follow_block{
      max-height:450px;
 
-}
+}*/
 div.Personal_record_comments_block{
-     max-height:450px;
+  padding-left:30px;
 }
+/*
 div.Personal_record_purchases_block{
      max-height:450px;
-}
+}*/
+
 div.Personal_record_comment_one_img_block{
     width:250px;
     height:190px;

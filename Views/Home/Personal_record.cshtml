@@ -6,6 +6,12 @@
 
 <h2>Personal_record</h2>
 <script>
+    var show_basket_flag = false;
+    var show_follow_flag = false;
+    var show_comment_flag = false;
+    var show_purchase_flag = false;
+
+    //
     function Edit_One_comment(id_comm,id_obj) {
         var block = document.getElementById("Personal_record_one_comm_num_id" + id_comm);
         var str = "<form action='/Home/Edit_comment' method='post'><input id='id_object' name='id_object' type='hidden' value='";
@@ -25,7 +31,76 @@
         var block2 = document.getElementById("count_comments_from_one_load");
         block1.value = +block1.value + +block2.value;
     }
+    function Show_basket() {
+        var block3 = document.getElementById("Personal_record_follow_block_hidden_id");
+        //alert(block3.getBoundingClientRect().top);
+        //alert(block3.getBoundingClientRect().left);
+        var block = document.getElementById("Personal_record_basket_block_hidden_id");
+        if (show_basket_flag) {
+            block.style.display = 'none';
+        }
+        else {
+            block.style.display = 'block';
+        }
+        show_basket_flag = !show_basket_flag;
+    }
+    function Show_follow() {
+        var block = document.getElementById("Personal_record_follow_block_hidden_id");
+        if (show_follow_flag) {
+            block.style.display = 'none';
+        }
+        else {
+            block.style.display = 'block';
+        }
+        show_follow_flag = !show_follow_flag;
+    }
+    function Show_comments() {
+        var block = document.getElementById("Personal_record_comments_block_id_hidden");
+        if (show_comment_flag) {
+            block.style.display = 'none';
+        }
+        else {
+            block.style.display = 'block';
+        }
+        show_comment_flag = !show_comment_flag;
+    }
+    function Show_Purchases() {
+        var block = document.getElementById("Personal_record_purchases_block_id_load");
+        if (show_purchase_flag) {
+            block.style.display = 'none';
+        }
+        else {
+            block.style.display = 'block';
+        }
+        show_purchase_flag = !show_purchase_flag;
+    }
+    //--------------------------------------------------------------------------------------
+    function isVisible_for_load_comment(tag) {
+        var t = $(tag);
+        //var w = $(window);
+        var wt = window.pageYOffset;
+        var tt = t.offset().top;
+        wt += document.documentElement.clientHeight;
+        if (show_comment_flag) {
+           // alert(tt);
+           // alert(wt);
+            return (tt <= wt);
+        }
+            
+        return false;
+    }
 
+    $(function () {
+        $(window).scroll(function () {
+            var b = $("#Personal_record_comments_load_block");
+            if (isVisible_for_load_comment(b)) {//TODO сюда флаг их hidden что бы не обращался на серв если спиок пуст
+                var o = document.getElementById("Personal_record_comments_load_form_id")
+                //alert("[vvv")
+                o.submit();
+            }
+           
+        });
+    });
 
 
 </script>
@@ -60,76 +135,85 @@
     <hr />
 @if (ViewBag.Baskets.Count > 0)
 {
-    <h1>В корзине:</h1>
-    <div class="div_scroll_y_block Personal_record_basket_block">
-        @foreach (var i in ViewBag.Baskets)
-            {
-           
-                @Html.Action("Basket_one_object_partial", "Home", new { id = i.Object_id })
-            
-        }
+    <div class="Personal_record_show_basket_button" onclick="Show_basket()"><h1> > Корзина:</h1></div>
 
+    <div id="Personal_record_basket_block_hidden_id" class="Personal_record_basket_block_hidden div_display_none">
+        @foreach (var i in ViewBag.Baskets)
+        {
+
+            @Html.Action("Basket_one_object_partial", "Home", new { id = i.Object_id })
+
+        }
     </div>
+
     <hr />
 }
     
 @if (ViewBag.Follow.Count > 0)
 {
-    <h1>В Избранном:</h1>
-    <div class="div_scroll_y_block Personal_record_follow_block">
-        @foreach (var i in ViewBag.Follow)
-        {
-            
-                @Html.Action("Follow_one_object_partial", "Home", new { id = i.Object_id })
-            
-        }
+    <div class="Personal_record_show_basket_button" onclick="Show_follow()"><h1> > Избранное:</h1></div>
 
-    </div>
-    <hr />
-}
-   
-@if (ViewBag.have_comments==true)
-{
-    <h1>Ваши комментарии и оценки:</h1>
-    <div class="div_scroll_y_block Personal_record_comments_block" id="Personal_record_comments_block_id_load">
-        @Html.Action("Load_comment_for_personal_record","Home",new {id=Model.Db.Id, count_comment_from_one_load=ViewBag.count_comment_from_one_load })
-    </div>
-    <div class="Personal_record_type_load_object_block">
-
-
-        @using (Ajax.BeginForm("Load_comment_for_personal_record", "Home", new AjaxOptions
-        { UpdateTargetId = "Personal_record_comments_block_id_load", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess_load_comments_pers_rec" }, new { }))
-        {
-
-            @Html.Hidden("count_comments_on_page", ((int)ViewBag.count_comment_from_one_load))
-            @Html.Hidden("count_comments_from_one_load", ((int)ViewBag.count_comment_from_one_load))
-            <input type='submit' class='submit' value='Загрузить еще' />
-        }
-
-
-    </div>
-    <hr />
-}
-    
-    @if (Model.Purchases.Count > 0)
-    {
-        <h1>Ваши покупки:</h1>
-        <div class="div_scroll_y_block Personal_record_purchases_block">
-
-            @foreach (var i in Model.Purchases)
+    <div id="Personal_record_follow_block_hidden_id" class="Personal_record_follow_block_hidden div_display_none">
+       
+            @foreach (var i in ViewBag.Follow)
             {
-                <div>
-                    @Html.ActionLink("ID Покупки", "Purchase_view", "Home", new { id = i.Id }, new { })
-                </div>
+
+                @Html.Action("Follow_one_object_partial", "Home", new { id = i.Object_id })
+
             }
 
-
         </div>
-    }
-    
+        <hr />
+        }
 
-
-
-
+        @if (ViewBag.have_comments == true)
+        {
+            <div class="Personal_record_show_basket_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
+          <div id="Personal_record_comments_block_id_hidden" class="div_display_none"><div class="Personal_record_comments_block" id="Personal_record_comments_block_id_load">
+    @Html.Action("Load_comment_for_personal_record", "Home", new { id = Model.Db.Id, count_comment_from_one_load = ViewBag.count_comment_from_one_load })
 </div>
+<div class="Personal_record_type_load_object_block" id="Personal_record_comments_load_block">
+
+
+    @using (Ajax.BeginForm("Load_comment_for_personal_record", "Home", new AjaxOptions
+    {
+        UpdateTargetId = "Personal_record_comments_block_id_load",
+        InsertionMode = InsertionMode.InsertAfter,
+        OnSuccess = "OnSuccess_load_comments_pers_rec"
+    }, new { id = "Personal_record_comments_load_form_id" }))
+    {
+
+        @Html.Hidden("id", Model.Db.Id)
+        @Html.Hidden("count_comments_on_page", ((int)ViewBag.count_comment_from_one_load))
+        @Html.Hidden("count_comments_from_one_load", ((int)ViewBag.count_comment_from_one_load))
+       
+    }
+
+
+</div></div>
+            
+            <hr />
+        }
+
+        @if (Model.Purchases.Count > 0)
+        {
+            <h1>Ваши покупки:</h1>
+            <div class="Personal_record_purchases_block" onclick="Show_Purchases()" id="Personal_record_purchases_block_id_load">
+
+                @foreach (var i in Model.Purchases)
+                {
+                    <div>
+                        @Html.ActionLink("ID Покупки", "Purchase_view", "Home", new { id = i.Id }, new { })
+                    </div>
+                }
+
+
+            </div>
+        }
+
+
+
+
+
+    </div>
 

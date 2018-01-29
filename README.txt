@@ -22,18 +22,24 @@ https://webformyself.com/animaciya-ot-display-block-do-display-none/
 
 
 
+по отправки форм тут чек :
+https://javascript.ru/blog/gordon-freeman/ajax-otpravka-formy-otpravka-formy-cherez-ajax-otpravka-formy-bez-perezagruzki-s
+https://stackoverflow.com/questions/13611614/submit-the-form-using-ajax
 
 TODO:
 
 !!!!!!!!!!!!!!!!!!!!!!!list_objects_type не работает фолов \корзиа и кривая дозагрузка  вместо num клеить id
-
+Personal_record_show_basket_button Personal_record_comments_block в personal_record мб поменять мб +css для отдельного класса
 в personal_record сделать кнопку показать скрыть для фолов корзины и тдтд
 list_objects_type  и в списках посомтреть кк отображаются объекты с длинными названиями проверить все
 в списках красивое отображение(оценки сердце корзина)
-
-
+Personal_record_one_comment_block css когда кнопки удалить\ред починю и поставлю на место убрать overflow-y
+вдмин может добавлять\удалять фолов корзину юзеров
 список комментов в personal_record редактировать\удалить кнопк подумать как лучше сделать
 мб объеденить все таки представление отображения комментов с personal_record и object_view
+personal_record TODO сюда флаг их hidden что бы не обращался на серв если спиок пуст
+
+
 
 если комментов нет вообще то даже без нажатия отображается кратинка вастед(мб это оставить)
 
