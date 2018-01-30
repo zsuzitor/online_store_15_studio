@@ -3,16 +3,16 @@
     @if (ViewBag.InBasket == false)
     {
         <div title="Добавить в корзину" class="Object_add_basket_follow_img_empty">
-            @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true, num_block_for_list = ViewBag.Num },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Num) },
+            @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true  },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id) },
            new { @class = "link_standart_for_div" })
         </div>
     }
     @if (ViewBag.InBasket == true)
     {
         <div title="Удалить из корзины" class="Object_add_basket_follow_img_full">
-            @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true, num_block_for_list = ViewBag.Num },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Num) },
+            @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true  },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id) },
            new { @class = "link_standart_for_div" })
         </div>
     }

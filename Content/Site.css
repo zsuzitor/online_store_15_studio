@@ -97,6 +97,16 @@ div.div_display_none{
     position:relative;
 
 }
+div.Main_preloader{
+    position:fixed;
+    width:100px;
+    height:100px;
+    left:48%;
+    top:50px;
+    background-image: url(/Content/images/preloader_cat.gif);
+    background-size: 100% 100%;
+    z-index:5;
+}
 /*-------------------------------------------------------------------------------------------------------------------*/
 div.Main_header_big {
     position: relative;
@@ -534,11 +544,11 @@ div.Personal_record_one_comment_block {
     padding-left: 10px;
     padding-top: 10px;
     min-height: 250px;
-   /* max-height: 500px;*/
+   /* max-height: 500px; overflow-y: auto;*/
     margin-top:10px;
      background-color:#fafde6;
      position:relative;
-     overflow-y: auto;
+    
 }
 div.Personal_record_one_comment_block_empty{
      padding-left: 10px;
@@ -553,18 +563,19 @@ div.Personal_record_one_comment_block_empty{
     background-size: 100% 100%;
 }
 div.Personal_record_Delete_Comment_button{
-    top:50px;
+    
    width:100%;
    position:relative;
-   /* width:75px;
+   /*top:50px; width:75px;
   min-height: 230px; float:right;*/
     
 }
-div.Personal_record_Edit_Comment_button{
-    /**/ position:absolute;
-    top:60px;
-    
-}
+/*div.Personal_record_Edit_Comment_button{
+   
+    float:right;
+    position:relative;
+}*/
+
 /*div.Personal_record_basket_block{
     max-height:450px;
     
@@ -784,7 +795,7 @@ div.Mark_for_comment_bad_mark_blockg{
     background-size: 100% 100%;
     background-color:green;
 }
-#Mark_for_comment_replace_mark_block{
+div.Mark_for_comment_replace_mark_block_class{
     right:0;
     position:absolute;
     top:0;

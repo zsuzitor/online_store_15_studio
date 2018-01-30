@@ -21,16 +21,19 @@
 
 <div>
     <div class=@color1 title=@ViewBag.Count_good_mark>@Ajax.ActionLink(" ","Mark_for_comment","Home",
-                                                                                                       new { comment_id = ViewBag.Comment_id, click = true, mark = 1 },
-                                                 new AjaxOptions {UpdateTargetId= "Mark_for_comment_replace_mark_block" },new {@class= "link_standart_for_div" }) </div>
+                                                                                    new { comment_id = ViewBag.Comment_id, click = true, mark = 1 },
+                                                 new AjaxOptions {UpdateTargetId= string.Concat("Mark_for_comment_replace_mark_block", ViewBag.Comment_id) }
+                                                 ,new {@class= "link_standart_for_div" }) </div>
 
     <div class=@color2  title=@ViewBag.Count_funny_mark>@Ajax.ActionLink(" ", "Mark_for_comment", "Home",
-                                                                                                           new { comment_id = ViewBag.Comment_id, click = true, mark = 2 },
-                                                 new AjaxOptions { UpdateTargetId = "Mark_for_comment_replace_mark_block" }, new { @class = "link_standart_for_div" })</div>
+                                                                                    new { comment_id = ViewBag.Comment_id, click = true, mark = 2 },
+                                                 new AjaxOptions { UpdateTargetId = string.Concat("Mark_for_comment_replace_mark_block", ViewBag.Comment_id) }
+                                                 , new { @class = "link_standart_for_div" })</div>
 
     <div class=@color3  title=@ViewBag.Count_bad_mark>@Ajax.ActionLink(" ", "Mark_for_comment", "Home",
-                                                                                                       new { comment_id = ViewBag.Comment_id, click = true, mark = 3 },
-                                                 new AjaxOptions { UpdateTargetId = "Mark_for_comment_replace_mark_block" }, new { @class = "link_standart_for_div" })</div>
+                                                                                    new { comment_id = ViewBag.Comment_id, click = true, mark = 3 },
+                                                 new AjaxOptions { UpdateTargetId = string.Concat("Mark_for_comment_replace_mark_block", ViewBag.Comment_id) }
+                                                 , new { @class = "link_standart_for_div" })</div>
 
 </div>
 

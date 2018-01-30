@@ -4,16 +4,16 @@
     @if (ViewBag.Follow == false)
     {
         <div title="Добавить в избранное" class="Object_follow_follow_img_white">
-            @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true, num_block_for_list = ViewBag.Num },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Num) },
+            @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Id) },
            new { @class = "link_standart_for_div" })
         </div>
     }
     @if (ViewBag.Follow == true)
     {
         <div title="Удалить из избранного" class="Object_follow_follow_img_red">
-            @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true, num_block_for_list = ViewBag.Num },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Num) },
+            @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true  },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Id) },
            new { @class = "link_standart_for_div" })
         </div>
     }

@@ -77,7 +77,7 @@
             }
 
         </div>
-        <div class="div_inline_block" id="Mark_for_comment_replace_mark_block">
+        <div class="Mark_for_comment_replace_mark_block_class div_inline_block" id=@string.Concat("Mark_for_comment_replace_mark_block",i.Db.Id)>
             @Html.Action("Mark_for_comment", "Home", new { comment_id = i.Db.Id, click = false, mark = -1 })
         </div>
     </div>

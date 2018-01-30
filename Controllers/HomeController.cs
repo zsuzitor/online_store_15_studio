@@ -67,8 +67,8 @@ namespace online_store.Controllers
                 return RedirectToAction("Not_found_page","Home",new { });
             }
             Object_os_for_view res = new Object_os_for_view(not_res);
-            var img = db.Images.Where(x1 => x1.Something_id == id.ToString() && x1.What_something == "Object");
-            res.Images = img.ToList();
+            var img = db.Images.Where(x1 => x1.Something_id == id.ToString() && x1.What_something == "Object").ToList();
+            res.Images = img;
             var com_person = db.Comments.FirstOrDefault(x1 => x1.Object_id == id &&x1.Person_id== check_id && !string.IsNullOrEmpty(x1.Text));
             //var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
             //TODO определить админ ли зашел и если да передавать true
@@ -214,25 +214,25 @@ namespace online_store.Controllers
             if (com != null)
                 ViewBag.have_comments = true;
            
-            var prc = db.Purchases.Where(x1=>x1.Person_id==id);
+            var prc = db.Purchases.Where(x1=>x1.Person_id==id).ToList(); //tolist hz
             res.Purchases.AddRange(prc);
             res.Purchases.Reverse();
             return View(res);
         }
         [AllowAnonymous]
-        public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
+        public ActionResult Load_comment_for_personal_record(string id ,int count_comments_on_page= 0, int count_comment_from_one_load = 20)
         {
             
             var res = new List<Comment_view>();
             //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = id;
             ViewBag.Person_name =db.Users.First(x1=>x1.Id==id).Name;
-            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page);
+            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comments_on_page).Take(count_comment_from_one_load).ToList();
 
 
 
 
-            foreach (var i in com.Take(count_comment_from_one_load).ToList())
+            foreach (var i in com)
             {
 
                 var tmp = new Comment_view(i);
@@ -246,17 +246,17 @@ namespace online_store.Controllers
 
 
             }
-           
+            ViewBag.Count_in_list = res.Count;
             res.Reverse();
             return PartialView(res);
         }
         [Authorize]
-        public ActionResult Object_follow(int id, bool? click, string num_block_for_list = "")
+        public ActionResult Object_follow(int id, bool? click)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
             ViewBag.Follow = false;
-            ViewBag.Num = num_block_for_list;
+            
             if (!string.IsNullOrEmpty(check_id))
             {
                 var foll = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
@@ -313,13 +313,18 @@ namespace online_store.Controllers
                        
                     }
                 }
-                    
+
             }
-            ViewBag.Count_good_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 1).Count();
-            ViewBag.Count_bad_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 3).Count();
-            ViewBag.Count_funny_mark = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 2).Count();
-            var person_mark = db.Mark_for_comment.FirstOrDefault(x1=>x1.Comment_id == comment_id && x1.Person_id == check_id);
-            ViewBag.person_mark = person_mark == null ? "" : person_mark.Mark.ToString();
+            {
+                var mark_f_c = db.Mark_for_comment.Where(x1 => x1.Comment_id == comment_id).ToList();
+                ViewBag.Count_good_mark = mark_f_c.Where(x1 =>  x1.Mark == 1).Count();//x1.Comment_id == comment_id &&
+                ViewBag.Count_bad_mark = mark_f_c.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 3).Count();//x1.Comment_id == comment_id &&
+                ViewBag.Count_funny_mark = mark_f_c.Where(x1 => x1.Comment_id == comment_id && x1.Mark == 2).Count();//x1.Comment_id == comment_id &&
+                var person_mark = mark_f_c.FirstOrDefault(x1 =>  x1.Person_id == check_id);//x1.Comment_id == comment_id &&
+                ViewBag.person_mark = person_mark == null ? "" : person_mark.Mark.ToString();
+            }
+            
+           
 
             return PartialView();
         }
@@ -327,7 +332,7 @@ namespace online_store.Controllers
         public ActionResult Basket_page()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var res = db.Baskets.Where(x1 => x1.Person_id == check_id);//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);
+            var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);     //ToList() hz
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
             ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
@@ -376,10 +381,10 @@ namespace online_store.Controllers
             return PartialView(res);
         }
         [Authorize]
-        public ActionResult Object_add_basket(int id, bool? click, string num_block_for_list = "")
+        public ActionResult Object_add_basket(int id, bool? click)
         {
             ViewBag.Id = id;
-            ViewBag.Num = num_block_for_list;
+            
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.InBasket = false;
             if (!string.IsNullOrEmpty(check_id))
@@ -473,13 +478,14 @@ namespace online_store.Controllers
             var res = new List<Comment_view>();
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
-            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page);
+            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id)
+                .Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
            
             //TODO определить админ ли зашел и если да передавать true
            
            
             
-            foreach (var i in com.Take(count_comment_from_one_load).ToList())
+            foreach (var i in com)
             {
                 if (i.Person_id != check_id)
                 {

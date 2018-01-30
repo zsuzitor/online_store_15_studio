@@ -10,7 +10,8 @@
     var show_follow_flag = false;
     var show_comment_flag = false;
     var show_purchase_flag = false;
-
+    //
+    var req_comment_flag = true;
     //
     function Edit_One_comment(id_comm,id_obj) {
         var block = document.getElementById("Personal_record_one_comm_num_id" + id_comm);
@@ -25,11 +26,49 @@
         block.innerHTML = str;
 
     }
-  
+    
+    function OnComplete_load_comments_pers_rec(request, status) {
+        //alert("_"+request["responseText"]+"_");
+        
+        
+        var el = document.getElementById('Load_comment_for_personal_record_count_request');
+        if (el.value == 0) {
+            req_comment_flag = false;
+        }
+        el.parentNode.removeChild(el);
+        
+
+        /*
+        var str = request["responseText"];
+        if (str != null || str !== undefined) {
+            
+            if (str != null && typeof str !== undefined) {
+                str = str.trim();
+            }
+           
+        }
+        if (!str) {
+            req_comment_flag = false;
+        }*/
+
+        /*
+        for (var key in request) {
+            // этот код будет вызван для каждого свойства объекта
+            // ..и выведет имя свойства и его значение
+
+            alert("Ключ: " + key + " значение: " + request[key]);
+        }*/
+    }
+
+    function OnBegin_load_comments_pers_rec() {
+        
+        req_comment_flag = false;
+    }
     function OnSuccess_load_comments_pers_rec() {
         var block1 = document.getElementById("count_comments_on_page");
         var block2 = document.getElementById("count_comments_from_one_load");
         block1.value = +block1.value + +block2.value;
+        req_comment_flag = true;
     }
     function Show_basket() {
         var block3 = document.getElementById("Personal_record_follow_block_hidden_id");
@@ -94,9 +133,13 @@
         $(window).scroll(function () {
             var b = $("#Personal_record_comments_load_block");
             if (isVisible_for_load_comment(b)) {//TODO сюда флаг их hidden что бы не обращался на серв если спиок пуст
-                var o = document.getElementById("Personal_record_comments_load_form_id")
+                var o = document.getElementById("Personal_record_submit_comments_load_id")//Personal_record_comments_load_form_id
                 //alert("[vvv")
-                o.submit();
+                //o.submit();
+                if (req_comment_flag) {
+                    o.click();
+                }
+               
             }
            
         });
@@ -168,6 +211,7 @@
 
         @if (ViewBag.have_comments == true)
         {
+            
             <div class="Personal_record_show_basket_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
           <div id="Personal_record_comments_block_id_hidden" class="div_display_none"><div class="Personal_record_comments_block" id="Personal_record_comments_block_id_load">
     @Html.Action("Load_comment_for_personal_record", "Home", new { id = Model.Db.Id, count_comment_from_one_load = ViewBag.count_comment_from_one_load })
@@ -179,14 +223,19 @@
     {
         UpdateTargetId = "Personal_record_comments_block_id_load",
         InsertionMode = InsertionMode.InsertAfter,
-        OnSuccess = "OnSuccess_load_comments_pers_rec"
+        OnBegin = "OnBegin_load_comments_pers_rec",
+        OnSuccess = "OnSuccess_load_comments_pers_rec",
+        OnComplete = "OnComplete_load_comments_pers_rec",
+        LoadingElementId = "Main_preloader_id",
+        LoadingElementDuration = 1000
+
     }, new { id = "Personal_record_comments_load_form_id" }))
     {
 
         @Html.Hidden("id", Model.Db.Id)
         @Html.Hidden("count_comments_on_page", ((int)ViewBag.count_comment_from_one_load))
         @Html.Hidden("count_comments_from_one_load", ((int)ViewBag.count_comment_from_one_load))
-       
+        <input type="submit" class="submit" style="display:none;" id="Personal_record_submit_comments_load_id" value="загрузить" />
     }
 
 

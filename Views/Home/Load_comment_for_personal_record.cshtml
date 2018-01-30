@@ -1,12 +1,16 @@
 ﻿@model IEnumerable<online_store.Models.Comment_view>
 
-@if (Model.Count() == 0)
+@{ 
+/*@if (Model.Count() == 0)
 {
 
-    <div class="Personal_record_one_comment_block_empty">
+<div class="Personal_record_one_comment_block_empty">
 
-    </div>
+</div>
+}*/
+
 }
+@Html.Hidden("Load_comment_for_personal_record_count_request", (int)ViewBag.Count_in_list)
 @foreach (var i in Model)
 {
 
@@ -41,7 +45,8 @@
                     @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
           new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) },
           new { })
-                    <div class="Personal_record_Edit_Comment_button"><button onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Ред.</button></div>
+                    <a style="cursor:pointer;float:right;" onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
+                    
 
                 }
 
@@ -83,7 +88,7 @@
 
         </div>
        
-            <div id="Mark_for_comment_replace_mark_block">
+            <div class="Mark_for_comment_replace_mark_block_class" id=@string.Concat("Mark_for_comment_replace_mark_block",i.Db.Id)>
                 @Html.Action("Mark_for_comment", "Home", new { comment_id = i.Db.Id, click = false, mark = -1 })
             </div>
         @{ 

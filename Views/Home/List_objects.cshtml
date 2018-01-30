@@ -1,8 +1,6 @@
 ﻿
 @model IEnumerable<online_store.Models.Object_os_for_view>
-@{
-    int num = 0;
-}
+
 
    @if (Model.Count() == 0)
    {
@@ -39,16 +37,14 @@
                     </div>
                 </a>
                 <div>
-                    <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", num)>
-                        @Html.Action("Object_follow", "Home", new { id = i.Db.Id, num_block_for_list = num })
+                    <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", i.Db.Id)>
+                        @Html.Action("Object_follow", "Home", new { id = i.Db.Id })
                     </div>
-                    <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", num)>
-                        @Html.Action("Object_add_basket", "Home", new { id = i.Db.Id, num_block_for_list = num })
+                    <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", i.Db.Id)>
+                        @Html.Action("Object_add_basket", "Home", new { id = i.Db.Id })
                     </div>
-                    <div class="Add_mark_for_object_partial_class" id=@string.Concat("Add_mark_for_object_partial_id", num)>@Html.Action("Add_mark_for_object", "Home", new { id = i.Db.Id, num = num.ToString() })</div>
-                    @{
-                        num += 1;
-                    }
+                    <div class="Add_mark_for_object_partial_class" id=@string.Concat("Add_mark_for_object_partial_id", i.Db.Id)>@Html.Action("Add_mark_for_object", "Home", new { id = i.Db.Id})</div>
+                    
                 </div>
             </div>
 
