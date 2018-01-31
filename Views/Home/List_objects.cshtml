@@ -2,13 +2,9 @@
 @model IEnumerable<online_store.Models.Object_os_for_view>
 
 
-   @if (Model.Count() == 0)
-   {
-    <div class="List_objects_one_object_empty div_inline_block">
-        </div>
-        }
+   
 
-
+@Html.Hidden("Load_object_for_list_objects_type_count_request", (int)ViewBag.Count_in_list)
         @foreach (var i in Model)
         {
 

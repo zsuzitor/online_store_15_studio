@@ -243,7 +243,7 @@ div.Main_header_big_home_link{
 div.List_objects_one_object {
     margin-top: 10px;
     width: 250px;
-    height: 500px;
+    height: 600px;
    
     border:1px solid black;
 }
@@ -348,6 +348,7 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
+
 div.Object_view_load_comments_block{
     margin-top:50px;
 }
@@ -596,6 +597,9 @@ div.Personal_record_show_basket_button{
 div.Personal_record_comments_block{
   padding-left:30px;
 }
+div.Personal_record_purchase_block{
+  padding-left:30px;
+}
 /*
 div.Personal_record_purchases_block{
      max-height:450px;
@@ -800,3 +804,5 @@ div.Mark_for_comment_replace_mark_block_class{
     position:absolute;
     top:0;
 }
+
+

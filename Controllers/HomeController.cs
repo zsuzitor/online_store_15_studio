@@ -47,13 +47,15 @@ namespace online_store.Controllers
         public ActionResult List_objects(string text_rearch = null,int count_object_from_one_load=10, int count_object_on_page=0)
         {
             List<Object_os_for_view> res = Search(text_rearch, count_skip: count_object_on_page, count_return: count_object_from_one_load);
+            ViewBag.text_rearch = text_rearch;
+            ViewBag.Count_in_list = res.Count;
             return PartialView(res);
         }
         [AllowAnonymous]
         public ActionResult List_objects_type(string text_rearch=null)
         {
             ViewBag.text_rearch = text_rearch;
-            ViewBag.Take_object = 1;
+            ViewBag.Take_object = 30;
             return View();
         }
         [AllowAnonymous]
@@ -105,30 +107,33 @@ namespace online_store.Controllers
             Work_with_comment(id_object, text, mark);            
             return RedirectToAction("Object_view", "Home", new { id = id_object });
         }
-        [Authorize]
-        public ActionResult Add_mark_for_object(int id, string num = "")
+        [AllowAnonymous]
+        public ActionResult Add_mark_for_object(int id)
         {
             //num для работы со списками объектов
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
-            ViewBag.Num = num;
+           
             ViewBag.Mark_pers = 0;
-            if (check_id != null)//не комментить условие, должно быть так
-            {               
-                var mrk = db.Comments.FirstOrDefault(x1 => x1.Person_id == check_id&&x1.Mark!=null);
-                if(mrk!=null)
-                    ViewBag.Mark_pers = mrk.Mark;
-            }
+            
             var marks = db.Comments.Where(x1 => x1.Object_id == id && x1.Mark != null).ToList();
             int mark = 0;
             if (marks.Count > 0)         
                 mark = (int)(marks.Sum(x1 => x1.Mark) / marks.Count);
             
             ViewBag.Mark = mark;
+
+            if (check_id != null)//не комментить условие, должно быть так
+            {
+                var mrk = marks.FirstOrDefault(x1 => x1.Person_id == check_id);
+                if (mrk != null)
+                    ViewBag.Mark_pers = mrk.Mark;
+            }
+
             return PartialView();
         }
         [Authorize]
-        public ActionResult Change_mark_for_object(int id, int num, string num_block_for_list = "")
+        public ActionResult Change_mark_for_object(int id, int num)
         {
             //num,num_block_for_list для работы со списками объектов
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -143,7 +148,7 @@ namespace online_store.Controllers
                 marks.Mark = num;
                 db.SaveChanges();
             }
-            return RedirectToAction("Add_mark_for_object", "Home", new { id = id, num = num_block_for_list });
+            return RedirectToAction("Add_mark_for_object", "Home", new { id = id });
         }
         [AllowAnonymous]
         public ActionResult Purchase_view(int id)
@@ -203,7 +208,8 @@ namespace online_store.Controllers
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
-            ViewBag.count_comment_from_one_load = 10;
+            ViewBag.count_comment_from_one_load = 1;
+            ViewBag.count_purchase_from_one_load = 10; 
             ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Baskets.Reverse();
 
@@ -213,21 +219,41 @@ namespace online_store.Controllers
             var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
             if (com != null)
                 ViewBag.have_comments = true;
-           
-            var prc = db.Purchases.Where(x1=>x1.Person_id==id).ToList(); //tolist hz
-            res.Purchases.AddRange(prc);
-            res.Purchases.Reverse();
+            var prc = db.Purchases.FirstOrDefault(x1 => x1.Person_id == id);
+            if (prc != null)
+                ViewBag.have_purchase = true;
+
+
             return View(res);
         }
         [AllowAnonymous]
-        public ActionResult Load_comment_for_personal_record(string id ,int count_comments_on_page= 0, int count_comment_from_one_load = 20)
+        public ActionResult Purchase_short(string id)
+        {
+
+
+            return PartialView();
+        }
+        [AllowAnonymous]
+        public ActionResult Load_purchase_list(string id, int count_purchase_on_page = 0, int count_purchase_from_one_load = 20)
+        {
+            ViewBag.Person_id = id;
+            var res = new List<Purchase>();
+            var prc = db.Purchases.Where(x1 => x1.Person_id == id); //tolist hz  
+            prc.Reverse();
+            res = prc.OrderBy(x1 => x1.Id).Skip(count_purchase_on_page).Take(count_purchase_from_one_load).ToList();
+            ViewBag.Count_in_list = res.Count;
+            return PartialView(res);
+
+        }
+        [AllowAnonymous]
+        public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
         {
             
             var res = new List<Comment_view>();
             //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = id;
             ViewBag.Person_name =db.Users.First(x1=>x1.Id==id).Name;
-            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comments_on_page).Take(count_comment_from_one_load).ToList();
+            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
 
 
 

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<online_store.Models.Purchase>
+
+@Html.Hidden("Load_purchase_for_personal_record_count_request", (int)ViewBag.Count_in_list)
+
+
+
+@foreach (var i in Model)
+{
+    <div class="">
+        @Html.ActionLink("ID Покупки", "Purchase_view", "Home", new { id = i.Id }, new { })
+    </div>
+}

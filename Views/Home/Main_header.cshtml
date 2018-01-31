@@ -1,48 +1,6 @@
 ﻿
 <script>
-    var t;
-    function up() {
-        var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-        if (top > 0) {
-            window.scrollBy(0, -100);
-            t = setTimeout('up()', 20);
-        } else clearTimeout(t);
-        return false;
-    }
-
-
-    function isVisible(tag) {
-        var t = $(tag);
-        var w = $(window);
-        var wt = w.scrollTop();
-        var tt = t.offset().top;
-        var tb = tt + t.height();
-        return (tb <= wt) ;
-    }
-
-    $(function () {
-        $(window).scroll(function () {
-            var b = $("#Main_header_check_small_or_big_header");
-            if (!b.prop("shown") && isVisible(b)) {
-                b.prop("shown", true);
-                var o = document.getElementById("Main_header_small_id")
-                var o1 = document.getElementById("Main_header_back_to_top_id")
-                o1.style.display = 'block';
-
-                o.style.display = 'block';
-
-            }
-            else {
-                if (b.prop("shown") && !isVisible(b)) {
-                    b.prop("shown", false);
-                    var o = document.getElementById("Main_header_small_id")
-                    var o1 = document.getElementById("Main_header_back_to_top_id")
-                    o1.style.display = 'none';
-                    o.style.display = 'none';
-                }
-            }
-        });
-    });
+   
 
 </script>
 

@@ -113,10 +113,10 @@
 
             </div>
             <div>
-                <div class="div_inline_block" id="Object_follow_block_all_id">
+                <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
                     @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
                 </div>
-                <div class="div_inline_block Object_add_basket_block_all_class" id="Object_add_basket_block_all_id">@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
+                <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
                 <div id="Add_mark_for_object_partial_id" class="Object_view_mark_main">@Html.Action("Add_mark_for_object", "Home", new { id = Model.Db.Id })</div>
             </div>
         </div>
@@ -174,6 +174,54 @@
                             }
             </div>
                             }
+                            @{ 
+                                /*<div class="Personal_record_show_basket_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
+                    <div id="Personal_record_comments_block_id_hidden" class="div_display_none">
+                    <div class="Personal_record_comments_block" id="Personal_record_comments_block_id_load">
+                    @Html.Action("Load_comment_for_personal_record", "Home", new { id = Model.Db.Id, count_comment_from_one_load = ViewBag.count_comment_from_one_load })
+                    </div>
+                    <div class="Personal_record_type_load_object_block" id="Personal_record_comments_load_block">
+
+
+                    @using (Ajax.BeginForm("Load_comment_for_personal_record", "Home", new AjaxOptions
+                    {
+                    UpdateTargetId = "Personal_record_comments_block_id_load",
+                    InsertionMode = InsertionMode.InsertAfter,
+                    OnBegin = "OnBegin_load_comments_pers_rec",
+                    OnSuccess = "OnSuccess_load_comments_pers_rec",
+                    OnComplete = "OnComplete_load_comments_pers_rec",
+                    LoadingElementId = "Main_preloader_id",
+                    LoadingElementDuration = 1000
+
+                    }, new { id = "Personal_record_comments_load_form_id" }))
+                    {
+
+                    @Html.Hidden("id", Model.Db.Id)
+                    @Html.Hidden("count_comments_on_page", ((int)ViewBag.count_comment_from_one_load))
+                    @Html.Hidden("count_comments_from_one_load", ((int)ViewBag.count_comment_from_one_load))
+                    <input type="submit" class="submit" style="display:none;" id="Personal_record_submit_comments_load_id" value="загрузить" />
+                    }
+
+
+                    </div>
+                    </div>*/
+                            }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div id="Object_view_all_comment_block_id_load">
            @Html.Action("Load_comment_for_object_view","Home",new { com_us_id= (int)ViewBag.Can_commented, object_id =Model.Db.Id, count_comment_from_one_load= ((int)ViewBag.Take_comment) })

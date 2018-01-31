@@ -3,33 +3,104 @@
     ViewBag.Title = "List_objects_type";
 }
 <script>
-    function OnSuccess_load_objects() {
+    var req_objects_flag = true;
+    //------------------------------
+    /* function OnSuccess_load_objects() {
         var block1 = document.getElementById("count_object_on_page");
         var block2 = document.getElementById("count_object_from_one_load");
         block1.value = +block1.value + +block2.value;
+        req_objects_flag = true;
+    }*/
+
+
+
+
+
+
+    function OnComplete_load_objects_LOT(request, status) {
+        //alert("_"+request["responseText"]+"_");
+        var block1 = document.getElementById("count_object_on_page");
+        var block2 = document.getElementById("count_object_from_one_load");
+        block1.value = +block1.value + +block2.value;
+        
+
+        var el = document.getElementById('Load_object_for_list_objects_type_count_request');
+        el.parentNode.removeChild(el);
+        if (el.value == 0) {
+            req_objects_flag = false;
+        }
+        else {
+            req_objects_flag = true;
+        }
+       
+
     }
 
+    function OnBegin_load_objects_LOT() {
+
+        req_objects_flag = false;
+    }
+    function Load_objects_list_LOT() {
+
+        var comments = $("#List_objects_type_load_block");
+
+
+        if ( isVisible(comments) ) {
+
+            var comments_submit = document.getElementById("List_objects_type_submit_objects_load_id")
+            //alert(req_objects_flag)
+            //o.submit();
+            if (req_objects_flag) {
+                comments_submit.click();
+            }
+
+        }
+    }
+    $(function () {
+        $(window).scroll(function () {
+            Load_objects_list_LOT();
+           
+
+        });
+    });
 
 </script>
 <h2>List_objects_type</h2>
 
 
-<div id="List_objects_type_all_object_block_id">
-     @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch, count_object_from_one_load = ViewBag.Take_object })
+
+
+
+
+    <div id="List_objects_type_all_object_block_id">
+    @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch, count_object_from_one_load = ViewBag.Take_object })
 </div>
+    <div id="List_objects_type_load_block">
 
 
+        @using (Ajax.BeginForm("List_objects", "Home",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "List_objects_type_all_object_block_id",
+                    InsertionMode = InsertionMode.InsertAfter,
+                    OnBegin = "OnBegin_load_objects_LOT",
+                    
+                    OnComplete = "OnComplete_load_objects_LOT",
+                    LoadingElementId = "Main_preloader_id",
+                    LoadingElementDuration = 1000
 
-<div class="List_objects_type_load_object_block">
-
-
-    @using (Ajax.BeginForm("List_objects", "Home", new AjaxOptions { UpdateTargetId = "List_objects_type_all_object_block_id", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess_load_objects" }, new { }))
+                }))
+        {
+            if (ViewBag.text_rearch != null)
             {
-        
-        @Html.Hidden("count_object_on_page", ((int)ViewBag.Take_object))
-        @Html.Hidden("count_object_from_one_load", ((int)ViewBag.Take_object))
-        <input type='submit' class='submit' value='Загрузить еще' />
-    }
+                @Html.Hidden("text_rearch",(string)ViewBag.text_rearch)
+            }
+
+            @Html.Hidden("count_object_on_page", ((int)ViewBag.Take_object))
+            @Html.Hidden("count_object_from_one_load", ((int)ViewBag.Take_object))
+            <input type="submit" class="submit" style="display:none;" id="List_objects_type_submit_objects_load_id" value="загрузить" />
+        }
 
 
-</div>
+    </div>
+

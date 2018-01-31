@@ -12,6 +12,7 @@
     var show_purchase_flag = false;
     //
     var req_comment_flag = true;
+    var req_purchase_flag = true;
     //
     function Edit_One_comment(id_comm,id_obj) {
         var block = document.getElementById("Personal_record_one_comm_num_id" + id_comm);
@@ -29,51 +30,68 @@
     
     function OnComplete_load_comments_pers_rec(request, status) {
         //alert("_"+request["responseText"]+"_");
+        var block1 = document.getElementById("count_comment_on_page");
+        var block2 = document.getElementById("count_comment_from_one_load");
+        block1.value = +block1.value + +block2.value;
         
         
         var el = document.getElementById('Load_comment_for_personal_record_count_request');
+        el.parentNode.removeChild(el);
         if (el.value == 0) {
             req_comment_flag = false;
         }
-        el.parentNode.removeChild(el);
-        
-
-        /*
-        var str = request["responseText"];
-        if (str != null || str !== undefined) {
-            
-            if (str != null && typeof str !== undefined) {
-                str = str.trim();
-            }
-           
+        else {
+            req_comment_flag = true;
         }
-        if (!str) {
-            req_comment_flag = false;
-        }*/
-
-        /*
-        for (var key in request) {
-            // этот код будет вызван для каждого свойства объекта
-            // ..и выведет имя свойства и его значение
-
-            alert("Ключ: " + key + " значение: " + request[key]);
-        }*/
+       
+      
     }
 
     function OnBegin_load_comments_pers_rec() {
         
         req_comment_flag = false;
     }
+    /*
     function OnSuccess_load_comments_pers_rec() {
-        var block1 = document.getElementById("count_comments_on_page");
-        var block2 = document.getElementById("count_comments_from_one_load");
+        var block1 = document.getElementById("count_comment_on_page");
+        var block2 = document.getElementById("count_comment_from_one_load");
         block1.value = +block1.value + +block2.value;
         req_comment_flag = true;
     }
+    function OnSuccess_load_purchases_pers_rec() {
+        var block1 = document.getElementById("count_purchase_on_page");
+        var block2 = document.getElementById("count_purchase_from_one_load");
+        block1.value = +block1.value + +block2.value;
+        req_purchase_flag = true;
+    }
+    */
+
+
+    //
+    function OnBegin_load_purchases_pers_rec() {
+
+        req_purchase_flag = false;
+    }
+    
+    function OnComplete_load_purchases_pers_rec(request, status) {
+        var block1 = document.getElementById("count_purchase_on_page");
+        var block2 = document.getElementById("count_purchase_from_one_load");
+        block1.value = +block1.value + +block2.value;
+       
+
+        var el = document.getElementById('Load_purchase_for_personal_record_count_request');
+        el.parentNode.removeChild(el);
+        if (el.value == 0) {
+            req_purchase_flag = false;
+        }
+        else {
+            req_purchase_flag = true;
+        }
+       
+    }
+    //-------------------------------------------------------------------------------------
     function Show_basket() {
         var block3 = document.getElementById("Personal_record_follow_block_hidden_id");
-        //alert(block3.getBoundingClientRect().top);
-        //alert(block3.getBoundingClientRect().left);
         var block = document.getElementById("Personal_record_basket_block_hidden_id");
         if (show_basket_flag) {
             block.style.display = 'none';
@@ -114,33 +132,42 @@
         show_purchase_flag = !show_purchase_flag;
     }
     //--------------------------------------------------------------------------------------
-    function isVisible_for_load_comment(tag) {
-        var t = $(tag);
-        //var w = $(window);
-        var wt = window.pageYOffset;
-        var tt = t.offset().top;
-        wt += document.documentElement.clientHeight;
-        if (show_comment_flag) {
-           // alert(tt);
-           // alert(wt);
-            return (tt <= wt);
-        }
-            
-        return false;
-    }
+ 
+    function Load_personal_record_comments_block() {
+       
+        var comments = $("#Personal_record_comments_load_block");
+        
 
-    $(function () {
-        $(window).scroll(function () {
-            var b = $("#Personal_record_comments_load_block");
-            if (isVisible_for_load_comment(b)) {//TODO сюда флаг их hidden что бы не обращался на серв если спиок пуст
-                var o = document.getElementById("Personal_record_submit_comments_load_id")//Personal_record_comments_load_form_id
-                //alert("[vvv")
-                //o.submit();
-                if (req_comment_flag) {
-                    o.click();
-                }
-               
+        if (show_comment_flag ? isVisible(comments) : false) {
+            
+            var comments_submit = document.getElementById("Personal_record_submit_comments_load_id")
+            //alert("[vvv")
+            //o.submit();
+            if (req_comment_flag) {
+                comments_submit.click();
             }
+
+        }
+    }
+    function Load_personal_record_purchase_block() {
+        var purchase = $("#Personal_record_purchase_load_block");
+
+
+        if (show_purchase_flag ? isVisible(purchase) : false) {
+
+            var purchase_submit = document.getElementById("Personal_record_submit_purchase_load_id")
+
+            if (req_purchase_flag) {
+
+                purchase_submit.click();
+            }
+
+        }
+    }
+    $(function () {
+       $(window).scroll(function () {
+           Load_personal_record_comments_block();
+           Load_personal_record_purchase_block();
            
         });
     });
@@ -224,7 +251,7 @@
         UpdateTargetId = "Personal_record_comments_block_id_load",
         InsertionMode = InsertionMode.InsertAfter,
         OnBegin = "OnBegin_load_comments_pers_rec",
-        OnSuccess = "OnSuccess_load_comments_pers_rec",
+        
         OnComplete = "OnComplete_load_comments_pers_rec",
         LoadingElementId = "Main_preloader_id",
         LoadingElementDuration = 1000
@@ -233,8 +260,8 @@
     {
 
         @Html.Hidden("id", Model.Db.Id)
-        @Html.Hidden("count_comments_on_page", ((int)ViewBag.count_comment_from_one_load))
-        @Html.Hidden("count_comments_from_one_load", ((int)ViewBag.count_comment_from_one_load))
+        @Html.Hidden("count_comment_on_page", ((int)ViewBag.count_comment_from_one_load))
+        @Html.Hidden("count_comment_from_one_load", ((int)ViewBag.count_comment_from_one_load))
         <input type="submit" class="submit" style="display:none;" id="Personal_record_submit_comments_load_id" value="загрузить" />
     }
 
@@ -244,20 +271,39 @@
             <hr />
         }
 
-        @if (Model.Purchases.Count > 0)
+        @if (ViewBag.have_purchase==true)
         {
-            <h1>Ваши покупки:</h1>
-            <div class="Personal_record_purchases_block" onclick="Show_Purchases()" id="Personal_record_purchases_block_id_load">
-
-                @foreach (var i in Model.Purchases)
-                {
-                    <div>
-                        @Html.ActionLink("ID Покупки", "Purchase_view", "Home", new { id = i.Id }, new { })
-                    </div>
-                }
+            <div class="Personal_record_show_basket_button" onclick="Show_Purchases()"><h1> > Ваши покупки:</h1></div>
+            <div id="Personal_record_purchases_block_id_load" class="div_display_none">
+                <div class="Personal_record_purchase_block" id="Personal_record_purchase_block_id_load">
+                    @Html.Action("Load_purchase_list", "Home", new { id = Model.Db.Id, count_purchase_from_one_load = ViewBag.count_purchase_from_one_load })
+                </div>
+                <div  id="Personal_record_purchase_load_block">
 
 
+                    @using (Ajax.BeginForm("Load_purchase_list", "Home", new AjaxOptions
+                    {
+                        UpdateTargetId = "Personal_record_purchase_block_id_load",
+                        InsertionMode = InsertionMode.InsertAfter,
+                        OnBegin = "OnBegin_load_purchases_pers_rec",
+                       
+                        OnComplete = "OnComplete_load_purchases_pers_rec",
+                        LoadingElementId = "Main_preloader_id",
+                        LoadingElementDuration = 1000
+
+                    }))
+                    {
+
+                        @Html.Hidden("id", Model.Db.Id)
+                        @Html.Hidden("count_purchase_on_page", ((int)ViewBag.count_purchase_from_one_load))
+                        @Html.Hidden("count_purchase_from_one_load", ((int)ViewBag.count_purchase_from_one_load))
+                        <input type="submit" class="submit" style="display:none;" id="Personal_record_submit_purchase_load_id" value="загрузить" />
+                    }
+
+
+                </div>
             </div>
+            
         }
 
 

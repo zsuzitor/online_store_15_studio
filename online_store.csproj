@@ -207,6 +207,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main_scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -267,6 +268,7 @@
     <Content Include="Views\Home\Load_comment_for_object_view.cshtml" />
     <Content Include="Views\Home\Load_comment_for_personal_record.cshtml" />
     <Content Include="Views\Home\Mark_for_comment.cshtml" />
+    <Content Include="Views\Home\Load_purchase_list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
