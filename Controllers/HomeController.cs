@@ -63,7 +63,8 @@ namespace online_store.Controllers
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
-            var not_res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
+            ViewBag.Count_comment_from_one_load = 10;
+           var not_res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
             if (not_res == null)
             {
                 return RedirectToAction("Not_found_page","Home",new { });
@@ -75,7 +76,7 @@ namespace online_store.Controllers
             //var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
             //TODO определить админ ли зашел и если да передавать true
             ViewBag.admin = true;
-            ViewBag.Take_comment =10;
+            
             
             
             if (com_person == null)
@@ -119,7 +120,7 @@ namespace online_store.Controllers
             var marks = db.Comments.Where(x1 => x1.Object_id == id && x1.Mark != null).ToList();
             int mark = 0;
             if (marks.Count > 0)         
-                mark = (int)(marks.Sum(x1 => x1.Mark) / marks.Count);
+                mark = (int)(((double)marks.Sum(x1 => x1.Mark)) / marks.Count + 0.5);
             
             ViewBag.Mark = mark;
 
@@ -442,11 +443,9 @@ namespace online_store.Controllers
         public ActionResult Delete_object_from_basket(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var obj = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
-            if (obj != null)
+            
+            if (Functions_project.Delete_object_from_basket(id,check_id))
             {
-                db.Baskets.Remove(obj);
-                db.SaveChanges();
                 ViewBag.Message = "Удалено";
             }
             else
@@ -457,13 +456,9 @@ namespace online_store.Controllers
         public ActionResult Delete_object_from_follow(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var obj = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
-            if (obj != null)
-            {
-                db.Follow_objects.Remove(obj);
-                db.SaveChanges();
+            
+            if(Functions_project.Delete_object_from_follow(id,check_id))
                 ViewBag.Message = "Удалено";
-            }
             else
                 ViewBag.Message = "Ошибка";
             return PartialView();
@@ -538,6 +533,7 @@ namespace online_store.Controllers
                
             }
             res.Reverse();
+            ViewBag.Count_in_list = res.Count;
             return PartialView(res);
 
             //var user = db.Users.First(x1 => x1.Id == check_id);

@@ -4,7 +4,10 @@
     {
         <div title="Добавить в корзину" class="Object_add_basket_follow_img_empty">
             @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true  },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id) },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id),
+               LoadingElementId = "Main_preloader_id",
+               LoadingElementDuration = 1000
+           },
            new { @class = "link_standart_for_div" })
         </div>
     }
@@ -12,7 +15,10 @@
     {
         <div title="Удалить из корзины" class="Object_add_basket_follow_img_full">
             @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true  },
-           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id) },
+           new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id),
+               LoadingElementId = "Main_preloader_id",
+               LoadingElementDuration = 1000
+           },
            new { @class = "link_standart_for_div" })
         </div>
     }

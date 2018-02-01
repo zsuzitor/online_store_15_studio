@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<online_store.Models.Comment_view>
 
-@if (Model.Count() == 0)
-{
-    <div class="Object_view_one_comment_block_empty"></div>
-}
+
+@Html.Hidden("Load_comment_for_object_view_count_request", (int)ViewBag.Count_in_list)
 
 @foreach (var i in Model)
 {
@@ -35,7 +33,10 @@
             @if (i.Db.Person_id == ViewBag.Person_id)
             {
                 @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
-                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", i.Db.Id.ToString()) },
+                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", i.Db.Id.ToString()),
+                           LoadingElementId = "Main_preloader_id",
+                           LoadingElementDuration = 1000
+                       },
                        new { })
                 <a style="cursor:pointer;float:right;" onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
 

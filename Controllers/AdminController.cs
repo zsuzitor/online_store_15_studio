@@ -90,6 +90,24 @@ namespace online_store.Controllers
             db.SaveChanges();
             return PartialView();
         }
+        public ActionResult Delete_object_from_follow(int id_object,string id_user)
+        {
+            if (Functions_project.Delete_object_from_follow(id_object, id_user))
+                ViewBag.Message = "Удалено";
+            else
+                ViewBag.Message = "Ошибка";
+            return PartialView();
+
+        }
+        public ActionResult Delete_object_from_basket(int id_object, string id_user)
+        {
+            if (Functions_project.Delete_object_from_basket(id_object, id_user))
+                ViewBag.Message = "Удалено";
+            else
+                ViewBag.Message = "Ошибка";
+            return PartialView();
+
+        }
 
         //[Authorize(Roles="admin")]  админ объектам, юзерам юзеры
         [HttpPost]

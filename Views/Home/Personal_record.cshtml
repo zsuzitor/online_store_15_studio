@@ -221,7 +221,7 @@
     
 @if (ViewBag.Follow.Count > 0)
 {
-    <div class="Personal_record_show_basket_button" onclick="Show_follow()"><h1> > Избранное:</h1></div>
+    <div class="Personal_record_show_follow_button" onclick="Show_follow()"><h1> > Избранное:</h1></div>
 
     <div id="Personal_record_follow_block_hidden_id" class="Personal_record_follow_block_hidden div_display_none">
        
@@ -239,7 +239,7 @@
         @if (ViewBag.have_comments == true)
         {
             
-            <div class="Personal_record_show_basket_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
+            <div class="Personal_record_show_comments_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
           <div id="Personal_record_comments_block_id_hidden" class="div_display_none"><div class="Personal_record_comments_block" id="Personal_record_comments_block_id_load">
     @Html.Action("Load_comment_for_personal_record", "Home", new { id = Model.Db.Id, count_comment_from_one_load = ViewBag.count_comment_from_one_load })
 </div>
@@ -273,7 +273,7 @@
 
         @if (ViewBag.have_purchase==true)
         {
-            <div class="Personal_record_show_basket_button" onclick="Show_Purchases()"><h1> > Ваши покупки:</h1></div>
+            <div class="Personal_record_show_purchase_button" onclick="Show_Purchases()"><h1> > Ваши покупки:</h1></div>
             <div id="Personal_record_purchases_block_id_load" class="div_display_none">
                 <div class="Personal_record_purchase_block" id="Personal_record_purchase_block_id_load">
                     @Html.Action("Load_purchase_list", "Home", new { id = Model.Db.Id, count_purchase_from_one_load = ViewBag.count_purchase_from_one_load })

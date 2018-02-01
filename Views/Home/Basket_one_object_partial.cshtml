@@ -28,6 +28,9 @@
     </div>
     <div class="Basket_one_object_delete_block div_inline_block">
         @Ajax.ActionLink("Удалить", "Delete_object_from_basket", "Home", new { id = Model.Db.Id },
-        new AjaxOptions { UpdateTargetId = string.Concat("Basket_one_object_partial_one_block_id", Model.Db.Id) }, new { })
+        new AjaxOptions { UpdateTargetId = string.Concat("Basket_one_object_partial_one_block_id", Model.Db.Id),
+            LoadingElementId = "Main_preloader_id",
+            LoadingElementDuration = 1000
+        }, new { })
     </div>
 </div>

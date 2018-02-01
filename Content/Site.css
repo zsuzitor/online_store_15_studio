@@ -348,10 +348,10 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
-
-div.Object_view_load_comments_block{
+#Object_view_all_comment_block_id_load{
     margin-top:50px;
 }
+
 .Object_view_text_area_comment{
     width:100%;
     min-width:300px;
@@ -588,6 +588,15 @@ div.Personal_record_follow_block_hidden{
 padding-left:30px;
 }
 div.Personal_record_show_basket_button{
+    cursor:pointer;
+}
+div.Personal_record_show_follow_button{
+    cursor:pointer;
+}
+div.Personal_record_show_comments_button{
+    cursor:pointer;
+}
+div.Personal_record_show_purchase_button{
     cursor:pointer;
 }
 /*div.Personal_record_follow_block{

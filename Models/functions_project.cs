@@ -62,8 +62,35 @@ namespace online_store.Models
 
             return res;
         }
+        
+            public static bool Delete_object_from_basket(int id_object, string id_user)
+        {
+            bool res = false;
+            var obj = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
+            if (obj != null)
+            {
+                db.Baskets.Remove(obj);
+                db.SaveChanges();
+                res = true;
+            }
 
 
+            return res;
+        }
+        public static bool Delete_object_from_follow(int id_object, string id_user)
+        {
+            bool res = false;
+            var obj = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
+            if (obj != null)
+            {
+                db.Follow_objects.Remove(obj);
+                db.SaveChanges();
+                res = true;
+                
+            }
+         
+            return res;
+        }
 
         public static bool Work_with_comment(int id_object, string text, int mark)
         {

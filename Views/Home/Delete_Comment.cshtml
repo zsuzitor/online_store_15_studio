@@ -30,7 +30,10 @@
         @if (Model.Db.Person_id == ViewBag.Person_id)
         {
             @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = Model.Db.Id },
-                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", Model.Db.Id.ToString()) },
+                       new AjaxOptions { UpdateTargetId = string.Concat("Object_view_one_comm_num_id", Model.Db.Id.ToString()),
+                           LoadingElementId = "Main_preloader_id",
+                           LoadingElementDuration = 1000
+                       },
                        new { })
         }
     </div>

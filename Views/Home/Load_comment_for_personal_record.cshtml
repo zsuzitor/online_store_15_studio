@@ -43,7 +43,10 @@
                 @if (i.Db.Person_id == ViewBag.Person_id)
                 {
                     @Ajax.ActionLink("Удалить", "Delete_Comment", "Home", new { id = i.Db.Id },
-          new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()) },
+          new AjaxOptions { UpdateTargetId = string.Concat("Personal_record_one_comm_num_id", i.Db.Id.ToString()),
+              LoadingElementId = "Main_preloader_id",
+              LoadingElementDuration = 1000
+          },
           new { })
                     <a style="cursor:pointer;float:right;" onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
                     
