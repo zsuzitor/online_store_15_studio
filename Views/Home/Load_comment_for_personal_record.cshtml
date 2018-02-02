@@ -11,6 +11,13 @@
 
 }
 @Html.Hidden("Load_comment_for_personal_record_count_request", (int)ViewBag.Count_in_list)
+
+@if (ViewBag.No_comments == true)
+{
+    <div class="no_comments_div_image"></div>
+}
+
+
 @foreach (var i in Model)
 {
 
@@ -48,7 +55,7 @@
               LoadingElementDuration = 1000
           },
           new { })
-                    <a style="cursor:pointer;float:right;" onclick=@string.Concat("Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
+                    <a style="cursor:pointer;float:right;" onclick=@string.Concat("Personal_record_OBJECT.Edit_One_comment(", i.Db.Id,",",i.Db.Object_id,")")>Редактировать</a>
                     
 
                 }

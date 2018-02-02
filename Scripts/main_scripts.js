@@ -21,7 +21,7 @@ function isVisible(tag) {//работает для маленьких объек
     var bot_tag = top_tag + t.height();
     //alert(bot_tag);
     //alert(top_window);
-    return ((bot_tag >= top_window && bot_tag<=bot_window) || (top_tag>=top_window&&top_tag<=bot_window));
+    return ((bot_tag >= top_window && bot_tag <= bot_window) || (top_tag >= top_window && top_tag <= bot_window) || (bot_tag >= bot_window && top_tag <= top_window));
 }
 
 /*

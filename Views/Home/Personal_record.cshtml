@@ -3,177 +3,10 @@
     ViewBag.Title = "Personal_record";
     //  @Html.Label(Model.Db.Info)
 }
+@Scripts.Render("~/scripts/Personal_record.js")
 
 <h2>Personal_record</h2>
-<script>
-    var show_basket_flag = false;
-    var show_follow_flag = false;
-    var show_comment_flag = false;
-    var show_purchase_flag = false;
-    //
-    var req_comment_flag = true;
-    var req_purchase_flag = true;
-    //
-    function Edit_One_comment(id_comm,id_obj) {
-        var block = document.getElementById("Personal_record_one_comm_num_id" + id_comm);
-        var str = "<form action='/Home/Edit_comment' method='post'><input id='id_object' name='id_object' type='hidden' value='";
-        str += id_obj + "' /><textarea class='Personal_record_text_area_comment' cols='20' id='text' name='text' rows='2'>";
 
-        var block_text_b = document.getElementById("Personal_record_text_one_comment_id" + id_comm);
-        var text = block_text_b.innerHTML;
-        str += text + "</textarea><input id='mark' name='mark' type='hidden' value='-1' /><input id='from' name='from' type='hidden' value='Personal_record' />";
-        str += "<div></div><input type='submit' class='submit' style='margin-top:15px;' value='Отправить' /></form>";
-
-        block.innerHTML = str;
-
-    }
-    
-    function OnComplete_load_comments_pers_rec(request, status) {
-        //alert("_"+request["responseText"]+"_");
-        var block1 = document.getElementById("count_comment_on_page");
-        var block2 = document.getElementById("count_comment_from_one_load");
-        block1.value = +block1.value + +block2.value;
-        
-        
-        var el = document.getElementById('Load_comment_for_personal_record_count_request');
-        el.parentNode.removeChild(el);
-        if (el.value == 0) {
-            req_comment_flag = false;
-        }
-        else {
-            req_comment_flag = true;
-        }
-       
-      
-    }
-
-    function OnBegin_load_comments_pers_rec() {
-        
-        req_comment_flag = false;
-    }
-    /*
-    function OnSuccess_load_comments_pers_rec() {
-        var block1 = document.getElementById("count_comment_on_page");
-        var block2 = document.getElementById("count_comment_from_one_load");
-        block1.value = +block1.value + +block2.value;
-        req_comment_flag = true;
-    }
-    function OnSuccess_load_purchases_pers_rec() {
-        var block1 = document.getElementById("count_purchase_on_page");
-        var block2 = document.getElementById("count_purchase_from_one_load");
-        block1.value = +block1.value + +block2.value;
-        req_purchase_flag = true;
-    }
-    */
-
-
-    //
-    function OnBegin_load_purchases_pers_rec() {
-
-        req_purchase_flag = false;
-    }
-    
-    function OnComplete_load_purchases_pers_rec(request, status) {
-        var block1 = document.getElementById("count_purchase_on_page");
-        var block2 = document.getElementById("count_purchase_from_one_load");
-        block1.value = +block1.value + +block2.value;
-       
-
-        var el = document.getElementById('Load_purchase_for_personal_record_count_request');
-        el.parentNode.removeChild(el);
-        if (el.value == 0) {
-            req_purchase_flag = false;
-        }
-        else {
-            req_purchase_flag = true;
-        }
-       
-    }
-    //-------------------------------------------------------------------------------------
-    function Show_basket() {
-        var block3 = document.getElementById("Personal_record_follow_block_hidden_id");
-        var block = document.getElementById("Personal_record_basket_block_hidden_id");
-        if (show_basket_flag) {
-            block.style.display = 'none';
-        }
-        else {
-            block.style.display = 'block';
-        }
-        show_basket_flag = !show_basket_flag;
-    }
-    function Show_follow() {
-        var block = document.getElementById("Personal_record_follow_block_hidden_id");
-        if (show_follow_flag) {
-            block.style.display = 'none';
-        }
-        else {
-            block.style.display = 'block';
-        }
-        show_follow_flag = !show_follow_flag;
-    }
-    function Show_comments() {
-        var block = document.getElementById("Personal_record_comments_block_id_hidden");
-        if (show_comment_flag) {
-            block.style.display = 'none';
-        }
-        else {
-            block.style.display = 'block';
-        }
-        show_comment_flag = !show_comment_flag;
-    }
-    function Show_Purchases() {
-        var block = document.getElementById("Personal_record_purchases_block_id_load");
-        if (show_purchase_flag) {
-            block.style.display = 'none';
-        }
-        else {
-            block.style.display = 'block';
-        }
-        show_purchase_flag = !show_purchase_flag;
-    }
-    //--------------------------------------------------------------------------------------
- 
-    function Load_personal_record_comments_block() {
-       
-        var comments = $("#Personal_record_comments_load_block");
-        
-
-        if (show_comment_flag ? isVisible(comments) : false) {
-            
-            var comments_submit = document.getElementById("Personal_record_submit_comments_load_id")
-            //alert("[vvv")
-            //o.submit();
-            if (req_comment_flag) {
-                comments_submit.click();
-            }
-
-        }
-    }
-    function Load_personal_record_purchase_block() {
-        var purchase = $("#Personal_record_purchase_load_block");
-
-
-        if (show_purchase_flag ? isVisible(purchase) : false) {
-
-            var purchase_submit = document.getElementById("Personal_record_submit_purchase_load_id")
-
-            if (req_purchase_flag) {
-
-                purchase_submit.click();
-            }
-
-        }
-    }
-    $(function () {
-       $(window).scroll(function () {
-           Load_personal_record_comments_block();
-           Load_personal_record_purchase_block();
-           
-        });
-    });
-
-
-</script>
 
 <div>
 
@@ -205,7 +38,7 @@
     <hr />
 @if (ViewBag.Baskets.Count > 0)
 {
-    <div class="Personal_record_show_basket_button" onclick="Show_basket()"><h1> > Корзина:</h1></div>
+    <div class="Personal_record_show_basket_button" onclick="Personal_record_OBJECT.Show_basket()"><h1> > Корзина:</h1></div>
 
     <div id="Personal_record_basket_block_hidden_id" class="Personal_record_basket_block_hidden div_display_none">
         @foreach (var i in ViewBag.Baskets)
@@ -221,7 +54,7 @@
     
 @if (ViewBag.Follow.Count > 0)
 {
-    <div class="Personal_record_show_follow_button" onclick="Show_follow()"><h1> > Избранное:</h1></div>
+    <div class="Personal_record_show_follow_button" onclick="Personal_record_OBJECT.Show_follow()"><h1> > Избранное:</h1></div>
 
     <div id="Personal_record_follow_block_hidden_id" class="Personal_record_follow_block_hidden div_display_none">
        
@@ -239,7 +72,7 @@
         @if (ViewBag.have_comments == true)
         {
             
-            <div class="Personal_record_show_comments_button" onclick="Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
+            <div class="Personal_record_show_comments_button" onclick="Personal_record_OBJECT.Show_comments()"><h1> > Ваши комментарии и оценки:</h1></div>
           <div id="Personal_record_comments_block_id_hidden" class="div_display_none"><div class="Personal_record_comments_block" id="Personal_record_comments_block_id_load">
     @Html.Action("Load_comment_for_personal_record", "Home", new { id = Model.Db.Id, count_comment_from_one_load = ViewBag.count_comment_from_one_load })
 </div>
@@ -250,9 +83,9 @@
     {
         UpdateTargetId = "Personal_record_comments_block_id_load",
         InsertionMode = InsertionMode.InsertAfter,
-        OnBegin = "OnBegin_load_comments_pers_rec",
+        OnBegin = "Personal_record_OBJECT.OnBegin_load_comments_pers_rec",
         
-        OnComplete = "OnComplete_load_comments_pers_rec",
+        OnComplete = "Personal_record_OBJECT.OnComplete_load_comments_pers_rec",
         LoadingElementId = "Main_preloader_id",
         LoadingElementDuration = 1000
 
@@ -273,7 +106,7 @@
 
         @if (ViewBag.have_purchase==true)
         {
-            <div class="Personal_record_show_purchase_button" onclick="Show_Purchases()"><h1> > Ваши покупки:</h1></div>
+            <div class="Personal_record_show_purchase_button" onclick="Personal_record_OBJECT.Show_Purchases()"><h1> > Ваши покупки:</h1></div>
             <div id="Personal_record_purchases_block_id_load" class="div_display_none">
                 <div class="Personal_record_purchase_block" id="Personal_record_purchase_block_id_load">
                     @Html.Action("Load_purchase_list", "Home", new { id = Model.Db.Id, count_purchase_from_one_load = ViewBag.count_purchase_from_one_load })
@@ -285,9 +118,9 @@
                     {
                         UpdateTargetId = "Personal_record_purchase_block_id_load",
                         InsertionMode = InsertionMode.InsertAfter,
-                        OnBegin = "OnBegin_load_purchases_pers_rec",
+                        OnBegin = "Personal_record_OBJECT.OnBegin_load_purchases_pers_rec",
                        
-                        OnComplete = "OnComplete_load_purchases_pers_rec",
+                        OnComplete = "Personal_record_OBJECT.OnComplete_load_purchases_pers_rec",
                         LoadingElementId = "Main_preloader_id",
                         LoadingElementDuration = 1000
 

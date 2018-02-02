@@ -18,6 +18,8 @@ namespace online_store.Models
         public string Composition { get; set; }//состав 
         public string Description { get; set; }
         public int Count_buy { get; set; }
+        public int Remainder { get; set; }
+        public bool Show_flag { get; set; }
         public Object_os()
         {
             Id = 0;
@@ -30,6 +32,8 @@ namespace online_store.Models
             Count_buy = 0;
             Price = 0;
             Discount = 0;
+            Remainder = 0;
+            Show_flag = true;
         }
         public bool Eq(Object_os a)
         {
@@ -43,11 +47,13 @@ namespace online_store.Models
             Count_buy = a.Count_buy;
             Price = a.Price;
             Discount = a.Discount;
+            Remainder = a.Remainder;
+            Show_flag = a.Show_flag;
             return true;
         }
         public bool Seacrh(string str)
         {
-            
+            //TODO не работает
             if (Name.Contains(str))
                 return true;
             if (Type.Contains(str))

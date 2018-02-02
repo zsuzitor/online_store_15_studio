@@ -2,70 +2,9 @@
 @{
     ViewBag.Title = "List_objects_type";
 }
-<script>
-    var req_objects_flag = true;
-    //------------------------------
-    /* function OnSuccess_load_objects() {
-        var block1 = document.getElementById("count_object_on_page");
-        var block2 = document.getElementById("count_object_from_one_load");
-        block1.value = +block1.value + +block2.value;
-        req_objects_flag = true;
-    }*/
+@Scripts.Render("~/scripts/List_objects_type.js")
 
-
-
-    function OnComplete_load_objects_LOT(request, status) {
-        //alert("_"+request["responseText"]+"_");
-        var block1 = document.getElementById("count_object_on_page");
-        var block2 = document.getElementById("count_object_from_one_load");
-        block1.value = +block1.value + +block2.value;
-        
-
-        var el = document.getElementById('Load_object_for_list_objects_type_count_request');
-        el.parentNode.removeChild(el);
-        if (el.value == 0) {
-            req_objects_flag = false;
-        }
-        else {
-            req_objects_flag = true;
-        }
-       
-
-    }
-
-    function OnBegin_load_objects_LOT() {
-
-        req_objects_flag = false;
-    }
-    function Load_objects_list_LOT() {
-
-        var comments = $("#List_objects_type_load_block");
-
-
-        if ( isVisible(comments) ) {
-
-            var comments_submit = document.getElementById("List_objects_type_submit_objects_load_id")
-            //alert(req_objects_flag)
-            //o.submit();
-            if (req_objects_flag) {
-                comments_submit.click();
-            }
-
-        }
-    }
-    $(function () {
-        $(window).scroll(function () {
-            Load_objects_list_LOT();
-           
-
-        });
-    });
-
-</script>
 <h2>List_objects_type</h2>
-
-
-
 
 
 
@@ -80,9 +19,9 @@
                 {
                     UpdateTargetId = "List_objects_type_all_object_block_id",
                     InsertionMode = InsertionMode.InsertAfter,
-                    OnBegin = "OnBegin_load_objects_LOT",
+                    OnBegin = "List_objects_type_OBJECT.OnBegin_load_objects_LOT",
                     
-                    OnComplete = "OnComplete_load_objects_LOT",
+                    OnComplete = "List_objects_type_OBJECT.OnComplete_load_objects_LOT",
                     LoadingElementId = "Main_preloader_id",
                     LoadingElementDuration = 1000
 

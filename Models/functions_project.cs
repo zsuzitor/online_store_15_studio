@@ -18,7 +18,7 @@ namespace online_store.Models
             List<Object_os_for_view> res = new List<Object_os_for_view>();
             var lst = new List<Object_os>();
             if (string.IsNullOrEmpty(text_rearch))
-                lst = db.Objects.OrderBy(x1 => x1.Id).Skip(count_skip).Take(count_return).ToList();
+                lst = db.Objects.OrderBy(x1 => x1.Id).Where(x1=>x1.Show_flag).Skip(count_skip).Take(count_return).ToList();
             else
             {
                 if (extends_src)

@@ -3,128 +3,7 @@
 @{
     ViewBag.Title = "Object_view";
 }
-
-<script>
-    var timer_slider_1;
-    var current_slider_1_id = 0;
-    var time_slider_1; 
-    //-------------
-    function change_image_click(a) {
-        change_image(a);
-        clearTimeout(time_slider_1);
-        clearInterval(timer_slider_1);
-         time_slider_1 = setTimeout(
-            Up_slider_1_time, 6000);
-    }
-    function change_image(a) {
-        var main_image = document.getElementById("Object_view_main_image_id");
-        //alert(a.id);
-        main_image.src = a.src;
-        
-
-        var arr_id = a.id.split('Object_view_img_for_main_id');
-        current_slider_1_id = arr_id[1];
-       
-    }
-
-    function Edit_One_comment(id_comm, id_obj) {
-        var block = document.getElementById("Object_view_one_comm_num_id" + id_comm);
-        var str = "<form action='/Home/Edit_comment' method='post'><input id='id_object' name='id_object' type='hidden' value='";
-        str += id_obj + "' /><textarea class='Object_view_text_area_comment' cols='20' id='text' name='text' rows='2'>";
-
-        var block_text_b = document.getElementById("Object_view_text_one_comment_id" + id_comm);
-        var text = block_text_b.innerHTML;
-        str += text + "</textarea><input id='mark' name='mark' type='hidden' value='-1' /><input id='from' name='from' type='hidden' value='Object_view' />";
-        str += "<div></div><input type='submit' class='submit' value='Отправить' /></form>";
-
-        block.innerHTML = str;
-
-    }
-    //--------------------------SLIDERS------------------
-
-    function Load_slider() {
-        //var curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
-        //change_image(curr_block_img);
-            Up_slider_1_time();
-
-    }
-    function Up_slider_1_time() {
-         time_slider_1 = setTimeout(function () {
-            timer_slider_1 = setInterval(function () {
-                Next_slider_1();
-            }, 6000);
-        }, 6000);
-    }
-    function Next_slider_1() {
-        current_slider_1_id =+current_slider_1_id+ 1;
-        var curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
-        //alert("Object_view_img_for_main_id" + current_slider_1_id);
-        if (curr_block_img == null) {
-            current_slider_1_id = 0;
-            curr_block_img = document.getElementById("Object_view_img_for_main_id" + current_slider_1_id);
-            if (curr_block_img == null) {
-                clearTimeout(time_slider_1);
-                clearInterval(timer_slider_1);
-                return;
-            }
-        }
-        change_image(curr_block_img);
-    }
-   
-    //------------------------------------------------------------AJAX-LOAD---------
-    var req_comments_flag_ob_v = true;
-    function OnComplete_load_comments_Object_view(request, status) {
-        //alert("_"+request["responseText"]+"_");
-        var block1 = document.getElementById("count_comment_on_page");
-        var block2 = document.getElementById("count_comment_from_one_load");
-        block1.value = +block1.value + +block2.value;
-
-        
-        var el = document.getElementById('Load_comment_for_object_view_count_request');
-        el.parentNode.removeChild(el);
-        if (el.value == 0) {
-            req_comments_flag_ob_v = false;
-        }
-        else {
-            req_comments_flag_ob_v = true;
-        }
-
-
-    }
-
-    function OnBegin_load_comments_Object_view() {
-
-        req_comments_flag_ob_v = false;
-    }
-    function Load_objects_list_LOT() {
-
-        var comments = $("#Object_view_type_load_block");
-
-
-        if (isVisible(comments)) {
-
-            var comments_submit = document.getElementById("Object_view_submit_objects_load_id")
-            
-            if (req_comments_flag_ob_v) {
-                comments_submit.click();
-            }
-
-        }
-    }
-    $(function () {
-        $(window).scroll(function () {
-            Load_objects_list_LOT();
-
-
-        });
-    });
-
-
-
-    //-------------------------------------------------------------------------------------
-
-    document.addEventListener("DOMContentLoaded", Load_slider);
-</script>
+@Scripts.Render("~/scripts/Object_view.js")
 
 <h2>Object_view</h2>
 <div>
@@ -137,7 +16,7 @@
             {
 
                 <div class="Object_view_small_img_change">
-                    <img id=@string.Concat("Object_view_img_for_main_id",s4_img_slider_main) onclick="change_image_click(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
+                    <img id=@string.Concat("Object_view_img_for_main_id",s4_img_slider_main) onclick="Object_view_OBJECT.change_image_click(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
                 </div>
                 s4_img_slider_main += 1;
             }
@@ -229,9 +108,9 @@
                 {
                     UpdateTargetId = "Object_view_all_comment_block_id_load",
                     InsertionMode = InsertionMode.InsertAfter,
-                    OnBegin = "OnBegin_load_comments_Object_view",
+                    OnBegin = "Object_view_OBJECT.OnBegin_load_comments_Object_view",
 
-                    OnComplete = "OnComplete_load_comments_Object_view",
+                    OnComplete = "Object_view_OBJECT.OnComplete_load_comments_Object_view",
                     LoadingElementId = "Main_preloader_id",
                     LoadingElementDuration = 1000
 

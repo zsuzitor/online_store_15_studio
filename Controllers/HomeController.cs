@@ -13,20 +13,23 @@ using static online_store.Models.Functions_project;
 using static online_store.Models.DataBase;
 //
 
+//var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+//[Authorize(Roles="admin")] [Authorize]
+
+
 namespace online_store.Controllers
 {
     public class HomeController : Controller
     {
        
-        //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-        //[Authorize(Roles="admin")] [Authorize]
-
+        
+        //главная страница
             [AllowAnonymous]
         public ActionResult Index()
         {
-           
+
             //TODO работа с object
-            try { 
+            /*try { 
             var objs = db.Objects.OrderBy(x1 => x1.Id).Take(10).ToList();
                  ViewBag.Object_for_slider_1 =new List<Object_os_for_view>();
             foreach (var i in objs)
@@ -39,10 +42,13 @@ namespace online_store.Controllers
             }
                 ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
             }
-            catch { }
-            
+            catch { }*/
+            ViewBag.Object_for_slider_1 = Search(null,10,0);
+            ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
+
             return View();
         }
+        //отображение списка объектов дозагржается через ajax
         [AllowAnonymous]
         public ActionResult List_objects(string text_rearch = null,int count_object_from_one_load=10, int count_object_on_page=0)
         {
@@ -51,13 +57,15 @@ namespace online_store.Controllers
             ViewBag.Count_in_list = res.Count;
             return PartialView(res);
         }
+        //страница объектов
         [AllowAnonymous]
         public ActionResult List_objects_type(string text_rearch=null)
         {
             ViewBag.text_rearch = text_rearch;
-            ViewBag.Take_object = 30;
+            ViewBag.Take_object = 30;//30
             return View();
         }
+        //страница 1 объекта(товара)
         [AllowAnonymous]
         public ActionResult Object_view(int id)
         {
@@ -101,6 +109,7 @@ namespace online_store.Controllers
             else
                 return RedirectToAction("Personal_record","Home",new { });
         }
+        //добавление комментария
         [Authorize]
         [HttpPost]
         public ActionResult Add_comment(int id_object, string text, int mark)
@@ -108,10 +117,11 @@ namespace online_store.Controllers
             Work_with_comment(id_object, text, mark);            
             return RedirectToAction("Object_view", "Home", new { id = id_object });
         }
+        //отображение оценки объекта
         [AllowAnonymous]
         public ActionResult Add_mark_for_object(int id)
         {
-            //num для работы со списками объектов
+            
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
            
@@ -133,6 +143,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+        //добавление и изменение оценки объекту
         [Authorize]
         public ActionResult Change_mark_for_object(int id, int num)
         {
@@ -151,6 +162,7 @@ namespace online_store.Controllers
             }
             return RedirectToAction("Add_mark_for_object", "Home", new { id = id });
         }
+        //(страница)отображение одной покупки
         [AllowAnonymous]
         public ActionResult Purchase_view(int id)
         {
@@ -171,12 +183,14 @@ namespace online_store.Controllers
 
             return View(res);
         }
+        //страница если совершено "плохое" действие, произошла ошибка и тд
         [AllowAnonymous]
         public ActionResult Not_found_page()
         {
 
             return View();
         }
+        //страница редактировая учетки пользователя
         [Authorize]
         public ActionResult Edit_personal_record()
         {
@@ -185,6 +199,7 @@ namespace online_store.Controllers
 
             return View(res);
         }
+        //сохранение изменений учетки пользователя
         [Authorize]
         [HttpPost]
         public ActionResult Edit_personal_record(ApplicationUser a)
@@ -199,6 +214,7 @@ namespace online_store.Controllers
 
             return RedirectToAction("Personal_record","Home");
         }
+        //страница пользователя
         [AllowAnonymous]
         public ActionResult Personal_record(string id)
         {
@@ -227,6 +243,7 @@ namespace online_store.Controllers
 
             return View(res);
         }
+        //"короткое" отображение покупки
         [AllowAnonymous]
         public ActionResult Purchase_short(string id)
         {
@@ -234,6 +251,8 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+
+        //отображение списка покупок дозагржается через ajax
         [AllowAnonymous]
         public ActionResult Load_purchase_list(string id, int count_purchase_on_page = 0, int count_purchase_from_one_load = 20)
         {
@@ -246,6 +265,7 @@ namespace online_store.Controllers
             return PartialView(res);
 
         }
+        //отображение списка комментов дозагржается через ajax
         [AllowAnonymous]
         public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
         {
@@ -274,9 +294,14 @@ namespace online_store.Controllers
 
             }
             ViewBag.Count_in_list = res.Count;
+            if(count_comment_on_page==0&& ViewBag.Count_in_list == 0)
+            {
+                ViewBag.No_comments = true;
+            }
             res.Reverse();
             return PartialView(res);
         }
+        //partial для отображения, добавления,удаления follow объекта
         [Authorize]
         public ActionResult Object_follow(int id, bool? click)
         {
@@ -308,7 +333,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
-
+        //partial для отображения, добавления,изменения оценки(пользователем) объекта
         [AllowAnonymous]
         public ActionResult Mark_for_comment( int comment_id, bool?click ,int mark=0)
         {
@@ -355,6 +380,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+        //страница отображения корзины
         [Authorize]
         public ActionResult Basket_page()
         {
@@ -367,6 +393,7 @@ namespace online_store.Controllers
             return View(res);
         }
         //TODO
+        //действия на сервере которые происходят после нажатия пользователем "купить все" в его корзине
         [Authorize]
         public ActionResult Buy_basket()
         {
@@ -382,6 +409,12 @@ namespace online_store.Controllers
                     var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
                     db.Purchases_connect.Add(tmp);
                     db.SaveChanges();
+
+                    var obj = db.Objects.First(x1=>x1.Id== i.Id);
+                    obj.Count_buy += 1;
+                    obj.Remainder -= 1;
+                    db.SaveChanges();
+
                 }
                 db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
                 db.SaveChanges();
@@ -389,6 +422,7 @@ namespace online_store.Controllers
             }
             return View();
         }
+        //частичное отображение 1 объекта для корзины
         [Authorize]
         [ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
@@ -398,7 +432,7 @@ namespace online_store.Controllers
             var res = new Object_os_for_view(obj) { Images = imgs };
             return PartialView(res);
         }
-       
+       //часточное отображение объекта который зафоловил человек  --(personal_record)
         [Authorize]
         public ActionResult Follow_one_object_partial(int id)
         {
@@ -407,6 +441,7 @@ namespace online_store.Controllers
             var res = new Object_os_for_view(obj) { Images = imgs };
             return PartialView(res);
         }
+        //partial для отображения, добавления,удаления  объекта в\из корзины
         [Authorize]
         public ActionResult Object_add_basket(int id, bool? click)
         {
@@ -439,6 +474,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+        //удаление объекта из корзины
         [Authorize]
         public ActionResult Delete_object_from_basket(int id)
         {
@@ -452,6 +488,7 @@ namespace online_store.Controllers
                 ViewBag.Message = "Ошибка";
             return PartialView();
         }
+        //удаление объекта из follow
         [Authorize]
         public ActionResult Delete_object_from_follow(int id)
         {
@@ -466,7 +503,7 @@ namespace online_store.Controllers
         }
         
 
-
+        //удаление комментария
         [Authorize]
         public ActionResult Delete_Comment(int id)
         {
@@ -484,7 +521,7 @@ namespace online_store.Controllers
                 }
                 else
                 {
-                    //TODO хз может бурать(просто отображение пустого блока с сообщением) или доделать там оценки комментов
+                    //TODO хз может убрать(просто отображение пустого блока с сообщением) или доделать там оценки комментов
                     ViewBag.Message = "Удалить невозможно";
                     var user = db.Users.First(x1 => x1.Id == com.Person_id);
                     res = new Comment_view(com) { Image_user = user.Image, User_name = user.Name };
@@ -493,6 +530,7 @@ namespace online_store.Controllers
 
             return PartialView(res);
         }
+        //отображение списка комментов дозагржается через ajax
         [AllowAnonymous]
         public ActionResult Load_comment_for_object_view(int object_id,int count_comment_on_page=0,int count_comment_from_one_load=20, int com_us_id=-1)
         {
@@ -534,17 +572,17 @@ namespace online_store.Controllers
             }
             res.Reverse();
             ViewBag.Count_in_list = res.Count;
+            if (count_comment_on_page == 0 && ViewBag.Count_in_list == 0)
+            {
+                ViewBag.No_comments = true;
+            }
             return PartialView(res);
 
-            //var user = db.Users.First(x1 => x1.Id == check_id);
-            //var tmp = new Comment_view(com_person) { Image_user = user.Image, User_name = user.Name };
-            //res.Comments.Add(tmp);
-            //res.Comments.Reverse();
         }
 
 
 
-
+        //загрузка фотографии профиля человека
         [Authorize]
         [HttpPost]
         public ActionResult Add_new_main_image(HttpPostedFileBase[] uploadImage)
