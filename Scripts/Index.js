@@ -17,10 +17,18 @@ Index_OBJECT.Prev_slider_1_click = ()=> {
     Index_OBJECT.time_slider_1 = setTimeout(
         Index_OBJECT.Up_slider_1_time, 15000);
 };
+Index_OBJECT.Next_slider_1_click = () => {
+    Index_OBJECT.Next_slider_1();
+    clearTimeout(Index_OBJECT.time_slider_1);
+    clearInterval(Index_OBJECT.timer_slider_1);
 
 
+    Index_OBJECT.time_slider_1 = setTimeout(
+        Index_OBJECT.Up_slider_1_time, 15000);
+};
 
-Index_OBJECT.Next_slider_1=()=> {
+
+Index_OBJECT.Next_slider_1 = () => {
 
     var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
     slider_1.innerHTML = "";
@@ -49,7 +57,7 @@ Index_OBJECT.Next_slider_1=()=> {
 
     if (Index_OBJECT.First_num_slider_1 >= 1)
         Index_OBJECT.First_num_slider_1 -= 1;
-}
+};
 Index_OBJECT.Prev_slider_1=()=> {
     var num = Index_OBJECT.First_num_slider_1 + 2 * (1 - Index_OBJECT.Count_block_for_slider_1);
 

@@ -356,6 +356,27 @@ div.Add_mark_for_object_partial_class {
     height: 450px;
 }
 /*Object_view*/
+div.Object_view_main_slider_prev_button{
+     cursor:pointer;
+     height:50px;
+    width:50px;
+    background-image: url(/Content/images/prev_button_up.png);
+    background-size: 100% 100%;
+}
+div.Object_view_main_slider_next_button{
+     cursor:pointer;
+     height:50px;
+    width:50px;
+    background-image: url(/Content/images/next_button_down.png);
+    background-size: 100% 100%;
+}
+div.Object_view_external_button_prev_main_slider{
+     position:relative;
+    
+}
+div.Object_view_external_button_next_main_slider{
+    position:relative;
+}
 #Object_view_all_comment_block_id_load{
     margin-top:50px;
 }
@@ -374,7 +395,7 @@ div.Object_view_small_img_change {
     cursor:pointer;
 }
 div.Object_view_small_img_change_block {
-    height: 450px;
+    /*height: 450px;*/
     width: 75px;
 }
 div.Object_view_main_img{
@@ -659,7 +680,7 @@ div.Index_button_prev_slider_1{
     cursor:pointer;
      height:100%;
     width:100%;
-    background-image: url(/Content/images/prev_button.png);
+    background-image: url(/Content/images/prev_button_left.png);
     background-size: 100% 100%;
 }
 div.Index_external_button_prev_slider_1{
@@ -673,7 +694,7 @@ div.Index_button_next_slider_1{
     cursor:pointer;
      height:100%;
     width:100%;
-    background-image: url(/Content/images/next_button.png);
+    background-image: url(/Content/images/next_button_right.png);
     background-size: 100% 100%;
 }
 div.Index_external_button_next_slider_1{

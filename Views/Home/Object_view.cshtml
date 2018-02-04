@@ -8,15 +8,35 @@
 <h2>Object_view</h2>
 <div>
     <div class="div_inline_block Object_view_left_block">
-        <div class="Object_view_small_img_change_block div_inline_block">
-            @{ 
+      
+        <div>@Html.Hidden("count_obg_slider_2_id", ((int)ViewBag.count_obg_slider_2).ToString())</div>
+        <div class="div_inline_block">
+            <div id="Object_view_external_button_prev_main_slider_id" class="Object_view_external_button_prev_main_slider">
+                <div onclick="Object_view_OBJECT.Prev_slider_2_click()" id="" class="Object_view_main_slider_prev_button"></div>
+            </div>
+
+            <div class="Object_view_small_img_change_block" id="Object_view_small_img_change_block_id">
+
+
+            </div>
+
+            <div id="Object_view_external_button_next_main_slider_id" class="Object_view_external_button_next_main_slider">
+                <div onclick="Object_view_OBJECT.Next_slider_2_click()" id="" class="Object_view_main_slider_next_button"></div>
+            </div>
+        </div>
+        
+
+      
+        <div class="div_display_none">
+            @{
                 int s4_img_slider_main = 0;
             }
             @foreach (var i in Model.Images)
             {
-
-                <div class="Object_view_small_img_change">
-                    <img id=@string.Concat("Object_view_img_for_main_id",s4_img_slider_main) onclick="Object_view_OBJECT.change_image_click(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
+                <div id=@string.Concat("Object_view_small_img_change_hidden",s4_img_slider_main)>
+                    <div class="Object_view_small_img_change">
+                        <img id=@string.Concat("Object_view_img_for_main_id",s4_img_slider_main) onclick="Object_view_OBJECT.change_image_click(this)" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image)) />
+                    </div>
                 </div>
                 s4_img_slider_main += 1;
             }

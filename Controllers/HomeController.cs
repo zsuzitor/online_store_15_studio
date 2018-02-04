@@ -43,7 +43,7 @@ namespace online_store.Controllers
                 ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
             }
             catch { }*/
-            ViewBag.Object_for_slider_1 = Search(null,10,0);
+            ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10);
             ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
 
             return View();
@@ -80,6 +80,7 @@ namespace online_store.Controllers
             Object_os_for_view res = new Object_os_for_view(not_res);
             var img = db.Images.Where(x1 => x1.Something_id == id.ToString() && x1.What_something == "Object").ToList();
             res.Images = img;
+            ViewBag.count_obg_slider_2 = res.Images.Count;
             var com_person = db.Comments.FirstOrDefault(x1 => x1.Object_id == id &&x1.Person_id== check_id && !string.IsNullOrEmpty(x1.Text));
             //var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
             //TODO определить админ ли зашел и если да передавать true
