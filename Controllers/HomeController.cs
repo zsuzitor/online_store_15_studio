@@ -21,10 +21,17 @@ namespace online_store.Controllers
 {
     public class HomeController : Controller
     {
-       
-        
+        //TODO TEST // не нужно ,просто попробовать
+        [AllowAnonymous]
+        public ActionResult Test_slider()
+        {
+            var res = db.Images.Take(10);
+            ViewBag.Count_id_slider = res.Count();
+            return View(res);
+        }
+
         //главная страница
-            [AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Index()
         {
 

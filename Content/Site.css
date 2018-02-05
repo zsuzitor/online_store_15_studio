@@ -843,4 +843,25 @@ div.Mark_for_comment_replace_mark_block_class{
     top:0;
 }
 
+/*test slider good*/
+div.test_div{
+    position:relative;
+    height:300px;
+    width:300px;
+}
+div.test_tt1{
+     position:relative;
+    height:300px;
+    width:300px;
+     overflow: hidden;
+}
+#slider_tt{
+     position:relative;
+    height:300px;
+    width:910px;
+    top: 0;
+    left: -300px;
+    display: block;
+    /*transition:2s;*/ 
+}
 

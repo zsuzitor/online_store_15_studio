@@ -274,6 +274,7 @@
     <Content Include="Views\Home\Load_comment_for_personal_record.cshtml" />
     <Content Include="Views\Home\Mark_for_comment.cshtml" />
     <Content Include="Views\Home\Load_purchase_list.cshtml" />
+    <Content Include="Views\Home\Test_slider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
