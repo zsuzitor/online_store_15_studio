@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
 }
 @Scripts.Render("~/scripts/Index.js")
+@Scripts.Render("~/scripts/Slider.js")
 
 <h2>Index</h2>
 <div>
@@ -10,10 +11,67 @@
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
     @Html.ActionLink("добавить продукт", "Add_object", "Admin", new { }, new { })
     @Html.ActionLink("личная страница", "Personal_record", "Home", new { }, new { })
-    
-    <div class="Index_block_type_1">
+    <div>
+        <div class="Object_view_external_button_prev_main_slider div_inline_block">
+            <div onclick="slider.prev()" id="" class="Object_view_main_slider_prev_button"></div>
+        </div>
+        @Html.Hidden("count_id_slider_main_index", ((int)ViewBag.count_id_slider_main_index))
+        <div id="Index_block_type_1_id" class="Index_block_type_1 div_inline_block">
+            <div id="Index_main_slider_3_view_block_id"></div>
+        </div>
+        <div class="Object_view_external_button_next_main_slider div_inline_block">
+            <div onclick="slider.next()" id="" class="Object_view_main_slider_next_button"></div>
+        </div>
+    </div>
+    @{
+//int num = 0;
+    }
+    <div class="div_display_none">
+        <div id="Index_main_slider_one_slide_id0">
+            <div class="Index_main_slider_one_view_block div_inline_block">
+                <a href="" class="link_standart_for_div"><img src="/Content/images/index/index_slider_1.jpg" /></a>
+
+            </div>
+
+
+        </div>
+        <div id="Index_main_slider_one_slide_id1">
+            <div class="Index_main_slider_one_view_block div_inline_block">
+                <a href="" class="link_standart_for_div"><img src="/Content/images/index/index_slider_2.jpg" /></a>
+
+            </div>
+
+
+        </div>
+        <div id="Index_main_slider_one_slide_id2">
+            <div class="Index_main_slider_one_view_block div_inline_block">
+                <a href="" class="link_standart_for_div"><img src="/Content/images/index/index_slider_3.jpg" /></a>
+
+            </div>
+
+
+        </div>
+        @{ 
+/* @foreach (var i in ViewBag.main_list_slider)
+{
+<div id=@string.Concat("Index_main_slider_one_slide_id",num)>
+    <div class="Index_main_slider_one_view_block div_inline_block">
+        <a href=@Url.Action((string)i.action,"Home") class="link_standart_for_div"><img src=@i.scr /></a>
 
     </div>
+
+
+</div>
+
+num++;
+}*/
+        }
+       
+    </div>
+
+
+
+
     @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
     {
     <div class="Index_slider_1">

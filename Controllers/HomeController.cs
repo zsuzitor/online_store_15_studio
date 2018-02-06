@@ -34,22 +34,20 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-
-            //TODO работа с object
-            /*try { 
-            var objs = db.Objects.OrderBy(x1 => x1.Id).Take(10).ToList();
-                 ViewBag.Object_for_slider_1 =new List<Object_os_for_view>();
-            foreach (var i in objs)
+           
             {
-                var tmp = new Object_os_for_view(i);
-                var img=db.Images.FirstOrDefault(x1=>x1.What_something=="Object"&&x1.Something_id==i.Id.ToString());
-                if(img!=null)
-                tmp.Images.Add(img);
-                ViewBag.Object_for_slider_1.Add(tmp);
+                ViewBag.count_id_slider_main_index = 3;
+                var mass = new[] { new {scr= "/Content/images/index/index_slider_1.jpg", action=" " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
+                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " } };
+                ViewBag.main_list_slider = mass.ToList();
             }
-                ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
-            }
-            catch { }*/
+           
+
             ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10);
             ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
 

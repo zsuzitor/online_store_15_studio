@@ -710,12 +710,37 @@ div.Index_slider_1{
 }
 div.Index_block_type_1{
     height:300px;
-    background-image: url(/Content/images/index_big_1.jpg);
-    background-size: 100% 100%;
+    width:700px;
+    /*background-image: url(/Content/images/index_big_1.jpg);
+    background-size: 100% 100%;width:78%;margin-left:10%;*/
+     overflow: hidden;
+      position:relative;
+       
+       
+}
+
+div.Index_main_slider_one_view_block{
+    position:relative;
+    height:300px;
+    width:670px;
+   /* width:700px; width:33%;*/
+   
     
 }
 
-
+#Index_main_slider_3_view_block_id{
+     position:relative;
+    height:300px;
+    /*width:2110px;*/
+    width:300%;
+    top: 0;
+    
+    
+    /*transition:2s;*/ 
+}
+/**{
+    margin: 0;
+}*/
 
 /*
 */
@@ -844,6 +869,7 @@ div.Mark_for_comment_replace_mark_block_class{
 }
 
 /*test slider good*/
+/*
 div.test_div{
     position:relative;
     height:300px;
@@ -862,6 +888,6 @@ div.test_tt1{
     top: 0;
     left: -300px;
     display: block;
-    /*transition:2s;*/ 
+   
 }
-
+*/

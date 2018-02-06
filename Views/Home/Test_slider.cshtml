@@ -3,112 +3,28 @@
 @{
     ViewBag.Title = "Test_slider";
 }
-
+@Scripts.Render("~/scripts/Slider.js")
 <script>
 
-    var timer;//clearTimeout(Object_view_OBJECT.time_slider_1);
-    //setTimeout( Object_view_OBJECT.Up_slider_1_time, 6000);
-   
-    var start;
-    //
-    var left_slider = 0;
-    var activated_slider = false;
-    var current_num_img = 0;
-    var count_img_in_list = 0;
-    //
+
+    var slider;
+
     function up_slider() {
-        count_img_in_list = document.getElementById("count_id_slider").value;
-        reload();
-    }
-    function load_sl() {
-        
-        var div_ = document.getElementById("slider_tt");
-        if (current_num_img < 0) {
-            current_num_img = +count_img_in_list + +current_num_img;
-        }
-        var img = document.getElementById("test_id_img" + (current_num_img-1));
-        if (img != null) {
-            div_.innerHTML += img.innerHTML;
-        }
-        else {
-            //с конца
-            img = document.getElementById("test_id_img" + (count_img_in_list-1));
-            div_.innerHTML += img.innerHTML;
-        }
-         img = document.getElementById("test_id_img" + current_num_img);
-        if (img != null) {
-            div_.innerHTML += img.innerHTML;
-        }
-        else {
-            current_num_img=0;
-            img = document.getElementById("test_id_img" + current_num_img);
-            div_.innerHTML += img.innerHTML;
-        }
-        img = document.getElementById("test_id_img" + (current_num_img+1));
-        if (img != null) {
-            div_.innerHTML += img.innerHTML;
-        }
-        else {
-            img = document.getElementById("test_id_img" + 0);
-            div_.innerHTML += img.innerHTML;
-        } 
-    }
-    function reload() {
-        var div_ = document.getElementById("slider_tt");
-        left_slider = -300;
-        div_.style.left = left_slider+'px';
-        div_.innerHTML = "";
-        load_sl();
-        activated_slider = false;
-    }
-    function action_slider(a) {
-        if (!activated_slider) {
-            var element = document.getElementById("slider_tt");
-            activated_slider = true;
-            start = Date.now();
-            timer = setInterval(function () {
-                var timePassed = Date.now() - start;
+        var count_img_in_list__ = document.getElementById("count_id_slider").value;
+        slider = new slider_horizontal(count_img_in_list__, "slider_tt", "test_id_img", 1000, 300,3000);
 
-                if (timePassed >= 2000) {
-                    clearInterval(timer);
-                    if (a) {
-                        ++current_num_img;
-                    }
-                    else {
-                        --current_num_img;
-                    }
-                    reload();
-                    return;
-                }
-                draw(timePassed);
-            }, 20);
-
-            function draw(timePassed) {
-                if (a) {
-                    left_slider -= 3;
-                }
-                else {
-                    left_slider += 3;
-                }
-                element.style.left = left_slider + 'px';
-            }
-        }
-    }
-    function next() {
-        action_slider(true);
-    }
-    function prev() {
-        action_slider(false);
+        slider.reload();
     }
 
     document.addEventListener("DOMContentLoaded", up_slider);
+
 </script>
 
 <h2>Test_slider</h2>
 
 
 <div  class="Object_view_external_button_prev_main_slider div_inline_block">
-    <div onclick="prev()" id="" class="Object_view_main_slider_prev_button"></div>
+    <div onclick="slider.prev()" id="" class="Object_view_main_slider_prev_button"></div>
 </div>
 
 @Html.Hidden("count_id_slider",((int)ViewBag.Count_id_slider))
@@ -118,7 +34,7 @@
 
 
 <div  class="Object_view_external_button_next_main_slider div_inline_block">
-    <div onclick="next()" id="" class="Object_view_main_slider_next_button"></div>
+    <div onclick="slider.next()" id="" class="Object_view_main_slider_next_button"></div>
 </div>
 
 
