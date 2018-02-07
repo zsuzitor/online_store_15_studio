@@ -276,5 +276,12 @@ namespace online_store.Models
             Purchases = new List<Purchase>();
         }
     }
+    public class Image_link
+    {
+        public string Path_image { get; set; }
+        public byte[] Byte_image { get; set; }
+        public string Action { get; set; }
+        public string Controller { get; set; }
+    }
 
-}
+    }

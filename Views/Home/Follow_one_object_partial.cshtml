@@ -31,7 +31,7 @@
         @Ajax.ActionLink("Удалить", "Delete_object_from_follow", "Home", new { id = Model.Db.Id },
         new AjaxOptions { UpdateTargetId = string.Concat("Follow_one_object_partial_one_block_id", Model.Db.Id),
             LoadingElementId = "Main_preloader_id",
-            LoadingElementDuration = 1000
+            LoadingElementDuration = 200
         }, new { })
     </div>
 </div>

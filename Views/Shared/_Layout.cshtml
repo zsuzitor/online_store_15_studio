@@ -18,11 +18,8 @@
 
     <div class="div_body">@RenderBody()</div>
 
-    <hr /><div class="div_footer"></div>
-    <footer>
-        <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-    </footer>
-
+    <hr />
+    @Html.Action("Main_footer", "Home")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

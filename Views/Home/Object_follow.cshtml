@@ -7,7 +7,7 @@
             @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true },
            new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Id),
                LoadingElementId = "Main_preloader_id",
-               LoadingElementDuration = 1000
+               LoadingElementDuration = 200
            },
            new { @class = "link_standart_for_div" })
         </div>
@@ -18,7 +18,7 @@
             @Ajax.ActionLink(" ", "Object_follow", new { id = ViewBag.Id, click = true  },
            new AjaxOptions { UpdateTargetId = string.Concat("Object_follow_block_all_id", ViewBag.Id),
                LoadingElementId = "Main_preloader_id",
-               LoadingElementDuration = 1000
+               LoadingElementDuration = 200
            },
            new { @class = "link_standart_for_div" })
         </div>

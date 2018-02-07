@@ -88,7 +88,8 @@ a {
     }*/
 
 div.div_footer{
-    height:200px;
+    position:relative;
+    height:300px;
     background-color:grey;
     width:100%;
 }
@@ -710,7 +711,6 @@ div.Index_slider_1{
 }
 div.Index_block_type_1{
     height:300px;
-    width:700px;
     /*background-image: url(/Content/images/index_big_1.jpg);
     background-size: 100% 100%;width:78%;margin-left:10%;*/
      overflow: hidden;
@@ -722,8 +722,9 @@ div.Index_block_type_1{
 div.Index_main_slider_one_view_block{
     position:relative;
     height:300px;
-    width:670px;
-   /* width:700px; width:33%;*/
+   width:100%;
+    
+   /* width:700px; width:33%; width:670px;*/
    
     
 }
@@ -734,13 +735,30 @@ div.Index_main_slider_one_view_block{
     /*width:2110px;*/
     width:300%;
     top: 0;
-    
-    
-    /*transition:2s;*/ 
+
 }
-/**{
-    margin: 0;
-}*/
+div.Index_main_slider_prev_but_v{
+    position:relative;
+    width:9%;
+}
+div.Index_main_slider_next_but_v{
+    position:relative;
+    width:9%;
+}
+div.Index_main_slider_prev_button{
+    cursor:pointer;
+     height:300px;
+    
+    background-image: url(/Content/images/prev_button_left.png);
+    background-size: 100% 100%;
+}
+div.Index_main_slider_next_button{
+    cursor:pointer;
+     height:300px;
+   
+    background-image: url(/Content/images/next_button_right.png);
+    background-size: 100% 100%;
+}
 
 /*
 */
@@ -868,26 +886,17 @@ div.Mark_for_comment_replace_mark_block_class{
     top:0;
 }
 
-/*test slider good*/
-/*
-div.test_div{
-    position:relative;
-    height:300px;
-    width:300px;
-}
-div.test_tt1{
-     position:relative;
-    height:300px;
-    width:300px;
-     overflow: hidden;
-}
-#slider_tt{
-     position:relative;
-    height:300px;
-    width:910px;
-    top: 0;
-    left: -300px;
-    display: block;
+div.Main_footer_one_link{
    
+    width:50px;
+    height:50px;
+    
+    margin-left:200px;
+    
 }
-*/
+div.Main_footer_link_block{
+    -webkit-transition: all 2000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 2000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+   top:0;
+    position:relative;
+}

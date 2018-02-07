@@ -34,18 +34,16 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-           
-            {
-                ViewBag.count_id_slider_main_index = 3;
-                var mass = new[] { new {scr= "/Content/images/index/index_slider_1.jpg", action=" " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " },
-                    new { scr = "/Content/images/index/index_slider_1.jpg", action = " " } };
-                ViewBag.main_list_slider = mass.ToList();
-            }
+            ViewBag.main_list_slider = new List<Image_link>() { new Image_link() { Path_image="/Content/images/index/index_slider_1.jpg",Action=" ",Controller="Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_2.jpg", Action =" ", Controller = "Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_3.jpg", Action =" ", Controller = "Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_4.jpg", Action =" ", Controller = "Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_5.jpg", Action =" ", Controller = "Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_6.jpg", Action =" ", Controller = "Home" },
+                new Image_link() { Path_image ="/Content/images/index/index_slider_7.jpg", Action =" ", Controller = "Home" } };
+            
+                ViewBag.count_id_slider_main_index = 7;
+                
            
 
             ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10);
@@ -613,6 +611,13 @@ namespace online_store.Controllers
 
 
         //-----------------------------------
+        [ChildActionOnly]
+        public ActionResult Main_footer()
+        {
+
+
+            return PartialView();
+        }
         [ChildActionOnly]
         public ActionResult Main_header()
         {

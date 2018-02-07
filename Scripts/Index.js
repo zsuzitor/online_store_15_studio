@@ -2,20 +2,14 @@
 var slider;
 Index_OBJECT.up_slider = () => {
     var count_img_in_list__ = document.getElementById("count_id_slider_main_index").value;
-    //alert(count_img_in_list__)
     var width = document.documentElement.clientWidth;
     if (width < 960) {
         width = 960;
     }
-   // alert(width * 0.6)
     var block = document.getElementById("Index_block_type_1_id");
     width = width * 0.8 - width * 0.8 * 0.2;
     block.style.width = width + 'px';
-    //block = document.getElementById("Index_main_slider_one_view_block_id");
-    //block.style.width = width * 0.6 + 'px';
-   
-    slider = new slider_horizontal(count_img_in_list__, "Index_main_slider_3_view_block_id", "Index_main_slider_one_slide_id", 1000, width, 0);
-
+    slider = new slider_horizontal(count_img_in_list__, "Index_main_slider_3_view_block_id", "Index_main_slider_one_slide_id", 1000, width, 6000);
     slider.reload();
 }
 //

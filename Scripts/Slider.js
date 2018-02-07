@@ -32,34 +32,32 @@ class slider_horizontal {
         //alert(part_id_one_img + (current_num_img - 1));
         if (img != null) {
 
-          
-        
-
-
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:"+this.width_one_image+"px;'"+">" + img.innerHTML + "</div>"
         }
         else {
             //с конца
             img = document.getElementById(this.part_id_one_img + (this.count_img_in_list - 1));
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:" + this.width_one_image + "px;'" + ">" + img.innerHTML + "</div>"
         }
         img = document.getElementById(this.part_id_one_img + this.current_num_img);
         if (img != null) {
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:" + this.width_one_image + "px;'" + ">" + img.innerHTML + "</div>"
         }
         else {
             this.current_num_img = 0;
             img = document.getElementById(this.part_id_one_img + this.current_num_img);
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:" + this.width_one_image + "px;'" + ">" + img.innerHTML + "</div>"
         }
         img = document.getElementById(this.part_id_one_img + (this.current_num_img + 1));
         if (img != null) {
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:" + this.width_one_image + "px;'" + ">" + img.innerHTML + "</div>"
         }
         else {
             img = document.getElementById(this.part_id_one_img + 0);
-            div_.innerHTML += img.innerHTML;
+            div_.innerHTML += "<div class='div_inline_block' style='width:" + this.width_one_image + "px;'" + ">" + img.innerHTML + "</div>"
         }
+
+        
     }
     reload() {
         var div_ = document.getElementById(this.img_3_block_id);
@@ -146,33 +144,57 @@ class slider_horizontal {
 var slider;
 
 function up_slider() {
-    var count_img_in_list__ = document.getElementById("count_id_slider").value;
-    slider = new slider_horizontal(count_img_in_list__, "slider_tt", "test_id_img", 1000, 300);
-
+//из hidden берем количество объектов в списке
+    var count_img_in_list__ = document.getElementById("count_id_slider_main_index").value;
+    //расчитываем ширину экрана
+    var width = document.documentElement.clientWidth;
+    if (width < 960) {
+        width = 960;
+    }
+    var block = document.getElementById("Index_block_type_1_id");//блок в котором будет показан текущий слайд
+    //ширина для слайда
+    width = width * 0.8 - width * 0.8 * 0.2;
+    block.style.width = width + 'px';
+    //создаем объект слайдера и запускаем его
+    //params :
+    //1- количество объектов в списке
+    //2- id блока в котором будут находиться активные объекты
+    //3- часть id блока с очередным слайдом (id формируется: Index_main_slider_one_slide_id0,Index_main_slider_one_slide_id1 .....)
+    //4- скорость прокрутки
+    //5- ширина 1 слайда
+    //6- интервал смены слайда (1000==1s)
+    slider = new slider_horizontal(count_img_in_list__, "Index_main_slider_3_view_block_id", "Index_main_slider_one_slide_id", 1000, width, 0);
     slider.reload();
 }
 
 document.addEventListener("DOMContentLoaded", up_slider);
 
+
 div.test_div{
+    height:300px;
+overflow: hidden;
+position:relative;    
+}
+
+div.test_tt1{
+    position:relative;
+    height:300px; 
+    width:100%;
+}
+
+#slider_tt{
     position:relative;
     height:300px;
-    width:300px;
-}
-div.test_tt1{
-     position:relative;
-    height:300px;
-    width:300px;
-     overflow: hidden;
-}
-#slider_tt{
-     position:relative;
-    height:300px;
-    width:910px;
-    top: 0;
     
-   
-   
+    width:300%;
+    top: 0;
+ 
+}
+
+ 
+}div.div_inline_block {
+    display: inline-block;
+    vertical-align: top;
 }
 
 */

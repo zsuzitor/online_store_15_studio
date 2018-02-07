@@ -47,6 +47,7 @@ function isVisible(tag) {
 $(function () {
     $(window).scroll(function () {
         Change_main_header();
+        Check_drop_footer();
     });
 });
 
@@ -75,7 +76,18 @@ function Change_main_header() {
 
 }
 
+//-----------------------------------------------------
 
+function Check_drop_footer() {
+    var bl = document.getElementById("Main_footer_link_block_id")
+    
+    if (isVisible(bl)) {
+        bl.style.top = '100px';
+    }
+    else {
+        bl.style.top = '0px';
+    }
+}
 
 
 
