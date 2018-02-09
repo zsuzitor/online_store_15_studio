@@ -710,10 +710,8 @@ div.Index_slider_1{
     margin-top:20px;
 }
 div.Index_block_type_1{
-    height:300px;
-    /*background-image: url(/Content/images/index_big_1.jpg);
-    background-size: 100% 100%;width:78%;margin-left:10%;*/
-     overflow: hidden;
+    margin-left:5%;
+    
       position:relative;
        
        
@@ -721,22 +719,23 @@ div.Index_block_type_1{
 
 div.Index_main_slider_one_view_block{
     position:relative;
-    height:300px;
+    height:100%;
    width:100%;
     
-   /* width:700px; width:33%; width:670px;*/
+   
    
     
 }
-
+/*
 #Index_main_slider_3_view_block_id{
      position:relative;
     height:300px;
-    /*width:2110px;*/
+   
     width:300%;
     top: 0;
 
-}
+}*/
+/*
 div.Index_main_slider_prev_but_v{
     position:relative;
     width:9%;
@@ -744,7 +743,8 @@ div.Index_main_slider_prev_but_v{
 div.Index_main_slider_next_but_v{
     position:relative;
     width:9%;
-}
+}*/
+/*
 div.Index_main_slider_prev_button{
     cursor:pointer;
      height:300px;
@@ -758,7 +758,7 @@ div.Index_main_slider_next_button{
    
     background-image: url(/Content/images/next_button_right.png);
     background-size: 100% 100%;
-}
+}*/
 
 /*
 */
@@ -899,4 +899,83 @@ div.Main_footer_link_block{
   transition: all 2000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
    top:0;
     position:relative;
+}
+
+/*SLIDER*/
+/*block1----------может изменить остальной код*/
+
+/*block1  END*/
+/*block2 ссылку на картинку нужно изменить*/
+div._Slider_prev_butt{
+	cursor:pointer;
+	width:100px;
+	height:100px;
+	 background-image: url(/Content/images/prev_button_left.png);
+    background-size: 100% 100%;
+}
+div._Slider_next_butt{
+	 background-image: url(/Content/images/next_button_right.png);
+    background-size: 100% 100%;
+	cursor:pointer;
+	width:100px;
+	height:100px;
+}
+/*block2  END*/
+div._Slider_div_inline_block {
+    display: inline-block;
+    vertical-align: top;
+}
+div._Slider_main_block_slider{
+     overflow: hidden;
+      position:relative;    
+}
+#_Slider_3_view_block_id{
+     position:relative;
+    top: 0;
+}
+div._Slider_block_change_slide{
+	position:absolute;
+	display:none;
+   
+}
+div._Slider_one_button_change{
+	width:30px;
+	height:30px;
+	background-color:black;
+	margin-left:5px;
+	margin-top:5px;
+	 border-radius: 30px;
+	 /*padding-top:5px;
+	 padding-left:5px;*/
+	border:1px solid white;
+	cursor:pointer;
+     -webkit-box-sizing:content-box;
+    
+    
+}
+div._Slider_one_button_change_curr{
+	width:20px;
+	height:20px;
+	background-color:white;
+	margin-left:5px;
+	margin-top:5px;
+	 border-radius: 20px;
+}
+#_Slider_3_view_block_id:hover div._Slider_block_change_slide{
+	display:block;
+}
+div._Slider_next_prev_block{
+	border:2px solid black;
+}
+#_Slider_3_view_block_id:hover #_Slider_next_prev_block_id{
+	display:block;
+}
+#_Slider_next_prev_block_id{
+	position:absolute;
+	display:none;
+	width:205px;
+	height:100px;
+}
+div._Slider_next_prev_block_tr{
+	 transform: rotate(90deg);
 }
