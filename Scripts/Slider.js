@@ -11,13 +11,13 @@
         this.object_name = object_name_;
         this.timer_change = timer_change_;
 
-        this.interval_changes;
-        this.current_num_img = 0;
-        this.activated_slider = false;
-        this.bias = 0;
-        this.start;
-        this.timer;
-
+        this.interval_changes;// переменная для интервала смены слайдов
+        this.current_num_img = 0;//текущий номер слайда
+        this.activated_slider = false;//(если пользователь что то нажал но код еще не выполнился true)
+        this.bias = 0;//смещение блока с 3мя слайдами
+        this.start;//таймер для анимаци
+        this.timer;//таймер для анимаци
+        this.animation = false;//разрешение пользователем анимации
     }
 
     //-----
@@ -32,61 +32,62 @@
 
         if (img != null) {
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
         else {
             //с конца
             img = document.getElementById(slider.part_id_one_img + (slider.count_img_in_list - 1));
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
         img = document.getElementById(slider.part_id_one_img + slider.current_num_img);
         if (img != null) {
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
         else {
             slider.current_num_img = 0;
             img = document.getElementById(slider.part_id_one_img + slider.current_num_img);
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
         img = document.getElementById(slider.part_id_one_img + (slider.current_num_img + 1));
         if (img != null) {
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
         else {
             img = document.getElementById(slider.part_id_one_img + 0);
             if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='height:100%; width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
             else {
-                div_.innerHTML += "<div style='width:100%; height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
+                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
             }
         }
     }
 
+    //старт слайдера
     up() {
         var slider = this;
         var main = document.getElementById(slider.id_main_block);
@@ -102,9 +103,13 @@
         }
         str += "'></div></div>";
         main.innerHTML = str;
+
+        if (slider.timer_change != 0) {
+            slider.animation = true;
+        }
         slider.reload();
     }
-
+    //обновить слайды+ добавить кнопки и тд
     reload() {
         var slider = this;
         var div_ = document.getElementById("_Slider_3_view_block_id");
@@ -126,9 +131,23 @@
 
         //добавление кнопок перехода
         var str = "<div id='_Slider_block_change_slide_id' class='_Slider_block_change_slide'>"
+        if (slider.timer_change != 0) {
+            str += "<div id='_Slider_cont_timer_id' onclick='" + slider.object_name + ".pause_slider()"
+            str += "' class='_Slider_cont_timer";
+            if (slider.horizontal_bool) {
+                str += " _Slider_div_inline_block";
+            }
+            str += "'>";
+            if (slider.animation) {
+                str += "<div class='_Slider_cont_timer_true'></div>";
+            }
+            else {
+                str += "<div class='_Slider_cont_timer_false'></div>";
+            }
+            str += "</div>";
+        }
         for (var i = 0; i < slider.count_img_in_list; ++i) {
-            //
-            var tmp = "<div  class='_Slider_one_button_change"
+            let tmp = "<div  class='_Slider_one_button_change"
             if (slider.horizontal_bool) {
                 tmp += " _Slider_div_inline_block";
             }
@@ -173,7 +192,7 @@
             but.style.top = slider.height_slide * 2 - 150 + "px";
             but.style.left = slider.width_slide - 150 + "px";
         }
-        if (slider.timer_change != 0) {
+        if (slider.timer_change != 0 && slider.animation) {
             slider.interval_changes = setInterval(function () {
                 slider.next();
             }, slider.timer_change);
@@ -183,8 +202,26 @@
     num_slide(num) {
         var slider = this;
         slider.current_num_img = num;
+        clearInterval(slider.interval_changes);
         slider.reload();
+    }
 
+    pause_slider() {
+        var slider = this;
+        slider.animation = !slider.animation;
+        var block = document.getElementById('_Slider_cont_timer_id');
+        var str = "";
+        if (slider.animation) {
+            str += "<div class='_Slider_cont_timer_true'></div>";
+            slider.interval_changes = setInterval(function () {
+                slider.next();
+            }, slider.timer_change);
+        }
+        else {
+            str += "<div class='_Slider_cont_timer_false'></div>";
+            clearInterval(slider.interval_changes);
+        }
+        block.innerHTML = str;
     }
 
     action_slider(a) {
@@ -245,6 +282,8 @@
         slider.clear_button();
         clearTimeout(slider.interval_changes);
         slider.action_slider(true);
+        clearInterval(slider.interval_changes);
+
     }
 
     prev() {
@@ -252,6 +291,8 @@
         slider.clear_button();
         clearTimeout(slider.interval_changes);
         slider.action_slider(false);
+        clearInterval(slider.interval_changes);
+
 
     }
 }
