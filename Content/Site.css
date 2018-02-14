@@ -407,7 +407,8 @@ div.Object_view_main_img_under {
     width: 300px;
     height: 650px;
 }div.Object_view_left_block {
-    width: 50%;
+    /*width:400px;*/
+    width:50%;
 }
 div.Object_view_right_block{
     width:49%;
@@ -449,6 +450,15 @@ div.Object_view_one_comment_text{
     overflow-y: auto;
 }
 /*Object_add_basket*/
+div.Object_add_basket_follow_img_no_object {
+    background-image: url(/Content/images/truck_empty.jpg);
+    background-size: 100% 100%;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    left: 0;
+    opacity:0.3;
+}
 div.Object_add_basket_follow_img_empty {
     background-image: url(/Content/images/truck_empty.jpg);
     background-size: 100% 100%;
@@ -474,18 +484,30 @@ div.Basket_one_object_partial_one_block{
       padding-left: 10px;
     padding-top: 10px;
 }
+div.Basket_one_object_partial_havent_obg{
+    opacity:0.3;
+    height:190px;
+    width:90%;
+    display: inline-block;
+    vertical-align: top;
+}
 div.Basket_one_object_left_block{
     width:250px;
     height:100%;
 }
 div.Basket_one_object_right_block {
-    width: 55%;
+   
     height: 100%;
 }
 div.Basket_one_object_delete_block {
     width: 75px;
     height: 100%;
     float:right;
+    
+}
+p.Basket_one_object_partial_havent_obg_message{
+    font-size:14pt;
+
 }
 div.Basket_page_all_price_block{
    position:relative;

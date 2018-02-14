@@ -1,7 +1,13 @@
 ﻿
 <div>
+    @if (ViewBag.Count_obj == 0)
+    {
+        <div title="Нет в наличии" class="Object_add_basket_follow_img_no_object"></div>
+
+    }
     @if (ViewBag.InBasket == false)
     {
+        
         <div title="Добавить в корзину" class="Object_add_basket_follow_img_empty">
             @Ajax.ActionLink(" ", "Object_add_basket", new { id = ViewBag.Id, click = true  },
            new AjaxOptions { UpdateTargetId = string.Concat("Object_add_basket_block_all_id", ViewBag.Id),

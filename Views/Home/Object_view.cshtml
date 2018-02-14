@@ -56,11 +56,8 @@
 
             </div>
             <div>
-                <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
-                    @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
-                </div>
-                <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
-                <div id=@string.Concat("Add_mark_for_object_partial_id",Model.Db.Id) class="Object_view_mark_main">@Html.Action("Add_mark_for_object", "Home", new { id = Model.Db.Id })</div>
+               
+               <div id=@string.Concat("Add_mark_for_object_partial_id",Model.Db.Id) class="Object_view_mark_main">@Html.Action("Add_mark_for_object", "Home", new { id = Model.Db.Id })</div>
             </div>
         </div>
         @if (((bool)ViewBag.admin) == true)
@@ -87,7 +84,25 @@
         <div>@Html.Label(Model.Db.Composition)</div>
         <div>@Html.Label(Model.Db.Description)</div>
         <div>@Html.Label(Model.Db.Count_buy.ToString())</div>
+        <hr />
+        <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
+            @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
+        </div>
+        <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
 
+        @{ 
+/* <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
+        @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
+    </div>
+
+              <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
+
+             */
+
+/*<div>
+@Html.ActionLink("Добавить в желаемое","","Home",new { },new { })
+</div>*/
+        }
 
 
 

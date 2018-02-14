@@ -384,6 +384,24 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+        
+            [Authorize]
+        public ActionResult Delete_basket_havent()
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();
+            for(var i=0;i< res.Count; ++i)
+            {
+                var obj = db.Objects.First(x1 => x1.Id == res[i].Object_id);
+                if (obj.Remainder < 1)
+                {
+                    db.Baskets.Remove(res[i]);
+                }
+
+            }
+            db.SaveChanges();
+            return RedirectToAction("Basket_page", "Home",new { });
+        }
         //страница отображения корзины
         [Authorize]
         public ActionResult Basket_page()
@@ -391,6 +409,12 @@ namespace online_store.Controllers
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);     //ToList() hz
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
+            
+            if (summ_1.Where(x1 => x1.Remainder < 1).Count()>0)
+            {
+                ViewBag.Havent_message = "В вашей корзине присутствуют предметы, которых на данный момент нет в наличии, перед подтверждением покупки, их необходимо удалить";
+            }
+            summ_1 = summ_1.Where(x1 => x1.Remainder > 0).ToList();
             ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
 
@@ -405,24 +429,33 @@ namespace online_store.Controllers
             var bsk_obj = db.Baskets.Where(x1=>x1.Person_id==check_id).Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
             if (bsk_obj.Count > 0)
             {
-                var prc = new Purchase() { Person_id = check_id, Price = bsk_obj.Sum(x1 => (((int)(x1.Price * (1 - x1.Discount))))) };//мб в цикле прибалять
-                db.Purchases.Add(prc);
-                db.SaveChanges();
-                foreach (var i in bsk_obj)
+                var havent = bsk_obj.Where(x1 => x1.Remainder < 1);
+                if (havent.Count() == 0)
                 {
-                    var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
-                    db.Purchases_connect.Add(tmp);
+                    var prc = new Purchase() { Person_id = check_id, Price = bsk_obj.Sum(x1 => (((int)(x1.Price * (1 - x1.Discount))))) };//мб в цикле прибалять
+                    db.Purchases.Add(prc);
                     db.SaveChanges();
+                    foreach (var i in bsk_obj)
+                    {
+                        var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
+                        db.Purchases_connect.Add(tmp);
+                        db.SaveChanges();
 
-                    var obj = db.Objects.First(x1=>x1.Id== i.Id);
-                    obj.Count_buy += 1;
-                    obj.Remainder -= 1;
+                        var obj = db.Objects.First(x1 => x1.Id == i.Id);
+                        obj.Count_buy += 1;
+                        obj.Remainder -= 1;
+                        db.SaveChanges();
+
+                    }
+                    db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
                     db.SaveChanges();
-
+                    //TODO у всех объектов сделать количество -1
                 }
-                db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
-                db.SaveChanges();
-                //TODO у всех объектов сделать количество -1
+                else
+                {
+                    ViewBag.Error_message = "в корзине присутствуют объекты которых нет в наличии, их необходимо удалить";
+                }
+
             }
             return View();
         }
@@ -450,30 +483,39 @@ namespace online_store.Controllers
         public ActionResult Object_add_basket(int id, bool? click)
         {
             ViewBag.Id = id;
-            
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            ViewBag.InBasket = false;
-            if (!string.IsNullOrEmpty(check_id))
+            ViewBag.Count_obj = 0;
+            var obj = db.Objects.FirstOrDefault(x1=>x1.Id==id);
+            if (obj != null)
             {
-                var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
-                if (bask != null)
+                ViewBag.Count_obj = obj.Remainder;
+            }
+            if (ViewBag.Count_obj != 0)
+            {
+                var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                ViewBag.InBasket = false;
+                if (!string.IsNullOrEmpty(check_id))
                 {
-                    ViewBag.InBasket = true;
-                }
-                if (click == true)
-                {
-                    if (ViewBag.InBasket == true)
+                    var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
+                    if (bask != null)
                     {
-                        db.Baskets.Remove(bask);
+                        ViewBag.InBasket = true;
                     }
-                    else
+                    if (click == true)
                     {
-                        db.Baskets.Add(new Connect_basket() { Object_id = id, Person_id = check_id });
+                        if (ViewBag.InBasket == true)
+                        {
+                            db.Baskets.Remove(bask);
+                        }
+                        else
+                        {
+                            db.Baskets.Add(new Connect_basket() { Object_id = id, Person_id = check_id });
+                        }
+                        db.SaveChanges();
+                        ViewBag.InBasket = !ViewBag.InBasket;
                     }
-                    db.SaveChanges();
-                    ViewBag.InBasket = !ViewBag.InBasket;
                 }
             }
+            
 
 
             return PartialView();

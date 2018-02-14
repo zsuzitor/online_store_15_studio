@@ -5,6 +5,17 @@
 
 <h2>Buy_basket</h2>
 
-<h1>Спасибо за покупку!</h1>
-@Html.ActionLink("Продолжить","Index","Home",new { },new { })
-@Html.ActionLink("Моя страница", "Personal_record", "Home", new { }, new { })
+@if (ViewBag.Error_message == null)
+{
+    <h1>Спасибо за покупку!</h1>
+    @Html.ActionLink("Продолжить", "Index", "Home", new { }, new { })
+    @Html.ActionLink("Моя страница", "Personal_record", "Home", new { }, new { })
+
+}
+@if (ViewBag.Error_message != null)
+{
+    <p>@ViewBag.Error_message</p>
+    @Html.ActionLink("Удалить самостоятельно", "Basket_page","Home",new { },new { })
+    <hr />
+    @Html.ActionLink("Удалить автоматически", "Delete_basket_havent", "Home", new { }, new { })
+}
