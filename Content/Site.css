@@ -477,6 +477,12 @@ div.Object_add_basket_follow_img_full {
     left: 0;
 }
 /*Basket_one_object*/
+div.Basket_one_object_partial_have_obg{
+    height:190px;
+    width:90%;
+    display: inline-block;
+    vertical-align: top;
+}
 div.Basket_one_object_partial_one_block{
     height:200px;
      background-color:#fafde6;

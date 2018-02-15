@@ -392,7 +392,8 @@ namespace online_store.Controllers
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();
             for(var i=0;i< res.Count; ++i)
             {
-                var obj = db.Objects.First(x1 => x1.Id == res[i].Object_id);
+                var tmp_id = res[i].Object_id;
+                var obj = db.Objects.First(x1 => x1.Id == tmp_id);
                 if (obj.Remainder < 1)
                 {
                     db.Baskets.Remove(res[i]);
@@ -417,8 +418,9 @@ namespace online_store.Controllers
             summ_1 = summ_1.Where(x1 => x1.Remainder > 0).ToList();
             ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
-
-            return View(res);
+           
+            ViewBag.obj_list_id = res.Select(x1 => x1.Object_id);
+            return View();
         }
         //TODO
         //действия на сервере которые происходят после нажатия пользователем "купить все" в его корзине
@@ -464,9 +466,11 @@ namespace online_store.Controllers
         [ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
         {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()).ToList();
             var obj = db.Objects.First(x1 => x1.Id == id);
-            var res = new Object_os_for_view(obj) { Images = imgs };
+            var count = db.Baskets.First(x1=>x1.Person_id== check_id&&x1.Object_id==id);
+            var res = new Object_os_for_view(obj) { Images = imgs,Count= count.Count_obj };
             return PartialView(res);
         }
        //часточное отображение объекта который зафоловил человек  --(personal_record)
@@ -487,7 +491,7 @@ namespace online_store.Controllers
             var obj = db.Objects.FirstOrDefault(x1=>x1.Id==id);
             if (obj != null)
             {
-                ViewBag.Count_obj = obj.Remainder;
+                ViewBag.Count_obj = obj.Remainder;//
             }
             if (ViewBag.Count_obj != 0)
             {

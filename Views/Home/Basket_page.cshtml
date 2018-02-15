@@ -1,4 +1,6 @@
-﻿@model IEnumerable<online_store.Models.Connect_basket>
+﻿@{
+//model IEnumerable<string>//online_store.Models.Connect_basket
+}
 
 @{
     ViewBag.Title = "Basket_page";
@@ -13,11 +15,11 @@
         <hr />
     }
     
-    @if (Model.Count() > 0)
+    @if (((IEnumerable<int>)ViewBag.obj_list_id).Count() > 0)
     {
-        foreach (var i in Model)
+        foreach (var i in ((IEnumerable<int>)ViewBag.obj_list_id))
         {
-            @Html.Action("Basket_one_object_partial", "Home", new { id = i.Object_id })
+            @Html.Action("Basket_one_object_partial", "Home", new { id = i })
 
         }
         <hr />
@@ -33,7 +35,7 @@
         <div class="Basket_page_buy_but">@Html.ActionLink("Купить Все", "Buy_basket", "Home", new { }, new { @class = "link_standart_for_div" })</div>
 
     }
-@if (Model.Count() == 0)
+@if (((IEnumerable<int>)ViewBag.obj_list_id).Count() == 0)
 {
     <h1>Ваша корзина пуста</h1>
     <h1>@Html.ActionLink("Присутпить к покупкам", "Index", "Home")</h1>

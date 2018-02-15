@@ -20,6 +20,7 @@ namespace online_store.Models
         public int Count_buy { get; set; }
         public int Remainder { get; set; }
         public bool Show_flag { get; set; }
+        
         public Object_os()
         {
             Id = 0;
@@ -34,6 +35,7 @@ namespace online_store.Models
             Discount = 0;
             Remainder = 0;
             Show_flag = true;
+            
         }
         public bool Eq(Object_os a)
         {
@@ -49,6 +51,7 @@ namespace online_store.Models
             Discount = a.Discount;
             Remainder = a.Remainder;
             Show_flag = a.Show_flag;
+            
             return true;
         }
         public bool Seacrh(string str)
@@ -77,11 +80,13 @@ namespace online_store.Models
     public class Object_os_for_view
     {
         public Object_os Db;
+        public int Count { get; set; }
         public List<Connect_image> Images;
         public List<Comment_view> Comments;
         public Object_os_for_view(Object_os a)
         {
             Db = a;
+            Count = 0;
             Images = new List<Connect_image>();
             Comments = new List<Comment_view>();
         }

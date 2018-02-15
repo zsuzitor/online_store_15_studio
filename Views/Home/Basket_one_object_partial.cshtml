@@ -9,7 +9,7 @@
     }
     else
     {
-        have = "div_inline_block";
+        have = "Basket_one_object_partial_have_obg";
     }
 }
 
@@ -38,6 +38,7 @@
             <p>Цена без скидки: @Model.Db.Price</p>
             <p>Скидка: @Model.Db.Discount</p>
             <p>Цена со скидкой: @(Model.Db.Price * (1 - @Model.Db.Discount))</p>
+            <p>Количество в корзине: @Model.Count</p>
         </div>
     </div>
 
