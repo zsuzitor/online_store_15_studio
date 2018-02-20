@@ -277,6 +277,7 @@
     <Content Include="Views\Home\Load_purchase_list.cshtml" />
     <Content Include="Views\Home\Test_slider.cshtml" />
     <Content Include="Views\Home\Main_footer.cshtml" />
+    <Content Include="Views\Home\Main_help_block.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

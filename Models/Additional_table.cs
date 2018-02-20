@@ -5,6 +5,25 @@ using System.Web;
 
 namespace online_store.Models
 {
+
+    public class Application_phone
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Phone { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime Date_comfortable { get; set; }
+        public string Message { get; set; }
+
+        public Application_phone()
+        {
+            Name = "";
+            Phone = -1;
+            Date = DateTime.Now;
+            Date_comfortable = DateTime.Now;
+            Message = "";
+        }
+    }
     //отзывы
     public class Comment
     {

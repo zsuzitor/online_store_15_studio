@@ -3,6 +3,7 @@
     padding-bottom: 20px;
     background-color:gainsboro;
     min-width:960px;
+    position:relative;
 }
 #RememberMe{
     max-width:50px;
@@ -952,6 +953,7 @@ div._Slider_next_butt{
 div._Slider_div_inline_block {
     display: inline-block;
     vertical-align: top;
+
 }
 div._Slider_main_block_slider{
      overflow: hidden;
@@ -1031,4 +1033,36 @@ div._Slider_cont_timer_false{
 	width:100%;
 	height:100%;
 	
+}
+
+/*Main_help_block*/
+div.Main_help_block_main_div{
+    width:50px;
+    height:50px;
+    position:fixed;
+    right:0;
+    top:400px;
+    background-color:lavender;
+    overflow:hidden;
+    z-index:6;
+    /*padding-top:50px;background-color:black;*/
+    transition:2s;
+    border-radius:50%;
+}
+div.Main_help_block_main_div:before{
+    background-image: url(/Content/images/Help_circle.png);
+    background-size:100% 100%;
+    content:'';
+    position:absolute;
+     width:50px;
+    height:50px;
+    
+}
+    div.Main_help_block_main_div:hover::before {
+        display:none;
+    }
+div.Main_help_block_main_div:hover {
+    border-radius:0%;
+    width:300px;
+    height:300px;
 }

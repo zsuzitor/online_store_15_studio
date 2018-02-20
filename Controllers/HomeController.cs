@@ -652,11 +652,27 @@ namespace online_store.Controllers
 
 
 
+        [HttpPost]
+        public ActionResult Main_help_block(Application_phone a)
+        {
+            //var res = new Application_phone();
+            db.Application_phone_comm.Add(a);
+            db.SaveChanges();
 
-
+            return RedirectToAction("Index","Home");
+        }
 
 
         //-----------------------------------
+
+        [ChildActionOnly]
+        public ActionResult Main_help_block()
+        {
+            //var res = new Application_phone();
+
+            return PartialView();
+        }
+
         [ChildActionOnly]
         public ActionResult Main_footer()
         {

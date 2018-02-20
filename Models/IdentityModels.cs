@@ -44,6 +44,8 @@ namespace online_store.Models
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Purchase_connect> Purchases_connect { get; set; }
         public DbSet<Section_main_header> Section_in_main_header { get; set; }
+
+        public DbSet<Application_phone> Application_phone_comm { get; set; }
         
 
 

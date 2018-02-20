@@ -1,0 +1,21 @@
+﻿
+
+<div class="Main_help_block_main_div">
+    @using (Html.BeginForm(""))
+    {
+        @Html.Label("Имя")
+        @Html.Editor("Name")
+        @Html.Label("Номер телефона +7")
+        @Html.Editor("Phone")
+        @Html.Label("Дата и время когда вам удобно")
+        @Html.Editor("Date_comfortable")
+        @Html.Label("Оставьте сообщение")
+        @Html.Editor("Message")
+      
+
+
+        <input type="submit" class="submit" value="Отправить" />
+    }
+
+
+</div>
