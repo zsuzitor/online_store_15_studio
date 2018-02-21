@@ -664,7 +664,20 @@ namespace online_store.Controllers
 
 
         //-----------------------------------
+        [ChildActionOnly]
+        public ActionResult Main_present_block_show()
+        {
+            //var res = new Application_phone();
 
+            return PartialView();
+        }
+        [ChildActionOnly]
+        public ActionResult Main_present_block()
+        {
+            //var res = new Application_phone();
+           
+            return PartialView();
+        }
         [ChildActionOnly]
         public ActionResult Main_help_block()
         {

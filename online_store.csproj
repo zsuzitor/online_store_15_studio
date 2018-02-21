@@ -209,6 +209,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\List_objects_type.js" />
+    <Content Include="Scripts\main_present.js" />
     <Content Include="Scripts\main_scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Object_view.js" />
@@ -278,6 +279,8 @@
     <Content Include="Views\Home\Test_slider.cshtml" />
     <Content Include="Views\Home\Main_footer.cshtml" />
     <Content Include="Views\Home\Main_help_block.cshtml" />
+    <Content Include="Views\Home\Main_present_block.cshtml" />
+    <Content Include="Views\Home\Main_present_block_show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

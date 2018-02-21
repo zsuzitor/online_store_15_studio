@@ -23,6 +23,17 @@
     //-----
 
     load_sl() {
+        var fff = () => {
+            var res = "";
+            let ttt = "'width:" + slider.width_slide + "px; " + "height:" + slider.height_slide + "px;'>";
+            if (slider.horizontal_bool) {
+                res= "<div class='_Slider_div_inline_block' style=" + ttt + img.innerHTML + "</div>"
+            }
+            else {
+                res = "<div style=" + ttt + img.innerHTML + "</div>"
+            }
+            return res;
+        }
         var slider = this;
         var div_ = document.getElementById("_Slider_3_view_block_id");
         if (slider.current_num_img < 0) {
@@ -30,60 +41,34 @@
         }
         var img = document.getElementById(slider.part_id_one_img + (slider.current_num_img - 1));
 
+
+        
         if (img != null) {
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+           
+            //div_.innerHTML += "<div class='_Slider_div_inline_block' style=" + ttt  +img.innerHTML + "</div>"
+            div_.innerHTML += fff();
         }
         else {
             //с конца
             img = document.getElementById(slider.part_id_one_img + (slider.count_img_in_list - 1));
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+            div_.innerHTML += fff();
         }
         img = document.getElementById(slider.part_id_one_img + slider.current_num_img);
         if (img != null) {
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+            div_.innerHTML += fff();
         }
         else {
             slider.current_num_img = 0;
             img = document.getElementById(slider.part_id_one_img + slider.current_num_img);
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+            div_.innerHTML += fff();
         }
         img = document.getElementById(slider.part_id_one_img + (slider.current_num_img + 1));
         if (img != null) {
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+            div_.innerHTML += fff();
         }
         else {
             img = document.getElementById(slider.part_id_one_img + 0);
-            if (slider.horizontal_bool) {
-                div_.innerHTML += "<div class='_Slider_div_inline_block' style='width:" + slider.width_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
-            else {
-                div_.innerHTML += "<div style='height:" + slider.height_slide + "px;'" + ">" + img.innerHTML + "</div>"
-            }
+            div_.innerHTML += fff();
         }
     }
 
