@@ -1085,7 +1085,7 @@ div.layout_present_small_block{
     cursor:pointer;
     background-image: url(/Content/images/present_small_l.png);
     background-size:100% 100%;
-    
+     z-index:6;
 }
 
 #Main_present_block_show_all_block{
@@ -1093,7 +1093,21 @@ div.layout_present_small_block{
 
 }
 /**/
+div.Main_present_block_show_image{
+     background-image: url(/Content/images/skidka20.png);
+    background-size:100% 100%;
+    height:500px;
 
+}
+div.Main_present_block_show_all_block_v{
+    width:600px;
+    height:800px;
+
+}
+div.Main_present_block_show_form{
+    height:300px;
+
+}
 
 
 

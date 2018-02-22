@@ -34,6 +34,8 @@ https://stackoverflow.com/questions/13611614/submit-the-form-using-ajax
 
 
 TODO:
+доделать купоны
+Main_present_block_save доделать
 РОЛИ комментить ту настройку
 Main_present_block_show_all_block   повесить событие на интервал что бы при видимости на экране задать размеры по окну пользователя
 

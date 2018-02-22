@@ -665,6 +665,16 @@ namespace online_store.Controllers
 
         //-----------------------------------
         [ChildActionOnly]
+        public ActionResult Main_present_block_save(int a)
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
+
+
+
+            return PartialView();
+        }
+        [ChildActionOnly]
         public ActionResult Main_present_block_show()
         {
             //var res = new Application_phone();

@@ -5,7 +5,48 @@ using System.Web;
 
 namespace online_store.Models
 {
+    public class Discount//что то типо купонов
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Tag { get; set; }//скидка например только на обувь или производителя
+        public string User_id { get; set; }
+        public bool Dispatch { get; set; }
+        public Double Discount_ { get; set; }
+        public DateTime Date { get; set; }
 
+
+        public Discount()
+        {
+            Id = 0;
+            Name = "";
+            Tag = null;
+            User_id = null;
+            Dispatch = true;
+            Date = DateTime.Now;
+            Discount_ = 0;
+
+        }
+    }
+    public class Follow_email
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string User_id { get; set; }
+        public bool Dispatch { get; set; }//нужно ли отправлять письма
+        public DateTime Date { get; set; }
+        
+
+        public Follow_email()
+        {
+            Id = 0;
+            Name = "";
+            User_id = null;
+            Dispatch = true;
+            Date = DateTime.Now;
+            
+        }
+    }
     public class Application_phone
     {
         public int Id { get; set; }
@@ -17,6 +58,7 @@ namespace online_store.Models
 
         public Application_phone()
         {
+            Id = 0;
             Name = "";
             Phone = -1;
             Date = DateTime.Now;

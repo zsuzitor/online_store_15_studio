@@ -46,8 +46,9 @@ namespace online_store.Models
         public DbSet<Section_main_header> Section_in_main_header { get; set; }
 
         public DbSet<Application_phone> Application_phone_comm { get; set; }
+        public DbSet<Follow_email> Follow_email { get; set; }
+        public DbSet<Discount> Discount_coupon { get; set; }
         
-
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
