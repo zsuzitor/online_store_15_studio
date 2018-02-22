@@ -665,15 +665,24 @@ namespace online_store.Controllers
 
         //-----------------------------------
         [ChildActionOnly]
-        public ActionResult Main_present_block_save(int a)
+        public ActionResult Main_present_block_save(Follow_email a)
         {
+            //TODO проверять есть ли в бд
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
-
+            if (em == null)
+            {
+                a.User_id = check_id;
+                db.Follow_email.Add(a);
+                db.SaveChanges();
+                db.Discount_coupon.Add(new Discount() { Discount_= 0.25, User_id=check_id });
+                db.SaveChanges();
+            }
 
 
             return PartialView();
         }
+        //TODO удалить
         [ChildActionOnly]
         public ActionResult Main_present_block_show()
         {

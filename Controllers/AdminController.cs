@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 namespace online_store.Controllers
 {
 
-    //[Authorize(Roles="admin")]
+    [Authorize(Roles="admin")]
     public class AdminController : Controller
     {
         //[Authorize(Roles="admin")]

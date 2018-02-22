@@ -7,11 +7,14 @@
         <div class="Main_present_block_show_image"></div>
         <div class="Main_present_block_show_form">
             @Html.Label("Подпишитесь на рассылку и получите скидку")
-            @using (Ajax.BeginForm("","",new AjaxOptions { }))
-            {
-
-
-            }
+            <form method='post' action='Home/Main_present_block_save'>
+                <label>Имя:</label>
+                <input type='text' name='Name' /><br>
+                <label>Email*:</label>
+                <input type='text' name='Email' /><br>
+                
+                <input type='button' value='Подписаться' />
+            </form>
 
         </div>
     </div>

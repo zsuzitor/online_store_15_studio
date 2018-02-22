@@ -8,10 +8,10 @@ namespace online_store.Models
     public class Discount//что то типо купонов
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }//доп настройка под tag и тд
         public string Tag { get; set; }//скидка например только на обувь или производителя
         public string User_id { get; set; }
-        public bool Dispatch { get; set; }
+       
         public Double Discount_ { get; set; }
         public DateTime Date { get; set; }
 
@@ -22,7 +22,7 @@ namespace online_store.Models
             Name = "";
             Tag = null;
             User_id = null;
-            Dispatch = true;
+            
             Date = DateTime.Now;
             Discount_ = 0;
 
@@ -32,6 +32,7 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public string User_id { get; set; }
         public bool Dispatch { get; set; }//нужно ли отправлять письма
         public DateTime Date { get; set; }
@@ -40,7 +41,8 @@ namespace online_store.Models
         public Follow_email()
         {
             Id = 0;
-            Name = "";
+            Email = null;
+            Name = null;
             User_id = null;
             Dispatch = true;
             Date = DateTime.Now;
