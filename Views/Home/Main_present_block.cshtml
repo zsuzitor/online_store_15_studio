@@ -1,10 +1,13 @@
 ﻿
 
 
-
- <div onclick="test_11()" class="layout_present_small_block">
-     @{
+@if (ViewBag.check != null && ViewBag.check == false)
+{
+    <div onclick="test_11()" class="layout_present_small_block">
+        @{
 //@Ajax.ActionLink(" ", "Main_present_block_show","Home",new AjaxOptions{UpdateTargetId= "layout_active_panel_id" })
 
-     }
- </div>
+        }
+    </div>
+            }
+ 

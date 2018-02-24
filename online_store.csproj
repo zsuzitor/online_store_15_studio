@@ -281,7 +281,6 @@
     <Content Include="Views\Home\Main_footer.cshtml" />
     <Content Include="Views\Home\Main_help_block.cshtml" />
     <Content Include="Views\Home\Main_present_block.cshtml" />
-    <Content Include="Views\Home\Main_present_block_show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

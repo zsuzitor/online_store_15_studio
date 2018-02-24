@@ -682,17 +682,15 @@ namespace online_store.Controllers
 
             return PartialView();
         }
-        //TODO удалить
-        [ChildActionOnly]
-        public ActionResult Main_present_block_show()
-        {
-            //var res = new Application_phone();
-
-            return PartialView();
-        }
+       
         [ChildActionOnly]
         public ActionResult Main_present_block()
         {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var t = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
+            ViewBag.check = false;
+            if (t == null)
+                ViewBag.check = true;
             //var res = new Application_phone();
            
             return PartialView();
