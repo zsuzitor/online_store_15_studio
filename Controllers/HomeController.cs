@@ -420,6 +420,8 @@ namespace online_store.Controllers
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
            
             ViewBag.obj_list_id = res.Select(x1 => x1.Object_id);
+            ViewBag.kupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id).ToList();
+
             return View();
         }
         //TODO
@@ -687,11 +689,19 @@ namespace online_store.Controllers
         public ActionResult Main_present_block()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var t = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
-            ViewBag.check = false;
-            if (t == null)
-                ViewBag.check = true;
-            //var res = new Application_phone();
+            if (string.IsNullOrEmpty(check_id))
+            {
+                ViewBag.check = null;
+            }
+            else
+            {
+                var t = db.Follow_email.FirstOrDefault(x1 => x1.User_id == check_id);
+                ViewBag.check = false;
+                if (t == null)
+                    ViewBag.check = true;
+            }
+           
+           
            
             return PartialView();
         }

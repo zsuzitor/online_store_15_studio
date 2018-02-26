@@ -1,8 +1,9 @@
 ﻿
 
 
-@if (ViewBag.check != null && ViewBag.check == false)
+@if (ViewBag.check == null || ViewBag.check == false)
 {
+    @Html.Hidden("Main_present_block_hideen_check", ((bool?)ViewBag.check).ToString())
     <div onclick="test_11()" class="layout_present_small_block">
         @{
 //@Ajax.ActionLink(" ", "Main_present_block_show","Home",new AjaxOptions{UpdateTargetId= "layout_active_panel_id" })

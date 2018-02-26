@@ -28,7 +28,18 @@
                 <div>Покупок на сумму(без скидок): @ViewBag.All_price</div>
                 <div>Покупок на сумму(со скидкой):@ViewBag.All_price_small</div>
             </div>
-
+            @if (ViewBag.kupons == null)
+            {
+               @Html.Label("У вас нет купонов")
+            }
+            @if (ViewBag.kupons != null)
+            {
+                @Html.DropDownList("Discount_list",
+                    new SelectList((List<online_store.Models.Discount>)ViewBag.kupons),
+                    "Выберите купон",
+                    new { })
+            }
+           
 
 
         </div>
