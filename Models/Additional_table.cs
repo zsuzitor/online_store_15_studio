@@ -53,18 +53,22 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool Complete { get; set; }
         public int Phone { get; set; }
         public DateTime Date { get; set; }
         public DateTime Date_comfortable { get; set; }
+        public DateTime? Date_complete { get; set; }
         public string Message { get; set; }
 
         public Application_phone()
         {
             Id = 0;
+            Complete = false;
             Name = "";
             Phone = -1;
             Date = DateTime.Now;
             Date_comfortable = DateTime.Now;
+            Date_complete = null;
             Message = "";
         }
     }

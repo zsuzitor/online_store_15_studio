@@ -15,7 +15,7 @@ namespace online_store.Controllers
     [Authorize(Roles="admin")]
     public class AdminController : Controller
     {
-        //[Authorize(Roles="admin")]
+       
         public ActionResult Delete_object(int id)
         {
             db.Objects.Remove(db.Objects.First(x1 => x1.Id == id));
@@ -26,7 +26,7 @@ namespace online_store.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new { });
         }
-        //[Authorize(Roles="admin")]
+      
         public ActionResult Add_object(int id = -1)
         {
             Object_os res = null;
@@ -41,7 +41,7 @@ namespace online_store.Controllers
 
             return View(res);
         }
-        //[Authorize(Roles="admin")]
+       
         [HttpPost]
         public ActionResult Add_object(Object_os a)
         {
@@ -75,7 +75,26 @@ namespace online_store.Controllers
 
             return RedirectToAction("Index", "Home", new { });
         }
-        //[Authorize(Roles="admin")]
+        [HttpPost]
+        public ActionResult Discount_coupon_create(Discount a,int count_a)
+        {
+            //TODO обработка купона
+
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Discount_coupon_create()
+        {
+            var res=new Discount();
+
+            return View(res);
+        }
+        public ActionResult Application_phone_list()
+        {
+            var app = db.Application_phone_comm.Where(x1=>x1.Complete==false).ToList();
+
+            return View(app);
+        }
         public ActionResult Work_with_images_object(int id)
         {
             ViewBag.Id = id;
@@ -83,7 +102,7 @@ namespace online_store.Controllers
             ViewBag.Images = imgs.ToList();
             return View();
         }
-        //[Authorize(Roles="admin")]
+       
         public ActionResult Delete_img_block(int id)
         {
             db.Images.Remove(db.Images.First(x1 => x1.Id == id));

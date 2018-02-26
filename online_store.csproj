@@ -281,6 +281,8 @@
     <Content Include="Views\Home\Main_footer.cshtml" />
     <Content Include="Views\Home\Main_help_block.cshtml" />
     <Content Include="Views\Home\Main_present_block.cshtml" />
+    <Content Include="Views\Admin\Application_phone_list.cshtml" />
+    <Content Include="Views\Admin\Discount_coupon_create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
