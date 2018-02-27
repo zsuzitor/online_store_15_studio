@@ -10,7 +10,14 @@
 {
     <div>
         @Html.Label("Колличество")
-        @Html.Editor("count_a")
+      @Html.EditorFor(x1=>x1.Count_left)
+        @Html.Label("Ключевое слово для активации")
+        @Html.EditorFor(x1 => x1.Name)
+        @Html.Label("Тэг на что распространяется")
+        @Html.EditorFor(x1 => x1.Tag)
+        @Html.Label("Предоставляемая скидка")
+        
+        @Html.EditorFor(x1 => x1.Discount_)
 
 
     </div>

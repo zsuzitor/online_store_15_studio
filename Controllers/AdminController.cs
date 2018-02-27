@@ -75,10 +75,22 @@ namespace online_store.Controllers
 
             return RedirectToAction("Index", "Home", new { });
         }
+        [HttpGet]
+        public ActionResult Discount_all_coupon()
+        {
+            var res = db.Discount_type.ToList();
+
+
+            return View(res);
+        }
+
+
         [HttpPost]
-        public ActionResult Discount_coupon_create(Discount a,int count_a)
+        public ActionResult Discount_coupon_create(Discount a)
         {
             //TODO обработка купона
+            db.Discount_type.Add(a);
+            db.SaveChanges();
 
             return View();
         }

@@ -5,27 +5,62 @@ using System.Web;
 
 namespace online_store.Models
 {
-    public class Discount//что то типо купонов
+
+
+    public class Discount_coupon//конкретный купон
     {
         public int Id { get; set; }
-        public string Name { get; set; }//доп настройка под tag и тд
-        public string Tag { get; set; }//скидка например только на обувь или производителя
         public string User_id { get; set; }
-       
+        public int Discount_id { get; set; }
+        public bool Spent { get; set; }
+
+        public Discount_coupon()
+        {
+            Id = 0;
+            User_id = null;
+            Discount_id = 0;
+            Spent = false;
+        }
+
+        }
+
+
+        public class Discount//что то типо купонов
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }//доп настройка под tag и тд          //Follow_mail будет известно пользователю и он будет получать купон по ней
+        public string Tag { get; set; }//скидка например только на обувь или производителя
+        public int? Count_left { get; set; }//null==бесконечное колличество купонов
+
         public Double Discount_ { get; set; }
         public DateTime Date { get; set; }
 
-
+        
         public Discount()
         {
             Id = 0;
             Name = "";
             Tag = null;
-            User_id = null;
-            
+            Count_left = null;
+
             Date = DateTime.Now;
             Discount_ = 0;
 
+        }
+        //только создание без проверок
+        public Discount_coupon Create_coupon(string user_id)
+        {
+            Discount_coupon res = null;
+            if(Count_left<1)
+                return res;
+            
+                if (Count_left != null)
+                    this.Count_left--;
+                res = new Discount_coupon() { User_id= user_id, Discount_id=this.Id };
+            
+
+
+            return res;
         }
     }
     public class Follow_email

@@ -403,6 +403,40 @@ namespace online_store.Controllers
             db.SaveChanges();
             return RedirectToAction("Basket_page", "Home",new { });
         }
+
+        //метод активации купонов
+        [Authorize]
+        public ActionResult Coupons_activated(string name)
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var coupon = db.Discount_type.FirstOrDefault(x1 => x1.Name == name);
+            
+            if (coupon != null)
+            {
+                var cp=coupon.Create_coupon(check_id);
+                db.Discount_coupon.Add(cp);
+                db.SaveChanges();
+                ViewBag.message = "Купон активирован";
+            }
+            else
+            {
+                ViewBag.message = "Купон не активирован";
+            }
+            return RedirectToAction("Coupons_page", "Home",new { });
+            //return View();
+        }
+
+
+        //страница отображения/активации купонов
+        [Authorize]
+        public ActionResult Coupons_page()
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var coupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id).ToList();
+            ViewBag.coupons_left = coupons.Where(x1 => x1.Spent == false).ToList();
+            ViewBag.coupons_spent = coupons.Where(x1 => x1.Spent == true).ToList();
+            return View();
+        }
         //страница отображения корзины
         [Authorize]
         public ActionResult Basket_page()
@@ -420,7 +454,7 @@ namespace online_store.Controllers
             ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
            
             ViewBag.obj_list_id = res.Select(x1 => x1.Object_id);
-            ViewBag.kupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id).ToList();
+            ViewBag.coupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id&&x1.Spent==false).ToList();
 
             return View();
         }
@@ -666,10 +700,10 @@ namespace online_store.Controllers
 
 
         //-----------------------------------
-        [ChildActionOnly]
+       
         public ActionResult Main_present_block_save(Follow_email a)
         {
-            //TODO проверять есть ли в бд
+            //TODO проверять есть ли в бд такая почта?
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
             if (em == null)
@@ -677,12 +711,19 @@ namespace online_store.Controllers
                 a.User_id = check_id;
                 db.Follow_email.Add(a);
                 db.SaveChanges();
-                db.Discount_coupon.Add(new Discount() { Discount_= 0.25, User_id=check_id });
-                db.SaveChanges();
+                //
+                var dis = db.Discount_type.FirstOrDefault(x1 => x1.Name == "Follow_mail");
+
+                if (dis != null)
+                {
+                    db.Discount_coupon.Add(new Discount_coupon() { Discount_id = dis.Id, User_id = check_id });
+                    db.SaveChanges();
+                }
+                
             }
 
-
-            return PartialView();
+            return RedirectToAction("Coupons_page", "Home",new{ });
+            //return PartialView();
         }
        
         [ChildActionOnly]

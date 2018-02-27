@@ -9,6 +9,7 @@
 <h2>Basket_page</h2>
 
 <div>
+    <h1>@Html.ActionLink("Активировать купон/просмотреть доступные","Coupons_page","Home",new { })</h1>
     @if (ViewBag.Havent_message != null)
     {
         <p>@ViewBag.Havent_message</p>
@@ -28,14 +29,14 @@
                 <div>Покупок на сумму(без скидок): @ViewBag.All_price</div>
                 <div>Покупок на сумму(со скидкой):@ViewBag.All_price_small</div>
             </div>
-            @if (ViewBag.kupons == null)
+            @if (ViewBag.coupons == null)
             {
                @Html.Label("У вас нет купонов")
             }
-            @if (ViewBag.kupons != null)
+            @if (ViewBag.coupons != null)
             {
                 @Html.DropDownList("Discount_list",
-                    new SelectList((List<online_store.Models.Discount>)ViewBag.kupons),
+                    new SelectList((List<online_store.Models.Discount_coupon>)ViewBag.coupons),
                     "Выберите купон",
                     new { })
             }

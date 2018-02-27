@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Coupons_page";
+}
+
+<h2>Coupons_page</h2>
+
+
+<div>
+    <h1>Введите промокод</h1>
+    @if (ViewBag.message != null)
+    {
+        @Html.Label((string)ViewBag.message)
+    }
+    
+
+    @using (Html.BeginForm("Coupons_activated", "Home"))
+    {
+        @Html.Editor("name")
+        <input type="submit" value="Активировать"/>
+    }
+    <hr />
+    <h1>Доступные купоны</h1>
+    @foreach(var i in ((List<online_store.Models.Discount_coupon>)ViewBag.coupons_left))
+    {
+        <div>
+            @{ 
+//TODO отображение отображение купонов
+            }
+        </div>
+
+
+                }
+
+    <h1>Потраченные купоны</h1>
+    @foreach (var i in ((List<online_store.Models.Discount_coupon>)ViewBag.coupons_spent))
+    {
+        <div>
+            @{
+//TODO визуализировать отображение купонов
+            }
+        </div>
+
+
+                }
+
+</div>
+

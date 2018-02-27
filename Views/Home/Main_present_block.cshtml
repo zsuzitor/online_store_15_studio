@@ -1,7 +1,7 @@
 ﻿
 
 
-@if (ViewBag.check == null || ViewBag.check == false)
+@if (ViewBag.check == null || ViewBag.check == true)
 {
     string val= ((bool?)ViewBag.check).ToString();
     @Html.Hidden("Main_present_block_hideen_check", val)
