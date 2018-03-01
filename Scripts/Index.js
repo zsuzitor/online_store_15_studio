@@ -46,6 +46,8 @@ Index_OBJECT.Next_slider_1_click = () => {
 Index_OBJECT.Next_slider_1 = () => {
 
     var slider_1 = document.getElementById("Index_one_block_slider_1_id_visible");
+    if (slider_1 == null)
+        return;
     slider_1.innerHTML = "";
 
     for (var i = 0; i < Index_OBJECT.Count_block_for_slider_1 && i < Index_OBJECT.Count_in_list_slider_1; ++i) {

@@ -565,26 +565,28 @@ namespace online_store.Controllers
         public ActionResult Delete_object_from_basket(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            
+            var res = "";
             if (Functions_project.Delete_object_from_basket(id,check_id))
             {
-                ViewBag.Message = "Удалено";
+                //ViewBag.Message = "Удалено";
+                res = "Удалено";
             }
             else
-                ViewBag.Message = "Ошибка";
-            return PartialView();
+                res = "Ошибка";
+            //ViewBag.Message = "Ошибка";
+            return Redirect(Url.Action("Partial_message", "Home",new { message=res }));
         }
         //удаление объекта из follow
         [Authorize]
         public ActionResult Delete_object_from_follow(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            
+            var res = "";
             if(Functions_project.Delete_object_from_follow(id,check_id))
-                ViewBag.Message = "Удалено";
+                res = "Удалено";
             else
-                ViewBag.Message = "Ошибка";
-            return PartialView();
+                res = "Ошибка";
+            return Redirect(Url.Action("Partial_message", "Home", new { message = res }));
 
         }
         
@@ -694,8 +696,8 @@ namespace online_store.Controllers
             //var res = new Application_phone();
             db.Application_phone_comm.Add(a);
             db.SaveChanges();
-
-            return RedirectToAction("Index","Home");
+            
+            return Redirect(Url.Action("Index", "Home"));
         }
 
 
@@ -705,7 +707,7 @@ namespace online_store.Controllers
         {
             //TODO проверять есть ли в бд такая почта?
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id);
+            var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id||x1.Email==a.Email);
             if (em == null)
             {
                 a.User_id = check_id;
@@ -718,8 +720,13 @@ namespace online_store.Controllers
                 {
                     db.Discount_coupon.Add(new Discount_coupon() { Discount_id = dis.Id, User_id = check_id });
                     db.SaveChanges();
+                    ViewBag.massage_activated_coupon = "Купон выдан";
                 }
                 
+            }
+            else
+            {
+                ViewBag.massage_activated_coupon ="Скидка на данную учетную зпись/почту уже была выдана";
             }
 
             return RedirectToAction("Coupons_page", "Home",new{ });
@@ -750,6 +757,12 @@ namespace online_store.Controllers
         public ActionResult Main_help_block()
         {
             //var res = new Application_phone();
+
+            return PartialView();
+        }
+        public ActionResult Partial_message(string message)
+        {
+            ViewBag.message = message;
 
             return PartialView();
         }

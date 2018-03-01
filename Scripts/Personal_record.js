@@ -113,7 +113,7 @@ Personal_record_OBJECT.Load_personal_record_comments_block = () => {
     var comments = $("#Personal_record_comments_load_block");
 
 
-    if (show_comment_flag ? isVisible(comments) : false) {
+    if (Personal_record_OBJECT.show_comment_flag ? isVisible(comments) : false) {
 
         var comments_submit = document.getElementById("Personal_record_submit_comments_load_id")
         //alert("[vvv")
@@ -128,7 +128,7 @@ Personal_record_OBJECT.Load_personal_record_purchase_block = () => {
     var purchase = $("#Personal_record_purchase_load_block");
 
 
-    if (show_purchase_flag ? isVisible(purchase) : false) {
+    if (Personal_record_OBJECT.show_purchase_flag ? isVisible(purchase) : false) {
 
         var purchase_submit = document.getElementById("Personal_record_submit_purchase_load_id")
 

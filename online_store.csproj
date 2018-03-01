@@ -256,7 +256,6 @@
     <Content Include="Views\Home\Basket_one_object_partial.cshtml" />
     <Content Include="Views\Home\Basket_page.cshtml" />
     <Content Include="Views\Home\Delete_Comment.cshtml" />
-    <Content Include="Views\Home\Delete_object_from_basket.cshtml" />
     <Content Include="Views\Home\List_objects.cshtml" />
     <Content Include="Views\Home\List_objects_type.cshtml" />
     <Content Include="Views\Home\Main_header.cshtml" />
@@ -265,14 +264,12 @@
     <Content Include="Views\Home\Object_view.cshtml" />
     <Content Include="Views\Home\Personal_record.cshtml" />
     <Content Include="Views\Home\Follow_one_object_partial.cshtml" />
-    <Content Include="Views\Home\Delete_object_from_follow.cshtml" />
     <Content Include="Views\Home\Buy_basket.cshtml" />
     <Content Include="Views\Home\Purchase_view.cshtml" />
     <Content Include="Views\Home\Edit_personal_record.cshtml" />
     <Content Include="Views\Home\Not_found_page.cshtml" />
     <Content Include="Views\Admin\Add_object.cshtml" />
     <Content Include="Views\Admin\Work_with_images_object.cshtml" />
-    <Content Include="Views\Admin\Delete_img_block.cshtml" />
     <Content Include="Views\Home\Load_comment_for_object_view.cshtml" />
     <Content Include="Views\Home\Load_comment_for_personal_record.cshtml" />
     <Content Include="Views\Home\Mark_for_comment.cshtml" />
@@ -284,6 +281,7 @@
     <Content Include="Views\Admin\Application_phone_list.cshtml" />
     <Content Include="Views\Admin\Discount_coupon_create.cshtml" />
     <Content Include="Views\Home\Coupons_page.cshtml" />
+    <Content Include="Views\Home\Partial_message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

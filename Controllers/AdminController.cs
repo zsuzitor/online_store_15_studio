@@ -119,7 +119,8 @@ namespace online_store.Controllers
         {
             db.Images.Remove(db.Images.First(x1 => x1.Id == id));
             db.SaveChanges();
-            return PartialView();
+            ViewBag.Message = "Удалено";
+            return PartialView("Partial_message", "Home");
         }
         public ActionResult Delete_object_from_follow(int id_object,string id_user)
         {

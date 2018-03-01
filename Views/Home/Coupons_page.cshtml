@@ -12,6 +12,11 @@
     {
         @Html.Label((string)ViewBag.message)
     }
+    @if (ViewBag.massage_activated_coupon != null)
+    {
+        @Html.Label((string)ViewBag.massage_activated_coupon)
+    }
+    
     
 
     @using (Html.BeginForm("Coupons_activated", "Home"))
