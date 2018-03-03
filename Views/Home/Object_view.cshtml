@@ -64,10 +64,14 @@
         {
             <div>
                 @Html.ActionLink("Удалить", "Delete_object", "Admin", new { id = Model.Db.Id }, new { })
-                @Html.ActionLink("Редактировать", "Add_object", "Admin", new { id = Model.Db.Id }, new { })
+                @Html.ActionLink("Редактировать поля", "Add_object", "Admin", new { id = Model.Db.Id }, new { })
+                @Html.ActionLink("Редактировать изображения", "Work_with_images_object", "Admin", new { id = Model.Db.Id }, new { })
             </div>
         }
        
+    </div>
+    <div class="div_inline_block Object_view_follow_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
+        @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
     </div>
     <div class="div_inline_block Object_view_right_block">
         <div>Куплено раз: @Model.Db.Count_buy</div>
@@ -87,29 +91,14 @@
         <div>@Html.Label(Model.Db.Description)</div>
         <div>@Html.Label(Model.Db.Count_buy.ToString())</div>
         <hr />
-        <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
-            @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
+        <div class="Object_view_add_basket_block_all" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>
+            @Html.Action("Object_add_basket_form_partial", "Home", new { id = Model.Db.Id })
         </div>
-        <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
-
-        @{ 
-/* <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", Model.Db.Id)>
-        @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
-    </div>
-
-              <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>@Html.Action("Object_add_basket", "Home", new { id = Model.Db.Id, click = false })</div>
-
-             */
-
-/*<div>
-@Html.ActionLink("Добавить в желаемое","","Home",new { },new { })
-</div>*/
-        }
-
-
-
-
-
+        
+        
+        <hr />
+       
+    
 
     </div>
     <hr />

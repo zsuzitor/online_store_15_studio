@@ -63,13 +63,29 @@ namespace online_store.Models
             return res;
         }
         
-            public static bool Delete_object_from_basket(int id_object, string id_user)
+            public static bool Delete_object_from_basket(int id_object, string id_user,int count=-1)
         {
             bool res = false;
             var obj = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
             if (obj != null)
             {
-                db.Baskets.Remove(obj);
+                if(count==-1|| count==0)
+                {
+                    db.Baskets.Remove(obj);
+                }
+                else
+                {
+                    if (obj.Count_obj <= count)
+                    {
+                        db.Baskets.Remove(obj);
+                    }
+                    else
+                    {
+                        obj.Count_obj -= count;
+                    }
+                }
+               
+               
                 db.SaveChanges();
                 res = true;
             }

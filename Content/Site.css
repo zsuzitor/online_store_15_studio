@@ -4,6 +4,8 @@
     background-color:gainsboro;
     min-width:960px;
     position:relative;
+    
+    /*font-family: SuperPuperFont;*/
 }
 #RememberMe{
     max-width:50px;
@@ -64,6 +66,7 @@ div.div_color_white {
     background-color: white;
 }
 div.div_body {
+     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     position: relative;
     width: 80%;
     margin-left: 10%;
@@ -126,6 +129,7 @@ div.Main_header_big {
     left: 2%;
     background-image: url(/Content/images/main_header_back_big.jpg);
     background-size: 100% 100%;
+     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 div.Main_header_big_v2 {
     height: 350px;
@@ -201,6 +205,7 @@ div.Main_header_one_section_block{
     font-size:14pt;
     background-color:white;
     margin-top:5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 div.Main_header_big_under {
     margin-top: 10px;
@@ -234,6 +239,7 @@ div.Main_header_back_to_top{
     width: 50px;
     display: none;
     top: 600px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     /*background-color: #cdfae0;*/
     background-image: url(/Content/images/back_to_top.jpg);
     background-size: 100% 100%;
@@ -247,6 +253,7 @@ div.Main_header_big_home_link{
      width:200px;
     font-size:25pt;
     font-style:italic;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 /*List_objects*/
@@ -254,8 +261,9 @@ div.List_objects_one_object {
     margin-top: 10px;
     width: 250px;
     height: 600px;
-   
+   box-shadow: 0 0 10px rgba(0,0,0,0.5);
     border:1px solid black;
+    margin-left:5px;
 }
 div.List_objects_one_object_empty {
     margin-top: 10px;
@@ -301,6 +309,17 @@ div.Object_follow_follow_img_red {
     top: 0;
     left: 0;
 }
+div.Object_view_add_basket_block_all{
+    min-height:300px;
+    background-color:aquamarine;
+}
+
+div.Object_view_follow_block{
+    position:absolute;
+    top:15px;
+    right:15px;
+}
+
 /**/
 /*Work_with_images_object*/
 div.Work_with_images_object_block_adds_img_class{
@@ -480,16 +499,31 @@ div.Object_add_basket_follow_img_full {
 /*Basket_one_object*/
 div.Basket_one_object_partial_have_obg{
     height:190px;
-    width:90%;
+/*width:90%;*/    
     display: inline-block;
     vertical-align: top;
 }
+div.Basket_one_object_partial_num_delete_obj{
+    width:100px;
+}
+div.Basket_one_object_partial_subm_delete_obj{
+      width:100px;
+}
+div.Basket_one_object_partial_form_delete_obj{
+    width:205px;
+    
+}
+div.Basket_one_object_partial_delete_all_block{
+    margin-top:-20px;
+    float:right;
+    position:relative;
+}
 div.Basket_one_object_partial_one_block{
-    height:200px;
+    height:230px;
      background-color:#fafde6;
      margin-top:10px;
       padding-left: 10px;
-    padding-top: 10px;
+    padding-top: 30px;
 }
 div.Basket_one_object_partial_havent_obg{
     opacity:0.3;
@@ -507,8 +541,8 @@ div.Basket_one_object_right_block {
     height: 100%;
 }
 div.Basket_one_object_delete_block {
-    width: 75px;
-    height: 100%;
+   /* width: 75px;
+    height: 100%;*/
     float:right;
     
 }
@@ -695,6 +729,7 @@ div.Index_one_block_slider_1{
     margin-left:10px;
     background-color:white;
     border:1px groove black;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 div.Index_one_block_slider_1_hid{
     height:100px;
@@ -1044,10 +1079,11 @@ div.Main_help_block_main_div{
     top:400px;
     background-color:lavender;
     overflow:hidden;
-    z-index:6;
+    z-index:7;
     /*padding-top:50px;background-color:black;*/
     transition:2s;
     border-radius:50%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 div.Main_help_block_main_div:before{
     background-image: url(/Content/images/Help_circle.png);
@@ -1076,6 +1112,7 @@ div.layout_active_panel{
     height:1px;
 
 }
+/**/
 div.layout_present_small_block{
     position:fixed;
     top: 320px;
@@ -1086,6 +1123,7 @@ div.layout_present_small_block{
     background-image: url(/Content/images/present_small_l.png);
     background-size:100% 100%;
      z-index:6;
+     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 #Main_present_block_show_all_block{
@@ -1096,7 +1134,7 @@ div.layout_present_small_block{
      z-index:7;
      cursor:pointer;
 }
-/**/
+/*Main_present_block*/
 div.Main_present_block_show_image{
      background-image: url(/Content/images/skidka20.png);
     background-size:100% 100%;
@@ -1115,8 +1153,19 @@ div.Main_present_block_show_form{
     height:300px;
 
 }
+/*Admin_page_link*/
 
-
-
+div.Admin_page_link_small_block{
+    position:fixed;
+    top: 500px;
+    right:0px;
+    width:50px;
+    height:50px;
+    cursor:pointer;
+    background-image: url(/Content/images/admin_img.jpg);
+    background-size:100% 100%;
+     z-index:6;
+     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 
 

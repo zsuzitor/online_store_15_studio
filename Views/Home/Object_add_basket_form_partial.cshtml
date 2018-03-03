@@ -1,0 +1,27 @@
+﻿
+
+<div>
+    @using (Ajax.BeginForm("Object_add_basket_form","Home",new AjaxOptions {
+        UpdateTargetId = "Object_add_basket_form_partial_id_comlete",
+        LoadingElementId = "Main_preloader_id",
+        LoadingElementDuration = 200
+    }))
+    {
+        @Html.Hidden("id", (int)ViewBag.object_id)
+        @Html.Editor("count")
+
+
+
+
+
+        <div id="Object_add_basket_form_partial_id_comlete"></div>
+        <input type="submit" value="добавить в корзину"/>
+    }
+</div>
+
+
+
+
+
+
+

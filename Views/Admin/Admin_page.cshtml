@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Admin_page";
+}
+
+<h2>Admin_page</h2>
+<h1>Да здравствует цезарь</h1>
+@Html.ActionLink("Добавить продукт", "Add_object", "Admin", new { }, new { })
+@Html.ActionLink("Существующие типы купоно", "Discount_all_coupon", "Admin", new { }, new { })
+@Html.ActionLink("Создание типа купона", "Discount_coupon_create", "Admin", new { }, new { })
+@Html.ActionLink("Просмотр заявок на связь по телефону", "Application_phone_list", "Admin", new { }, new { })
+

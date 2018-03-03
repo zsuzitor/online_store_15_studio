@@ -282,6 +282,9 @@
     <Content Include="Views\Admin\Discount_coupon_create.cshtml" />
     <Content Include="Views\Home\Coupons_page.cshtml" />
     <Content Include="Views\Home\Partial_message.cshtml" />
+    <Content Include="Views\Admin\Admin_page.cshtml" />
+    <Content Include="Views\Home\Admin_page_link.cshtml" />
+    <Content Include="Views\Home\Object_add_basket_form_partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

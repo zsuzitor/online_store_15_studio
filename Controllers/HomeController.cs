@@ -11,6 +11,7 @@ using System.IO;
 //
 using static online_store.Models.Functions_project;
 using static online_store.Models.DataBase;
+using Microsoft.AspNet.Identity.Owin;
 //
 
 //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -229,7 +230,7 @@ namespace online_store.Controllers
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
-            ViewBag.count_comment_from_one_load = 1;
+            ViewBag.count_comment_from_one_load = 5;
             ViewBag.count_purchase_from_one_load = 10; 
             ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
             ViewBag.Baskets.Reverse();
@@ -305,14 +306,20 @@ namespace online_store.Controllers
             res.Reverse();
             return PartialView(res);
         }
+
+
+
         //partial для отображения, добавления,удаления follow объекта
+        //NET//action:(all||follow||basket)
         [Authorize]
         public ActionResult Object_follow(int id, bool? click)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Id = id;
             ViewBag.Follow = false;
-            
+            //ViewBag.action = action;
+
+
             if (!string.IsNullOrEmpty(check_id))
             {
                 var foll = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
@@ -450,8 +457,12 @@ namespace online_store.Controllers
                 ViewBag.Havent_message = "В вашей корзине присутствуют предметы, которых на данный момент нет в наличии, перед подтверждением покупки, их необходимо удалить";
             }
             summ_1 = summ_1.Where(x1 => x1.Remainder > 0).ToList();
-            ViewBag.All_price = summ_1.Sum(x1 => x1.Price);
-            ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price * (1 - x1.Discount))));
+            ViewBag.All_price = summ_1.Sum(x1 =>
+            {
+                var bsk=res.First(x2 => x2.Object_id == x1.Id).Count_obj;
+                return bsk * x1.Price;
+            });//x1.Price
+            ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price* res.First(x2 => x2.Object_id == x1.Id).Count_obj * (1 - x1.Discount))));
            
             ViewBag.obj_list_id = res.Select(x1 => x1.Object_id);
             ViewBag.coupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id&&x1.Spent==false).ToList();
@@ -518,6 +529,7 @@ namespace online_store.Controllers
             var res = new Object_os_for_view(obj) { Images = imgs };
             return PartialView(res);
         }
+        //для объектов без параметров(цвета размера и тдтд и отображения в списках)
         //partial для отображения, добавления,удаления  объекта в\из корзины
         [Authorize]
         public ActionResult Object_add_basket(int id, bool? click)
@@ -533,8 +545,8 @@ namespace online_store.Controllers
             {
                 var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 ViewBag.InBasket = false;
-                if (!string.IsNullOrEmpty(check_id))
-                {
+                //if (!string.IsNullOrEmpty(check_id))
+                //{
                     var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
                     if (bask != null)
                     {
@@ -553,20 +565,66 @@ namespace online_store.Controllers
                         db.SaveChanges();
                         ViewBag.InBasket = !ViewBag.InBasket;
                     }
-                }
+                //}
             }
             
 
 
             return PartialView();
         }
+        [Authorize]
+        public ActionResult Object_add_basket_form_partial(int id)
+        {
+            ViewBag.object_id = id;
+
+            return PartialView();
+        }
+        //параметры с которым добавлять объект(цвет размер и тдтд)
+        [HttpPost]
+        [Authorize]
+        public ActionResult Object_add_basket_form(int id,int count)
+        {
+            var res = "";
+            ViewBag.Count_obj = 0;
+            var obj = db.Objects.FirstOrDefault(x1 => x1.Id == id);
+            if (obj != null)
+            {
+                ViewBag.Count_obj = obj.Remainder;//
+            }
+            if (ViewBag.Count_obj >=count)
+            {
+                var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+               
+                    var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
+                if (bask != null)
+                {
+                    bask.Count_obj += count;
+                }
+                else
+                {
+                    db.Baskets.Add(new Connect_basket() { Object_id = id, Count_obj = count, Person_id = check_id });
+                }
+                db.SaveChanges();
+                res = "Успешно добавлено";
+
+
+            }
+            else
+            {
+                res = "данного объекта в таком колличестве нет";
+                //TODO сообщение что столько объектов нет и передать колличество
+            }
+
+            return Redirect(Url.Action("Partial_message", "Home", new { message = res }));
+        }
         //удаление объекта из корзины
         [Authorize]
-        public ActionResult Delete_object_from_basket(int id)
+        public ActionResult Delete_object_from_basket(int id,int count_delete = -1)//-1 удалить все объекты  таким id
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = "";
-            if (Functions_project.Delete_object_from_basket(id,check_id))
+            if (Functions_project.Delete_object_from_basket(id,check_id, count_delete))
             {
                 //ViewBag.Message = "Удалено";
                 res = "Удалено";
@@ -597,8 +655,10 @@ namespace online_store.Controllers
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
+            ViewBag.comment_id = id;
+            ViewBag.delete = false;
             var com = db.Comments.FirstOrDefault(x1 => x1.Id == id);
-            Comment_view res = null;
+            
             if (com != null)
             {
                 if (com.Person_id == check_id)
@@ -606,17 +666,26 @@ namespace online_store.Controllers
                     db.Comments.Remove(com);
                     db.SaveChanges();
                     ViewBag.Message = "Удалено";
+                    ViewBag.delete = true;
                 }
                 else
                 {
-                    //TODO хз может убрать(просто отображение пустого блока с сообщением) или доделать там оценки комментов
-                    ViewBag.Message = "Удалить невозможно";
-                    var user = db.Users.First(x1 => x1.Id == com.Person_id);
-                    res = new Comment_view(com) { Image_user = user.Image, User_name = user.Name };
+                    var roles = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(check_id);
+                    var check = roles.FirstOrDefault(x1 => x1 == "employee");
+                    if (check != null)
+                    {
+                        db.Comments.Remove(com);
+                        db.SaveChanges();
+                        ViewBag.Message = "Удалено";
+                        ViewBag.delete = true;
+                    }
+                        
+                        ViewBag.Message = "Неудача";
+                   
                 }
             }
-
-            return PartialView(res);
+           
+            return PartialView();
         }
         //отображение списка комментов дозагржается через ajax
         [AllowAnonymous]
@@ -690,15 +759,7 @@ namespace online_store.Controllers
 
 
 
-        [HttpPost]
-        public ActionResult Main_help_block(Application_phone a)
-        {
-            //var res = new Application_phone();
-            db.Application_phone_comm.Add(a);
-            db.SaveChanges();
-            
-            return Redirect(Url.Action("Index", "Home"));
-        }
+       
 
 
         //-----------------------------------
@@ -732,7 +793,27 @@ namespace online_store.Controllers
             return RedirectToAction("Coupons_page", "Home",new{ });
             //return PartialView();
         }
-       
+        [ChildActionOnly]
+        public ActionResult Admin_page_link()
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+            ViewBag.admin = false;
+            if (check_id != null)
+            {
+                var roles=HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(check_id);
+                var check=roles.FirstOrDefault(x1=>x1=="admin");
+                if(check!=null)
+                ViewBag.admin = true;
+            }
+            //TODO убрать строчку
+            ViewBag.admin = true;
+            //
+
+            return PartialView();
+        }
+
+
         [ChildActionOnly]
         public ActionResult Main_present_block()
         {
@@ -753,6 +834,17 @@ namespace online_store.Controllers
            
             return PartialView();
         }
+
+        [HttpPost]
+        public ActionResult Main_help_block(Application_phone a)
+        {
+            //var res = new Application_phone();
+            db.Application_phone_comm.Add(a);
+            db.SaveChanges();
+
+            return Redirect(Url.Action("Index", "Home"));
+        }
+
         [ChildActionOnly]
         public ActionResult Main_help_block()
         {

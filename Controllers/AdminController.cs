@@ -12,10 +12,16 @@ using Microsoft.AspNet.Identity;
 namespace online_store.Controllers
 {
 
-    [Authorize(Roles="admin")]
+    //[Authorize(Roles="admin")]
     public class AdminController : Controller
     {
-       
+        public ActionResult Admin_page()
+        {
+
+            return View();
+        }
+
+
         public ActionResult Delete_object(int id)
         {
             db.Objects.Remove(db.Objects.First(x1 => x1.Id == id));
@@ -68,7 +74,7 @@ namespace online_store.Controllers
                     ViewBag.Id = a.Id;
                 }
 
-                return RedirectToAction("Work_with_images_object", "Admin", new { id = a.Id });
+                return RedirectToAction("Object_view", "Home", new { id = a.Id });
             }
 
 
@@ -119,8 +125,9 @@ namespace online_store.Controllers
         {
             db.Images.Remove(db.Images.First(x1 => x1.Id == id));
             db.SaveChanges();
-            ViewBag.Message = "Удалено";
-            return PartialView("Partial_message", "Home");
+            //ViewBag.Message = "Удалено";
+            return Redirect(Url.Action("Partial_message", "Home", new { message = "Удалено" }));
+            //return PartialView();
         }
         public ActionResult Delete_object_from_follow(int id_object,string id_user)
         {
@@ -142,6 +149,7 @@ namespace online_store.Controllers
         }
 
         //[Authorize(Roles="admin")]  админ объектам, юзерам юзеры
+        //TODO
         [HttpPost]
         public ActionResult Add_new_image(HttpPostedFileBase[] uploadImage, string id, string from)
         {
