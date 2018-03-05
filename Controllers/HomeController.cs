@@ -893,58 +893,43 @@ namespace online_store.Controllers
             try
             {
 
-           
+                var res = new List<Section_main_header_view>();
             var sect = db.Section_in_main_header.ToList();
             if (sect == null || sect.Count == 0)
             {
-                var tmp_woman = new Section_main_header() {Name= "Женщинам", line1_name = "Обувь",
-                    line2_name = "Аксессуары",
-                    line3_name = "Спорт",
-                    line4_name = "Игрушки",
-                    line5_name = "Красота",
-                    line6_name = "Новинки",
-                    line7_name = "Ювелирные украшения",
-                    line8_name = "Premium",
-                    line9_name = "Подарки",
-                    line10_name = "Зима",
-                    line1_link="",
-                    line2_link = "",
-                    line3_link = "",
-                    line4_link = "",
-                    line5_link = "",
-                    line6_link = "",
-                    line7_link = "",
-                    line8_link = "",
-                    line9_link = "",
-                    line10_link = "",
-                };
+                var tmp_woman = new Section_main_header() {Name= "Женщинам"};
                 db.Section_in_main_header.Add(tmp_woman);
-                var tmp_man = new Section_main_header()
-                {
-                    Name = "Мужчинам",
-                    line1_name = "Обувь",
-                    line2_name = "Аксессуары",
-                    line3_name = "Спорт",
-                    line4_name = "Игрушки",
-                    line5_name = "Красота",
-                    line6_name = "Новинки",
-                    line7_name = "Ювелирные украшения",
-                    line8_name = "Premium",
-                    line9_name = "Подарки",
-                    line10_name = "Зима",
-                    line1_link = "",
-                    line2_link = "",
-                    line3_link = "",
-                    line4_link = "",
-                    line5_link = "",
-                    line6_link = "",
-                    line7_link = "",
-                    line8_link = "",
-                    line9_link = "",
-                    line10_link = "",
-                };
+                    db.SaveChanges();
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id= tmp_woman.Id, Line_name= "Аксессуары", Line_link_action="#", Line_link_controller="Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Спорт", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Игрушки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Красота", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Новинки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Ювелирные украшения", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Premium", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Подарки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_woman.Id, Line_name = "Зима", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.SaveChanges();
+                    
+
+                    //
+                    var tmp_man = new Section_main_header(){Name = "Мужчинам"};
                 db.Section_in_main_header.Add(tmp_man);
-                var tmp_1 = new Section_main_header()
+
+                    db.SaveChanges();
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Аксессуары", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Спорт", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Игрушки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Красота", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Новинки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Ювелирные украшения", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Premium", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Подарки", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.Section_in_main_header_link.Add(new Section_main_header_link() { Section_Id = tmp_man.Id, Line_name = "Зима", Line_link_action = "#", Line_link_controller = "Home" });
+                    db.SaveChanges();
+                    
+
+                    var tmp_1 = new Section_main_header()
                 {
                     Name = "Детям"
                 };
@@ -1019,10 +1004,15 @@ namespace online_store.Controllers
 
 
                 db.SaveChanges();
-                 sect = db.Section_in_main_header.ToList();
+                    
             }
-            
-            ViewBag.List_class_for_header = sect;
+                var names = db.Section_in_main_header.ToList();
+                foreach(var i in names)
+                res.Add(new Section_main_header_view() { Section = i, Link = db.Section_in_main_header_link.Where(x1 => x1.Section_Id == i.Id).ToList() });
+
+
+
+                ViewBag.List_class_for_header = res;
             }
             catch { }
             return PartialView();

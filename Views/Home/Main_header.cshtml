@@ -30,49 +30,19 @@
                         foreach (var i in ViewBag.List_class_for_header)
                         {
                         <li>
-                            <div class="Main_header_one_section_block div_inline_block">@i.Name
+                            <div class="Main_header_one_section_block div_inline_block">@i.Section.Name
                                 <div class="Main_header_hover_section_for_block">
                                     <div class="Main_header_hover_section_for_block_opac">
-                                        @if (!string.IsNullOrEmpty(((string)i.line1_name)) && !string.IsNullOrEmpty(((string)i.line1_link)))
+
+                                        @foreach (var i2 in i.Link)
                                         {
-                                            <div>@Html.ActionLink(((string)i.line1_name), ((string)i.line1_link), "Home", new { })</div>
+                                            if (!string.IsNullOrEmpty(((string)i2.Line_name)) && !string.IsNullOrEmpty(((string)i2.Line_link_action))
+                                                && !string.IsNullOrEmpty(((string)i2.Line_link_controller)))
+                                            {
+                                                <div>@Html.ActionLink(((string)i2.Line_name), ((string)i2.Line_link_action), (string)i2.Line_link_controller, new { })</div>
+                                            }
                                         }
-                                        @if (!string.IsNullOrEmpty(((string)i.line2_name)) && !string.IsNullOrEmpty(((string)i.line2_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line2_name), ((string)i.line2_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line3_name)) && !string.IsNullOrEmpty(((string)i.line3_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line3_name), ((string)i.line3_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line4_name)) && !string.IsNullOrEmpty(((string)i.line4_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line4_name), ((string)i.line4_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line5_name)) && !string.IsNullOrEmpty(((string)i.line5_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line5_name), ((string)i.line5_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line6_name)) && !string.IsNullOrEmpty(((string)i.line6_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line6_name), ((string)i.line6_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line7_name)) && !string.IsNullOrEmpty(((string)i.line7_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line7_name), ((string)i.line7_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line8_name)) && !string.IsNullOrEmpty(((string)i.line8_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line8_name), ((string)i.line8_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line9_name)) && !string.IsNullOrEmpty(((string)i.line9_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line9_name), ((string)i.line9_link), "Home", new { })</div>
-                                        }
-                                        @if (!string.IsNullOrEmpty(((string)i.line10_name)) && !string.IsNullOrEmpty(((string)i.line10_link)))
-                                        {
-                                            <div>@Html.ActionLink(((string)i.line10_name), ((string)i.line10_link), "Home", new { })</div>
-                                        }
+                                       
 
                                     </div>
                                 </div>
