@@ -444,8 +444,16 @@ namespace online_store.Controllers
             ViewBag.coupons_spent = coupons.Where(x1 => x1.Spent == true).ToList();
             return View();
         }
-        //страница отображения корзины
         [Authorize]
+        public ActionResult Notification_object(int id)
+        {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            
+            return PartialView();
+        }
+        
+                //страница отображения корзины
+                [Authorize]
         public ActionResult Basket_page()
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
