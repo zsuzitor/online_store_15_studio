@@ -63,10 +63,11 @@ namespace online_store.Controllers
         }
         //страница объектов
         [AllowAnonymous]
-        public ActionResult List_objects_type(string text_rearch=null)
+        public ActionResult List_objects_type(string text_rearch=null,int page=1)
         {
             ViewBag.text_rearch = text_rearch;
             ViewBag.Take_object = 30;//30
+            ViewBag.Page = page;
             return View();
         }
         //страница 1 объекта(товара)
@@ -445,10 +446,37 @@ namespace online_store.Controllers
             return View();
         }
         [Authorize]
-        public ActionResult Notification_object(int id)
+        public ActionResult Notification_object(int id,bool click=false)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            
+            ViewBag.id = id;
+            var not=db.Object_notification.FirstOrDefault(x1 => x1.User_id == check_id && x1.Object_id == id);
+            if (not == null)
+            {
+                if (click)
+                {
+                    db.Object_notification.Add(new Object_notification() { User_id = check_id, Object_id = id });
+                    db.SaveChanges();
+                    ViewBag.In_notification = true;
+                }
+                else
+                    ViewBag.In_notification = false;
+            }
+            else
+            {
+                if (click)
+                {
+                    db.Object_notification.Remove(not);
+                    db.SaveChanges();
+                    ViewBag.In_notification = false;
+                }
+                else
+                    ViewBag.In_notification = true;
+
+
+            }
+
+            //ViewBag.In_notification =true;
             return PartialView();
         }
         
@@ -459,18 +487,46 @@ namespace online_store.Controllers
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);     //ToList() hz
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
-            
+            bool error = false;
             if (summ_1.Where(x1 => x1.Remainder < 1).Count()>0)
             {
-                ViewBag.Havent_message = "В вашей корзине присутствуют предметы, которых на данный момент нет в наличии, перед подтверждением покупки, их необходимо удалить";
+                error = true;
+               
             }
             summ_1 = summ_1.Where(x1 => x1.Remainder > 0).ToList();
+            foreach(var i in res)
+            {
+                var tmp_obj=summ_1.First(x1 => x1.Id == i.Id);
+                if (tmp_obj.Remainder < i.Count_obj)
+                {
+                    error = true;
+                    //summ_1.Remove(tmp_obj);
+                }
+
+            }
+
+
+            if(error)
+                ViewBag.Havent_message = "В вашей корзине присутствуют предметы, которых на данный момент нет в наличии, перед подтверждением покупки, их необходимо удалить";
+
             ViewBag.All_price = summ_1.Sum(x1 =>
             {
                 var bsk=res.First(x2 => x2.Object_id == x1.Id).Count_obj;
-                return bsk * x1.Price;
+                if (bsk >= x1.Remainder)
+                {
+                    return bsk * x1.Price;
+                }
+                return x1.Remainder * x1.Price;
             });//x1.Price
-            ViewBag.All_price_small = summ_1.Sum(x1 => ((int)(x1.Price* res.First(x2 => x2.Object_id == x1.Id).Count_obj * (1 - x1.Discount))));
+            ViewBag.All_price_small = summ_1.Sum(x1 =>
+            {
+            var tmp = x1.Price;
+            var count = res.First(x2 => x2.Object_id == x1.Id).Count_obj;
+            count = count >= x1.Remainder ? count :x1.Remainder;
+            tmp *= count* (1 - x1.Discount);
+        //((int)(x1.Price * res.First(x2 => x2.Object_id == x1.Id).Count_obj * (1 - x1.Discount))));
+            return (int)tmp;
+            });
            
             ViewBag.obj_list_id = res.Select(x1 => x1.Object_id);
             ViewBag.coupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id&&x1.Spent==false).ToList();

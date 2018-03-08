@@ -10,6 +10,7 @@ List_objects_type_OBJECT.OnComplete_load_objects_LOT = (request, status) => {
     var block2 = document.getElementById("count_object_from_one_load");
     block1.value = +block1.value + +block2.value;
 
+    
 
     var el = document.getElementById('Load_object_for_list_objects_type_count_request');
     el.parentNode.removeChild(el);
@@ -18,8 +19,16 @@ List_objects_type_OBJECT.OnComplete_load_objects_LOT = (request, status) => {
     }
     else {
         List_objects_type_OBJECT.req_objects_flag = true;
-    }
+        var page = (+block1.value - +block1.value % +block2.value) / +block2.value - 1;
 
+
+        var ref = "List_objects_type?page=" + page;
+        history.pushState(null, null, ref);
+    }
+   
+    
+       
+    
 
 }
 

@@ -74,8 +74,7 @@
         @Html.Action("Object_follow", "Home", new { id = Model.Db.Id, click = false })
     </div>
     <div class="div_inline_block Object_view_right_block">
-        <div>Куплено раз: @Model.Db.Count_buy</div>
-        <div>Всего осталось: @Model.Db.Remainder</div>
+        
         <div>@Html.Label(Model.Db.Name)</div>
         <div>@Html.Label("Артикул" + Model.Db.Id.ToString())</div>
 
@@ -90,6 +89,16 @@
         <div>@Html.Label(Model.Db.Composition)</div>
         <div>@Html.Label(Model.Db.Description)</div>
         <div>@Html.Label(Model.Db.Count_buy.ToString())</div>
+        <hr />
+        <div>Куплено раз: @Model.Db.Count_buy</div>
+        
+        <div>Всего осталось: @Model.Db.Remainder</div>
+        @if (Model.Db.Remainder == 0)
+        {
+
+            @Html.Action("Notification_object","Home",new { })
+            
+        }
         <hr />
         <div class="Object_view_add_basket_block_all" id=@string.Concat("Object_add_basket_block_all_id", Model.Db.Id)>
             @Html.Action("Object_add_basket_form_partial", "Home", new { id = Model.Db.Id })

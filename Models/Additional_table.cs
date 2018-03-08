@@ -63,6 +63,24 @@ namespace online_store.Models
             return res;
         }
     }
+    public class Object_notification
+    {
+        public int Id { get; set; }
+        
+        public string User_id { get; set; }
+        public int Object_id { get; set; }
+
+
+
+        public Object_notification()
+        {
+            Id = 0;
+            Object_id = 0;
+            User_id = null;
+            
+
+        }
+    }
     public class Follow_email
     {
         public int Id { get; set; }

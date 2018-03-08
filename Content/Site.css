@@ -331,6 +331,23 @@ div.Object_view_follow_block{
     top:15px;
     right:15px;
 }
+div.Object_view_notification_object{
+    width:100%;
+    max-width:500px;
+    
+    background-color:#fa9191;
+    font-size:24pt;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+div.Object_view_not_notification_object{
+    width:100%;
+    max-width:500px;
+    
+    background-color:#bab3b3;
+    opacity:.5;
+    font-size:24pt;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 
 /**/
 /*Work_with_images_object*/
@@ -694,15 +711,36 @@ padding-left:30px;
 }
 div.Personal_record_show_basket_button{
     cursor:pointer;
+     text-indent:40px;
 }
 div.Personal_record_show_follow_button{
     cursor:pointer;
+    text-indent:40px;
 }
+div.Personal_record_triangle_right{
+    position:absolute;
+    height:0px;
+    width:0px;
+    border-left:30px solid black;
+    border-bottom:15px solid transparent;
+    border-top:15px solid transparent;
+}
+div.Personal_record_triangle_down{
+    position:absolute;
+    height:0px;
+    width:0px;
+    border-top:30px solid black;
+    border-left:15px solid transparent;
+    border-right:15px solid transparent;
+}
+
 div.Personal_record_show_comments_button{
     cursor:pointer;
+     text-indent:40px;
 }
 div.Personal_record_show_purchase_button{
     cursor:pointer;
+    text-indent:40px;
 }
 /*div.Personal_record_follow_block{
      max-height:450px;

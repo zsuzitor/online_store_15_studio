@@ -1,0 +1,27 @@
+﻿
+
+
+@if (ViewBag.In_notification == true)
+{
+    <div id="Object_view_notification_object_id" class="Object_view_not_notification_object">
+        @Ajax.ActionLink("Не уведомлять", "Notification_object", "Home", new { id = (int)ViewBag.id, click=true },
+               new AjaxOptions
+               {
+                   UpdateTargetId = "Object_view_notification_object_id",
+                   LoadingElementId = "Main_preloader_id",
+                   LoadingElementDuration = 200
+               },new {@class= "link_standart_for_div" })
+    </div>
+}
+        @if (ViewBag.In_notification == false)
+        {
+            <div id="Object_view_notification_object_id" class="Object_view_notification_object">
+                @Ajax.ActionLink("Уведомить при поступлении", "Notification_object", "Home", new { id = (int)ViewBag.id, click = true },
+               new AjaxOptions
+               {
+                   UpdateTargetId = "Object_view_notification_object_id",
+                   LoadingElementId = "Main_preloader_id",
+                   LoadingElementDuration = 200
+               }, new { @class = "link_standart_for_div" })
+            </div>
+        }

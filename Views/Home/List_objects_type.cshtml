@@ -9,7 +9,8 @@
 
 
     <div id="List_objects_type_all_object_block_id">
-    @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch, count_object_from_one_load = ViewBag.Take_object })
+    @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch,
+    count_object_from_one_load = ((int)ViewBag.Page * (int)ViewBag.Take_object)})
 </div>
     <div id="List_objects_type_load_block">
 
@@ -32,7 +33,7 @@
                 @Html.Hidden("text_rearch",(string)ViewBag.text_rearch)
             }
 
-            @Html.Hidden("count_object_on_page", ((int)ViewBag.Take_object))
+            @Html.Hidden("count_object_on_page", ((int)ViewBag.Page * (int)ViewBag.Take_object))
             @Html.Hidden("count_object_from_one_load", ((int)ViewBag.Take_object))
             <input type="submit" class="submit" style="display:none;" id="List_objects_type_submit_objects_load_id" value="загрузить" />
         }

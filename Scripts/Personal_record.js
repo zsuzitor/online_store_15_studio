@@ -68,41 +68,54 @@ Personal_record_OBJECT.OnComplete_load_purchases_pers_rec = (request, status) =>
 Personal_record_OBJECT.Show_basket = () => {
     var block3 = document.getElementById("Personal_record_follow_block_hidden_id");
     var block = document.getElementById("Personal_record_basket_block_hidden_id");
+    var triangle = document.getElementById("Personal_record_for_triangle_b");
+    
     if (Personal_record_OBJECT.show_basket_flag) {
         block.style.display = 'none';
+        triangle.innerHTML = "<div class='Personal_record_triangle_right'></div>";
     }
     else {
         block.style.display = 'block';
+        triangle.innerHTML = "<div class='Personal_record_triangle_down'></div>";
     }
     Personal_record_OBJECT.show_basket_flag = !Personal_record_OBJECT.show_basket_flag;
 }
 Personal_record_OBJECT.Show_follow = () => {
     var block = document.getElementById("Personal_record_follow_block_hidden_id");
+    var triangle = document.getElementById("Personal_record_for_triangle_f");
     if (Personal_record_OBJECT.show_follow_flag) {
         block.style.display = 'none';
+        triangle.innerHTML = "<div class='Personal_record_triangle_right'></div>";
     }
     else {
         block.style.display = 'block';
+        triangle.innerHTML = "<div class='Personal_record_triangle_down'></div>";
     }
     Personal_record_OBJECT.show_follow_flag = !Personal_record_OBJECT.show_follow_flag;
 }
 Personal_record_OBJECT.Show_comments = () => {
     var block = document.getElementById("Personal_record_comments_block_id_hidden");
+    var triangle = document.getElementById("Personal_record_for_triangle_c");
     if (Personal_record_OBJECT.show_comment_flag) {
         block.style.display = 'none';
+        triangle.innerHTML = "<div class='Personal_record_triangle_right'></div>";
     }
     else {
         block.style.display = 'block';
+        triangle.innerHTML = "<div class='Personal_record_triangle_down'></div>";
     }
     Personal_record_OBJECT.show_comment_flag = !Personal_record_OBJECT.show_comment_flag;
 }
 Personal_record_OBJECT.Show_Purchases = () => {
     var block = document.getElementById("Personal_record_purchases_block_id_load");
+    var triangle = document.getElementById("Personal_record_for_triangle_p");
     if (Personal_record_OBJECT.show_purchase_flag) {
         block.style.display = 'none';
+        triangle.innerHTML = "<div class='Personal_record_triangle_right'></div>";
     }
     else {
         block.style.display = 'block';
+        triangle.innerHTML = "<div class='Personal_record_triangle_down'></div>";
     }
     Personal_record_OBJECT.show_purchase_flag = !Personal_record_OBJECT.show_purchase_flag;
 }
