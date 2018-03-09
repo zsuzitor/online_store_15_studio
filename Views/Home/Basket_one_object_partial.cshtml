@@ -3,7 +3,7 @@
 
 @{ 
     string have = "";
-    if(Model.Db.Remainder<1)
+    if (ViewBag.Have == false)
     {
         have = "Basket_one_object_partial_havent_obg";
     }
@@ -14,76 +14,72 @@
 }
 
 <div class="Basket_one_object_partial_one_block" id=@string.Concat("Basket_one_object_partial_one_block_id",Model.Db.Id)>
-    <div class="Basket_one_object_partial_delete_all_block">
+    <div class="Basket_one_object_partial_one_block_lvl2">
+        <div class="Basket_one_object_partial_delete_all_block">
 
-        @if (have == "Basket_one_object_partial_havent_obg")
+            @if (have == "Basket_one_object_partial_havent_obg")
             {
-            <div class="div_inline_block">
-                <p class="Basket_one_object_partial_havent_obg_message">Объекта нет в наличии</p>
-            </div>
-        }
+                <div class="div_inline_block">
+                    <p class="Basket_one_object_partial_havent_obg_message">Доступно для покупки: @Model.Db.Remainder</p>
+                </div>
+            }
 
 
-        <div class="div_inline_block Basket_one_object_partial_form_delete_obj">
-            @using (Ajax.BeginForm("Delete_object_from_basket", "Home", new AjaxOptions
+            <div class="div_inline_block Basket_one_object_partial_form_delete_obj">
+                @using (Ajax.BeginForm("Delete_object_from_basket", "Home", new AjaxOptions
             {
                 UpdateTargetId = string.Concat("Basket_one_object_partial_one_block_id", Model.Db.Id),
                 LoadingElementId = "Main_preloader_id",
                 LoadingElementDuration = 200
             }))
             {
-                @Html.Hidden("id", Model.Db.Id)
-                <div class="div_inline_block Basket_one_object_partial_num_delete_obj"><input type="number" name="count_delete" /></div>
-                <div class="div_inline_block Basket_one_object_partial_subm_delete_obj"><input type="submit" value="Удалить" /></div>
+                    @Html.Hidden("id", Model.Db.Id)
+                    <div class="div_inline_block Basket_one_object_partial_num_delete_obj"><input type="number" name="count_delete" /></div>
+                    <div class="div_inline_block Basket_one_object_partial_subm_delete_obj"><input type="submit" value="Удалить" /></div>
 
-                //@Html.Editor("count",new { },new { },)
+                    //@Html.Editor("count",new { },new { },)
 
-            }
+                }
 
-
-
-
+            </div>
         </div>
 
+        <div class=@have>
 
-    </div>
+            <div class="Basket_one_object_left_block div_inline_block">
 
-    <div class=@have>
-       
-        <div class="Basket_one_object_left_block div_inline_block">
-
-            @if (Model.Images.Count > 0 && Model.Images[0].Image != null)
+                @if (Model.Images.Count > 0 && Model.Images[0].Image != null)
             {
-                <a class="link_standart_for_div" href=@Url.Action("Object_view", "Home",new {id= Model.Db.Id })>
-                    <img id="" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(Model.Images[0].Image)) />
-                </a>
-            }
-            @if (Model.Images.Count < 1 || Model.Images[0].Image == null)
+                    <a class="link_standart_for_div" href=@Url.Action("Object_view", "Home",new {id= Model.Db.Id })>
+                        <img id="" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(Model.Images[0].Image)) />
+                    </a>
+                }
+                @if (Model.Images.Count < 1 || Model.Images[0].Image == null)
             {
-                <a class="link_standart_for_div" href=@Url.Action("Object_view", "Home",new {id= Model.Db.Id })>
-                    <img id="" src="/Content/images/camera_200.png" />
-                </a>
-            }
+                    <a class="link_standart_for_div" href=@Url.Action("Object_view", "Home",new {id= Model.Db.Id })>
+                        <img id="" src="/Content/images/camera_200.png" />
+                    </a>
+                }
 
 
-        </div>
-        <div class="Basket_one_object_right_block div_inline_block">
-            <p>Название @Model.Db.Name</p>
-            <p>Артикул @Model.Db.Id</p>
-            @if (Model.Db.Price != (Model.Db.Price * (1 - Model.Db.Discount)))
+            </div>
+            <div class="Basket_one_object_right_block div_inline_block">
+                <p>Название @Model.Db.Name</p>
+                <p>Артикул @Model.Db.Id</p>
+                @if (Model.Db.Price != (Model.Db.Price * (1 - Model.Db.Discount)))
             {
-                <p>Цена без скидки: @Model.Db.Price</p>
-                <p>Скидка: @Model.Db.Discount</p>
-                <p>Цена со скидкой: @(Model.Db.Price * (1 - @Model.Db.Discount))</p>
-            }
-@if (Model.Db.Price == (Model.Db.Price * (1 - Model.Db.Discount)))
-{
-    <p>Цена: @Model.Db.Price</p>
-}
+                    <p>Цена без скидки: @Model.Db.Price</p>
+                    <p>Скидка: @Model.Db.Discount</p>
+                    <p>Цена со скидкой: @(Model.Db.Price * (1 - @Model.Db.Discount))</p>
+                }
+                @if (Model.Db.Price == (Model.Db.Price * (1 - Model.Db.Discount)))
+                {
+                    <p>Цена: @Model.Db.Price</p>
+                }
 
-            <h1>Количество в корзине: @Model.Count</h1>
+                <h1>Количество в корзине: @Model.Count</h1>
+            </div>
         </div>
     </div>
-
         
 </div>

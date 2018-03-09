@@ -286,6 +286,7 @@
     <Content Include="Views\Home\Admin_page_link.cshtml" />
     <Content Include="Views\Home\Object_add_basket_form_partial.cshtml" />
     <Content Include="Views\Home\Notification_object.cshtml" />
+    <Content Include="Views\Home\Menu_search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

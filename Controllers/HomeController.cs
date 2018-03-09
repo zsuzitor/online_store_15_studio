@@ -44,19 +44,33 @@ namespace online_store.Controllers
                 new Image_link() { Path_image ="/Content/images/index/index_slider_7.jpg", Action =" ", Controller = "Home" } };
             
                 ViewBag.count_id_slider_main_index = 7;
-                
-           
 
-            ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10);
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            bool Show_available_o = false;
+            if (check_id != null)
+                Show_available_o = db.Users.First(x1 => x1.Id == check_id).Show_available_object;
+            ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10, Show_available_object: Show_available_o);
             ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
 
             return View();
+        }
+        [AllowAnonymous]
+        public ActionResult Menu_search(string text_rearch = null)
+        {
+            //TODO реализовать text_rearch
+            //ждя каэждого типа своя менюшка
+
+            return PartialView();
         }
         //отображение списка объектов дозагржается через ajax
         [AllowAnonymous]
         public ActionResult List_objects(string text_rearch = null,int count_object_from_one_load=10, int count_object_on_page=0)
         {
-            List<Object_os_for_view> res = Search(text_rearch, count_skip: count_object_on_page, count_return: count_object_from_one_load);
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            bool Show_available_o = false;
+            if (check_id != null)
+                Show_available_o = db.Users.First(x1 => x1.Id == check_id).Show_available_object;
+            List<Object_os_for_view> res = Search(text_rearch, count_skip: count_object_on_page, count_return: count_object_from_one_load, Show_available_object: Show_available_o);
             ViewBag.text_rearch = text_rearch;
             ViewBag.Count_in_list = res.Count;
             return PartialView(res);
@@ -574,7 +588,7 @@ namespace online_store.Controllers
         }
         //частичное отображение 1 объекта для корзины
         [Authorize]
-        [ChildActionOnly]
+        //[ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
         {
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -582,6 +596,11 @@ namespace online_store.Controllers
             var obj = db.Objects.First(x1 => x1.Id == id);
             var count = db.Baskets.First(x1=>x1.Person_id== check_id&&x1.Object_id==id);
             var res = new Object_os_for_view(obj) { Images = imgs,Count= count.Count_obj };
+
+            ViewBag.Have = true;
+            if (res.Db.Remainder < 1 || res.Count > res.Db.Remainder)
+                ViewBag.Have = false;
+
             return PartialView(res);
         }
        //часточное отображение объекта который зафоловил человек  --(personal_record)
@@ -695,8 +714,15 @@ namespace online_store.Controllers
             }
             else
                 res = "Ошибка";
+            var count_rem = db.Baskets.FirstOrDefault(x1=>x1.Person_id==check_id&&x1.Object_id==id);
+            
+            if(count_rem==null)
+                return Redirect(Url.Action("Partial_message", "Home", new { message = res }));
+            else
+
+                return Redirect(Url.Action("Basket_one_object_partial", "Home", new { id = id }));
             //ViewBag.Message = "Ошибка";
-            return Redirect(Url.Action("Partial_message", "Home",new { message=res }));
+
         }
         //удаление объекта из follow
         [Authorize]

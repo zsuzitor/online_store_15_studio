@@ -13,6 +13,7 @@ namespace online_store.Models
         public int Age { get; set; }
         public byte[] Image { get; set; }
         public string Info { get; set; }
+        public bool Show_available_object { get; set; } = false;
 
         public  void Eq(ApplicationUser a)
         {

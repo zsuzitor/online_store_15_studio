@@ -13,7 +13,7 @@ namespace online_store.Models
 {
     public static class Functions_project
     {
-        public static List<Object_os_for_view> Search(string text_rearch,int count_skip=0, int count_return = 10, bool extends_src = false)
+        public static List<Object_os_for_view> Search(string text_rearch, int count_skip = 0, int count_return = 10, bool extends_src = false, bool Show_available_object = false)
         {
             List<Object_os_for_view> res = new List<Object_os_for_view>();
             var lst = new List<Object_os>();

@@ -7,7 +7,7 @@
 <h2>List_objects_type</h2>
 
 
-
+@Html.Action("Menu_search", "Home", new { text_rearch = ViewBag.text_rearch })
     <div id="List_objects_type_all_object_block_id">
     @Html.Action("List_objects", "Home", new { text_rearch = ViewBag.text_rearch,
     count_object_from_one_load = ((int)ViewBag.Page * (int)ViewBag.Take_object)})
