@@ -1,10 +1,6 @@
 ﻿@model online_store.Models.Object_os
 
-@{
-    ViewBag.Title = "Add_object";
-}
 
-<h2>Add_object</h2>
 
 @using (Html.BeginForm("Add_object", "Admin"))
 {
@@ -44,10 +40,7 @@
             @Html.Label("", "Цена")
             @Html.EditorFor(x1 => x1.Price)
         </div>
-        <div class="Add_object_small_block">
-            @Html.Label("", "Количество")
-            @Html.EditorFor(x1 => x1.Remainder)
-        </div>
+        
         @Html.Label("", "Скидка (дробное от 0 до 1 (Пример для скидки в 15%: 0,15))")
         <div class="Add_object_small_block">
 

@@ -1,0 +1,15 @@
+﻿
+
+
+<div>
+    <h1>Для удаления объекта введите в пустое поле id объекта</h1>
+    <h2>Id Объекта: @((int)ViewBag.id)</h2>
+    @using (Html.BeginForm("Delete_object", "Admin"))
+    {
+        @Html.Hidden("id1",(int)ViewBag.id)
+        @Html.Editor("id2")
+        <input type="submit" value="УДАЛИТЬ" />
+    }
+
+
+</div>

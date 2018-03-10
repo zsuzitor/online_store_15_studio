@@ -46,10 +46,10 @@ namespace online_store.Models
             Color = a.Color;
             Composition = a.Composition;
             Description = a.Description;
-            Count_buy = a.Count_buy;
+            
             Price = a.Price;
             Discount = a.Discount;
-            Remainder = a.Remainder;
+            //Remainder = a.Remainder;
             Show_flag = a.Show_flag;
             
             return true;

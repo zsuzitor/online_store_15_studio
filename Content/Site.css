@@ -1255,8 +1255,18 @@ div.Menu_search_main_div:hover{
      background-color:#ffdee9;
 }
 
-
-
+/*Edit_object*/
+div.Edit_object_menu_div{
+    width:20%;
+    height:500px;
+    background-color:aquamarine;
+}
+div.Edit_object_main_block{
+    width:70%;
+    margin-left:5%;
+    min-height:500px;
+    background-color:antiquewhite;
+}
 
 
 

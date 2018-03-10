@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Edit_object";
+}
+
+<h2>Edit_object</h2>
+<h2>@Html.ActionLink("Вернуться к объекту", "Object_view","Home",new {id= (int)ViewBag.id },new { })</h2>
+<div class="div_inline_block Edit_object_menu_div">
+    <h3>@Ajax.ActionLink("Редактировать колличество", "Edit_count_current_object", "Admin", new { id = (int)ViewBag.id },
+        new AjaxOptions { UpdateTargetId = "Edit_object_main_block_id" },new { })
+</h3>
+    <h3>@Ajax.ActionLink("Редактировать изображения", "Work_with_images_object", "Admin", new { id = (int)ViewBag.id },
+        new AjaxOptions { UpdateTargetId = "Edit_object_main_block_id" }, new { })
+</h3>
+    <h3>@Ajax.ActionLink("Редактировать поля", "Add_object", "Admin", new { id = (int)ViewBag.id },
+        new AjaxOptions { UpdateTargetId = "Edit_object_main_block_id" }, new { })
+</h3>
+    <h3>@Ajax.ActionLink("Удалить", "Delete_object", "Admin", new { id = (int)ViewBag.id },
+        new AjaxOptions { UpdateTargetId = "Edit_object_main_block_id" }, new { })
+</h3>
+    
+ 
+</div>
+
+
+
+<div class="div_inline_block Edit_object_main_block" id="Edit_object_main_block_id">
+
+</div>

@@ -15,12 +15,14 @@ namespace online_store.Models
     {
         public static List<Object_os_for_view> Search(string text_rearch, int count_skip = 0, int count_return = 10, bool extends_src = false, bool Show_available_object = false)
         {
+            //Show_available_object--покзывать объекты которых нет в наличии
             List<Object_os_for_view> res = new List<Object_os_for_view>();
             var lst = new List<Object_os>();
             if (string.IsNullOrEmpty(text_rearch))
-                lst = db.Objects.OrderBy(x1 => x1.Id).Where(x1=>x1.Show_flag).Skip(count_skip).Take(count_return).ToList();
+                lst = db.Objects.OrderBy(x1 => x1.Id).Where(x1=>x1.Show_flag&&(Show_available_object?true:x1.Remainder>0)).Skip(count_skip).Take(count_return).ToList();
             else
             {
+                //TODO реализовать
                 if (extends_src)
                 {
                     //TODO скорее всего так нельзя

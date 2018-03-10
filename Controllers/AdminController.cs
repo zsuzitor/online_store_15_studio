@@ -20,19 +20,29 @@ namespace online_store.Controllers
 
             return View();
         }
-
-
-        public ActionResult Delete_object(int id)
+        [HttpPost]
+        public ActionResult Delete_object(int id1,int id2)
         {
-            db.Objects.Remove(db.Objects.First(x1 => x1.Id == id));
-            db.Comments.RemoveRange(db.Comments.Where(x1 => x1.Object_id == id));
-            db.Images.RemoveRange(db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()));
-            db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Object_id == id));
-            db.Follow_objects.RemoveRange(db.Follow_objects.Where(x1 => x1.Object_id == id));
-            db.SaveChanges();
+            if (!string.IsNullOrEmpty(id1.ToString()) && id1 > 0&&id1==id2)
+            {
+                db.Objects.Remove(db.Objects.First(x1 => x1.Id == id1));
+                db.Comments.RemoveRange(db.Comments.Where(x1 => x1.Object_id == id1));
+                db.Images.RemoveRange(db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id1.ToString()));
+                db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Object_id == id1));
+                db.Follow_objects.RemoveRange(db.Follow_objects.Where(x1 => x1.Object_id == id1));
+                db.SaveChanges();
+            }
+
+
             return RedirectToAction("Index", "Home", new { });
         }
-      
+        public ActionResult Delete_object(int id)
+        {
+            ViewBag.id = id;
+            return PartialView();
+            //return RedirectToAction("Index", "Home", new { });
+        }
+        [HttpGet]
         public ActionResult Add_object(int id = -1)
         {
             Object_os res = null;
@@ -45,9 +55,39 @@ namespace online_store.Controllers
                 res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
             }
 
-            return View(res);
+            return PartialView(res);
         }
-       
+        [HttpGet]
+        public ActionResult Edit_object(int id = -1)
+        {
+            ViewBag.id = id;
+            return View();
+        }
+       [HttpGet]
+        public ActionResult Edit_count_current_object(int id)
+        {
+            ViewBag.count = -1;
+            ViewBag.id = id;
+            var obj = db.Objects.FirstOrDefault(x1=>x1.Id==id);
+            if (obj != null)
+            {
+                ViewBag.count = obj.Remainder;
+            }
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult Edit_count_current_object(int id,int count)
+        {
+            var obj=db.Objects.FirstOrDefault(x1 => x1.Id == id);
+
+            if (obj != null && count > 0)
+            {
+                obj.Remainder += count;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Edit_object", "Admin",new {id=id });
+        }
         [HttpPost]
         public ActionResult Add_object(Object_os a)
         {
@@ -118,7 +158,7 @@ namespace online_store.Controllers
             ViewBag.Id = id;
             var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString());
             ViewBag.Images = imgs.ToList();
-            return View();
+            return PartialView();
         }
        
         public ActionResult Delete_img_block(int id)

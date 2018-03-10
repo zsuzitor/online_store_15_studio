@@ -1,0 +1,20 @@
+﻿
+
+<div>
+
+    @if ((int)ViewBag.count == -1)
+    {
+        <p>Ошибка</p>
+    }
+    @if((int)ViewBag.count != -1)
+    {
+        <p>На данный момент Объектов:@((int)ViewBag.count)</p>
+        using (Html.BeginForm("Edit_count_current_object", "Admin"))
+        {
+            @Html.Hidden("id", (int)ViewBag.id)
+            <p>Добавить объектов:</p>
+            @Html.Editor("count")
+            <input type="submit" value="Добавить" />
+        }
+    }
+</div>
