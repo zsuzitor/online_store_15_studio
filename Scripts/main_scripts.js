@@ -12,7 +12,7 @@ function up() {
     return false;
 }
 
-function isVisible(tag) {//работает для маленьких объектов(меньше экрана)
+function isVisible(tag) {
     var t = $(tag);
     var w = $(window);
     var top_window = w.scrollTop();
@@ -37,7 +37,12 @@ function isVisible(tag) {
 }
 */
 
+function close_present()  {
+    var block = document.getElementById("layout_active_panel_id");
+    block.innerHTML = "";
 
+
+}
 
 
 

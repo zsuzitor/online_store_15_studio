@@ -1,9 +1,23 @@
 ﻿@model IEnumerable<online_store.Models.Application_phone>
 
-@{
-    ViewBag.Title = "Application_phone_list";
-}
+<div>
+    <div>@Ajax.ActionLink("Взять звонок", "Work_with_application_phone", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })</div>
 
-<h2>Application_phone_list</h2>
+    
+    <div>@Ajax.ActionLink("Обновить", "Application_phone_list", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })</div>
+    <div>
+        @foreach (var i in Model)
+        {
+            <div>
+                <p>@i.Id</p>
+                <p>@i.Date</p>
+                <p>@i.Date_comfortable</p>
+            </div>
+        }
 
 
+    </div>
+
+</div>

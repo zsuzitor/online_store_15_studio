@@ -510,7 +510,7 @@ namespace online_store.Controllers
             summ_1 = summ_1.Where(x1 => x1.Remainder > 0).ToList();
             foreach(var i in res)
             {
-                var tmp_obj=summ_1.First(x1 => x1.Id == i.Id);
+                var tmp_obj=summ_1.First(x1 => x1.Id == i.Object_id);
                 if (tmp_obj.Remainder < i.Count_obj)
                 {
                     error = true;
@@ -552,38 +552,52 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Buy_basket()
         {
+            bool error = false;
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var bsk_obj = db.Baskets.Where(x1=>x1.Person_id==check_id).Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
-            if (bsk_obj.Count > 0)
+            var bsk = db.Baskets.Where(x1 => x1.Person_id == check_id);//.ToList()
+            var bsk_obj = bsk.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
+            int price = 0;
+            foreach(var i in bsk)
             {
-                var havent = bsk_obj.Where(x1 => x1.Remainder < 1);
-                if (havent.Count() == 0)
+                var obj = bsk_obj.First(x1 => x1.Id == i.Object_id);
+                if (obj.Remainder < i.Count_obj)
                 {
-                    var prc = new Purchase() { Person_id = check_id, Price = bsk_obj.Sum(x1 => (((int)(x1.Price * (1 - x1.Discount))))) };//мб в цикле прибалять
-                    db.Purchases.Add(prc);
-                    db.SaveChanges();
-                    foreach (var i in bsk_obj)
-                    {
-                        var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
-                        db.Purchases_connect.Add(tmp);
-                        db.SaveChanges();
-
-                        var obj = db.Objects.First(x1 => x1.Id == i.Id);
-                        obj.Count_buy += 1;
-                        obj.Remainder -= 1;
-                        db.SaveChanges();
-
-                    }
-                    db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
-                    db.SaveChanges();
-                    //TODO у всех объектов сделать количество -1
+                    error = true;
+                    break;
                 }
-                else
-                {
-                    ViewBag.Error_message = "в корзине присутствуют объекты которых нет в наличии, их необходимо удалить";
-                }
+                price += (int)(obj.Price* (1 - obj.Discount) * i.Count_obj);
+
 
             }
+            if (!error)
+            {
+
+                var prc = new Purchase() { Person_id = check_id, Price = price };
+                db.Purchases.Add(prc);
+                db.SaveChanges();
+                foreach (var i in bsk_obj)
+                {
+                    //TODO
+                    var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
+                    db.Purchases_connect.Add(tmp);
+                    db.SaveChanges();
+
+                    var obj = db.Objects.First(x1 => x1.Id == i.Id);
+                    obj.Count_buy += 1;//TODO
+                    obj.Remainder -= 1;//TODO
+                    db.SaveChanges();
+
+                }
+                db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
+                db.SaveChanges();
+                //TODO у всех объектов сделать количество -1
+            }
+            else
+            {
+                ViewBag.Error_message = "в корзине присутствуют объекты которых нет в наличии, их необходимо удалить";
+            }
+
+            
             return View();
         }
         //частичное отображение 1 объекта для корзины
@@ -931,11 +945,12 @@ namespace online_store.Controllers
             //var res = new Application_phone();
             db.Application_phone_comm.Add(a);
             db.SaveChanges();
-
-            return Redirect(Url.Action("Index", "Home"));
+            //return PartialView();
+            return RedirectToAction("Index", "Home", new { });
+            return Redirect(Url.Action("Index", "Home",new { }));
         }
 
-        [ChildActionOnly]
+        //[ChildActionOnly]
         public ActionResult Main_help_block()
         {
             //var res = new Application_phone();

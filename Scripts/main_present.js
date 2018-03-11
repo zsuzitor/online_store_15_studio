@@ -9,7 +9,7 @@ Main_present_OBJECT.test_11=()=> {
     var str = "";
     var left=width/2-300;
     var top=height/2-400;
-    str += "<div onclick='Main_present_OBJECT.close_present()' style='width:" + width + "px;height:" + height + "px;' id='Main_present_block_show_all_block'>";
+    str += "<div onclick='close_present()' style='width:" + width + "px;height:" + height + "px;' id='Main_block_show_all_block'>";
     str += " <div style='margin-top:" + top + "px; margin-left:" + left + "px;' onclick='event.stopPropagation()' class='Main_present_block_show_all_block_v'><div class='Main_present_block_show_image'></div>";
     str += "<div class='Main_present_block_show_form'>";
     
@@ -36,9 +36,3 @@ Main_present_OBJECT.test_11=()=> {
 }
 
 
-Main_present_OBJECT.close_present=()=> {
-    var block = document.getElementById("layout_active_panel_id");
-    block.innerHTML = "";
-
-
-}

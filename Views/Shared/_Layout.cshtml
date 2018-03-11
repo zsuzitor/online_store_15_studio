@@ -11,6 +11,7 @@
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
     @Scripts.Render("~/scripts/main_scripts.js")
     @Scripts.Render("~/scripts/main_present.js")
+    @Scripts.Render("~/scripts/main_help.js")
 
 </head>
 <body>
@@ -19,9 +20,17 @@
     <div onclick="up()" class="Main_header_back_to_top" id="Main_header_back_to_top_id"></div>
 
     <div class="div_body">@RenderBody()</div>
-    @Html.Action("Main_help_block", "Home")
-    @Html.Action("Main_present_block", "Home")
-    @Html.Action("Admin_page_link", "Home")
+    <div class="layout_panel_move_block">
+        @Html.Action("Main_help_block", "Home")
+        @Html.Action("Main_present_block", "Home")
+        @Html.Action("Admin_page_link", "Home")
+    </div>
+    <!--
+        Html.Action("Main_help_block", "Home")
+    Html.Action("Main_present_block", "Home")
+    Html.Action("Admin_page_link", "Home")
+    -->
+    
     
     <hr />
     @Html.Action("Main_footer", "Home")

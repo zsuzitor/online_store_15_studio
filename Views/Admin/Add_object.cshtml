@@ -32,6 +32,10 @@
             @Html.EditorFor(x1 => x1.Manufacturer)
         </div>
         <div>
+            @Html.Label("", "Показывать объект в списках?(галочка означает НЕ скрытый объект)")
+            @Html.EditorFor(x1 => x1.Show_flag)
+        </div>
+        <div>
             @Html.Label("", "Тип")
             @Html.EditorFor(x1 => x1.Type)
         </div>

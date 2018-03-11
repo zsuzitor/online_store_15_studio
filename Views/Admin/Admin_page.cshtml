@@ -5,8 +5,33 @@
 
 <h2>Admin_page</h2>
 <h1>Да здравствует цезарь</h1>
-@Html.ActionLink("Добавить продукт", "Add_object", "Admin", new { }, new { })
-@Html.ActionLink("Существующие типы купоно", "Discount_all_coupon", "Admin", new { }, new { })
-@Html.ActionLink("Создание типа купона", "Discount_coupon_create", "Admin", new { }, new { })
-@Html.ActionLink("Просмотр заявок на связь по телефону", "Application_phone_list", "Admin", new { }, new { })
+
+
+<div class="div_inline_block Admin_page_menu_div">
+    <h3>
+        @Ajax.ActionLink("Добавить продукт", "Add_object", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+</h3>
+<h3>
+    @Ajax.ActionLink("Существующие типы купонов", "Discount_all_coupon", "Admin", new {  },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+</h3>
+<h3>
+    @Ajax.ActionLink("Создание типа купона", "Discount_coupon_create", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+</h3>
+<h3>
+    @Ajax.ActionLink("Просмотр заявок на связь по телефону", "Application_phone_list", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+</h3>
+
+
+</div>
+
+
+
+<div class="div_inline_block Admin_page_main_block" id="Admin_page_main_block_id">
+
+</div>
+
 

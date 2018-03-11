@@ -138,20 +138,20 @@ namespace online_store.Controllers
             db.Discount_type.Add(a);
             db.SaveChanges();
 
-            return View();
+            return PartialView();
         }
         [HttpGet]
         public ActionResult Discount_coupon_create()
         {
             var res=new Discount();
 
-            return View(res);
+            return PartialView(res);
         }
         public ActionResult Application_phone_list()
         {
             var app = db.Application_phone_comm.Where(x1=>x1.Complete==false).ToList();
 
-            return View(app);
+            return PartialView(app);
         }
         public ActionResult Work_with_images_object(int id)
         {
@@ -160,7 +160,13 @@ namespace online_store.Controllers
             ViewBag.Images = imgs.ToList();
             return PartialView();
         }
-       
+        public ActionResult Work_with_application_phone()
+        {
+            var res = db.Application_phone_comm.FirstOrDefault();
+
+
+            return PartialView(res);
+        }
         public ActionResult Delete_img_block(int id)
         {
             db.Images.Remove(db.Images.First(x1 => x1.Id == id));

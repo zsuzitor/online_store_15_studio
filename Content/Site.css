@@ -121,6 +121,19 @@ div.no_comments_div_image{
     margin-top:100px;
 }
 /*-------------------------------------------------------------------------------------------------------------------*/
+#Main_block_show_all_block{
+    background-color: rgba(192, 192, 192, 0.5);
+    position:fixed;
+    top:0;
+    left:0;
+     z-index:7;
+     cursor:pointer;
+}
+
+
+
+
+/*--------------------------------------------------------*/
 div.Main_header_big {
     position: relative;
     background-color: white;
@@ -165,6 +178,7 @@ div.Main_header_1_link_for_4rlink_r {
    color: black;
     text-align:center;
     font-size:25pt;
+    overflow:hidden;
 }
 div.Main_header_1_link_for_4rlink_r:hover {
          box-shadow:inset 0 0 20px rgba(0,0,0,0.5);
@@ -1134,21 +1148,33 @@ div._Slider_cont_timer_false{
 }
 
 /*Main_help_block*/
+div.Main_help_block_show_all_block_v{
+    width:300px;
+    height:300px;
+    background-color:#c0c0c0;
+    border:1px solid black;
+    border-radius:10px;
+    cursor:default;
+}
 div.Main_help_block_main_div{
     width:50px;
     height:50px;
-    position:fixed;
-    right:0;
-    top:400px;
-    background-color:lavender;
+     margin-top:15px;
+    margin-left:25px;
+    /*top:0;position:fixed;background-color:lavender; transition:0s;*/
     overflow:hidden;
     z-index:7;
     /*padding-top:50px;background-color:black;*/
-    
-     transition:0s;
     border-radius:50%;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+    background-image: url(/Content/images/Help_circle.png);
+    background-size:100% 100%;
+     width:50px;
+    height:50px;
+    cursor:pointer;
 }
+/*
 div.Main_help_block_main_div:before{
     background-image: url(/Content/images/Help_circle.png);
     background-size:100% 100%;
@@ -1167,8 +1193,53 @@ div.Main_help_block_main_div:hover {
     height:300px;
    transition:2s;
 }
-
+    */
 /**/
+div.layout_panel_move_block{
+    position:fixed;
+    top:400px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width:100px;
+    height:400px;
+    right:-100px;
+     transition:1s;
+     z-index:6;
+     background-color:#ffebeb;
+}
+div.layout_panel_move_block:hover {
+    right:0;
+}
+div.layout_panel_move_block:hover::before {
+
+    display:none;
+}
+
+div.layout_panel_move_block:before{
+    content:'';
+    position:absolute;
+    height:0px;
+    width:0px;
+    top:40%;
+    margin-left:-50px;
+    border-right:50px solid red;
+    border-bottom:40px solid transparent;
+    border-top:40px solid transparent;
+    display:block;
+   
+}
+    div.layout_panel_move_block:hover::after {
+        
+   border-left:50px solid blue;
+    border-bottom:40px solid transparent;
+    border-top:40px solid transparent;
+    content:'';
+    position:absolute;
+    height:0px;
+    width:0px;
+    top:40%;
+    margin-left:-50px;
+}
+
 div.layout_active_panel{
     position:absolute;
     top:-1px;
@@ -1179,9 +1250,10 @@ div.layout_active_panel{
 }
 /**/
 div.layout_present_small_block{
-    position:fixed;
-    top: 320px;
-    right:0px;
+    
+   /*top: 320px;position:fixed;*/ 
+    margin-top:15px;
+   margin-left:25px;
     width:50px;
     height:50px;
     cursor:pointer;
@@ -1191,14 +1263,7 @@ div.layout_present_small_block{
      box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-#Main_present_block_show_all_block{
-    background-color: rgba(192, 192, 192, 0.5);
-    position:fixed;
-    top:0;
-    left:0;
-     z-index:7;
-     cursor:pointer;
-}
+
 /*Main_present_block*/
 div.Main_present_block_show_image{
      background-image: url(/Content/images/skidka20.png);
@@ -1221,9 +1286,10 @@ div.Main_present_block_show_form{
 /*Admin_page_link*/
 
 div.Admin_page_link_small_block{
-    position:fixed;
-    top: 500px;
-    right:0px;
+    
+    /*top: 500px;position:fixed;*/
+    margin-top:15px;
+    margin-left:25px;
     width:50px;
     height:50px;
     cursor:pointer;
@@ -1232,7 +1298,17 @@ div.Admin_page_link_small_block{
      z-index:6;
      box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-
+div.Admin_page_menu_div{
+    width:20%;
+    height:500px;
+    background-color:aquamarine;
+}
+div.Admin_page_main_block{
+    width:70%;
+    margin-left:5%;
+    min-height:500px;
+    background-color:antiquewhite;
+}
 
 /*Menu_search*/
 div.Menu_search_main_div{

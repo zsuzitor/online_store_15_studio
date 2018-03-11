@@ -210,6 +210,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\List_objects_type.js" />
+    <Content Include="Scripts\main_help.js" />
     <Content Include="Scripts\main_present.js" />
     <Content Include="Scripts\main_scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -290,6 +291,7 @@
     <Content Include="Views\Admin\Edit_object.cshtml" />
     <Content Include="Views\Admin\Edit_count_current_object.cshtml" />
     <Content Include="Views\Admin\Delete_object.cshtml" />
+    <Content Include="Views\Admin\Work_with_application_phone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

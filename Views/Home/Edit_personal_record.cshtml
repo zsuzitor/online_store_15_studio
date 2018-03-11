@@ -18,10 +18,10 @@
     <div>@Html.Label("Имя:")@Html.EditorFor(x1 => x1.Name)</div>
     <div>@Html.Label("Возраст:")@Html.EditorFor(x1 => x1.Age)</div>
     <div>@Html.Label("О себе:")@Html.TextAreaFor(x1 => x1.Info)</div>
-    
-    
-   
+    <div>@Html.Label("Показывать в поиске объекты которые на данный момент отсутствуют")@Html.EditorFor(x1 => x1.Show_available_object)</div>
+            
 
 
-    <input type="submit" class="submit" value="Отправить" />
+
+            <input type = "submit" class="submit" value="Отправить" />
 }

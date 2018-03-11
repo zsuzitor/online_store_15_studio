@@ -1,0 +1,23 @@
+﻿@model online_store.Models.Application_phone
+
+\нет\след звонок\какая то инфа
+ 
+<div>@Ajax.ActionLink("звонок обработан","","Admin",new AjaxOptions { },new { })</div>
+<div>@using (Ajax.BeginForm("","Admin",new AjaxOptions { }))
+{
+    @Html.Label("Выберите дату")
+    @Html.Editor("date")
+
+
+
+}</div >
+
+<!--выключать если не нажата 1 из кнопок(зонок обработан или надо перезвонить)-->
+<div>@Ajax.ActionLink("Следующий звонок", "", "Admin", new AjaxOptions { }, new { })</div>
+<div>
+    @Ajax.ActionLink("Вернуться к списку", "Application_phone_list", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+</div>
+
+    <!---->
+

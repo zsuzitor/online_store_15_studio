@@ -20,6 +20,7 @@ namespace online_store.Models
             Name = a.Name;
             Age = a.Age;
            Info = a.Info;
+            Show_available_object = a.Show_available_object;
             return;
         }
 
