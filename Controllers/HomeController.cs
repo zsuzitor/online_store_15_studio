@@ -58,7 +58,7 @@ namespace online_store.Controllers
         public ActionResult Menu_search(string text_rearch = null)
         {
             //TODO реализовать text_rearch
-            //ждя каэждого типа своя менюшка
+            //дляя каждого типа своя менюшка
 
             return PartialView();
         }
@@ -554,7 +554,7 @@ namespace online_store.Controllers
         {
             bool error = false;
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var bsk = db.Baskets.Where(x1 => x1.Person_id == check_id);//.ToList()
+            var bsk = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();
             var bsk_obj = bsk.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
             int price = 0;
             foreach(var i in bsk)
@@ -571,26 +571,28 @@ namespace online_store.Controllers
             }
             if (!error)
             {
-
                 var prc = new Purchase() { Person_id = check_id, Price = price };
                 db.Purchases.Add(prc);
                 db.SaveChanges();
-                foreach (var i in bsk_obj)
+
+                foreach (var i in bsk)
                 {
                     //TODO
-                    var tmp = new Purchase_connect() { Purchase_id = prc.Id, Object_id = i.Id, Price = ((int)(i.Price * (1 - i.Discount))) };
+                    var obj = bsk_obj.First(x1 => x1.Id == i.Object_id);
+                    var tmp = new Purchase_connect() {Count_object=i.Count_obj, Purchase_id = prc.Id, Object_id = i.Object_id, Price = ((int)(obj.Price * (1 - obj.Discount)*i.Count_obj)) };
                     db.Purchases_connect.Add(tmp);
                     db.SaveChanges();
 
-                    var obj = db.Objects.First(x1 => x1.Id == i.Id);
-                    obj.Count_buy += 1;//TODO
-                    obj.Remainder -= 1;//TODO
+                    
+                    obj.Count_buy += i.Count_obj;
+                    obj.Remainder -= i.Count_obj;
                     db.SaveChanges();
 
                 }
                 db.Baskets.RemoveRange(db.Baskets.Where(x1 => x1.Person_id == check_id));
                 db.SaveChanges();
-                //TODO у всех объектов сделать количество -1
+
+               
             }
             else
             {
@@ -669,6 +671,7 @@ namespace online_store.Controllers
 
             return PartialView();
         }
+        //для отображения блока добавления в корзину на странице объекта(с параметрами)
         [Authorize]
         public ActionResult Object_add_basket_form_partial(int id)
         {
@@ -679,40 +682,48 @@ namespace online_store.Controllers
         //параметры с которым добавлять объект(цвет размер и тдтд)
         [HttpPost]
         [Authorize]
-        public ActionResult Object_add_basket_form(int id,int count)
+        public ActionResult Object_add_basket_form(int id,int count=1)
         {
             var res = "";
-            ViewBag.Count_obj = 0;
-            var obj = db.Objects.FirstOrDefault(x1 => x1.Id == id);
-            if (obj != null)
-            {
-                ViewBag.Count_obj = obj.Remainder;//
-            }
-            if (ViewBag.Count_obj >=count)
-            {
-                var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            if (count <= 0)
+                count = 1;
 
-               
-                    var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
-                if (bask != null)
+
+                int Count_obj = 0;
+                var obj = db.Objects.FirstOrDefault(x1 => x1.Id == id);
+                if (obj != null)
                 {
-                    bask.Count_obj += count;
+                    Count_obj = obj.Remainder;//
+                }
+                if (Count_obj >= count)
+                {
+                    var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+
+                    var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
+                    if (bask != null)
+                    {
+                        bask.Count_obj += count;
+                    }
+                    else
+                    {
+                        db.Baskets.Add(new Connect_basket() { Object_id = id, Count_obj = count, Person_id = check_id });
+                    }
+                    db.SaveChanges();
+                    res = "Успешно добавлено";
+
+
                 }
                 else
                 {
-                    db.Baskets.Add(new Connect_basket() { Object_id = id, Count_obj = count, Person_id = check_id });
+                    res = "данного объекта в таком колличестве нет";
+                    //TODO сообщение что столько объектов нет и передать колличество
                 }
-                db.SaveChanges();
-                res = "Успешно добавлено";
-
-
-            }
-            else
+            
+           /* else
             {
-                res = "данного объекта в таком колличестве нет";
-                //TODO сообщение что столько объектов нет и передать колличество
-            }
-
+                res = "Выберите отличное от 0 значение";
+            }*/
             return Redirect(Url.Action("Partial_message", "Home", new { message = res }));
         }
         //удаление объекта из корзины

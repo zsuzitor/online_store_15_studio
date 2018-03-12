@@ -2,7 +2,7 @@
 
 
 
-Main_help_OBJECT.test_11 = () => {
+Main_help_OBJECT.load_main_block = () => {
 
     var block = document.getElementById("layout_active_panel_id");
     var width = document.documentElement.clientWidth;
@@ -15,13 +15,14 @@ Main_help_OBJECT.test_11 = () => {
     str += "<div>";
     str+="<form action='/Home/Main_help_block' method='post'>";
     str+="<label>Имя</label>";
-    str+="<input class='text-box single-line' id='Name' name='Name' type='text'";
+    str+="<input class='text-box single-line' id='Name' name='Name' type='text'>";
     str+="<label>Номер телефона +7</label>";
-    str+="<input class='text-box single-line' id='Phone' name='Phone' type='text'";
+    str+="<input class='text-box single-line' id='Phone' name='Phone' type='text'>";
     str+="<label>Дата и время когда вам удобно</label>";
-    str+="<input class='text-box single-line' id='Date_comfortable' name='Date_comfortable' type='text'";
-    str+="<label>Оставьте сообщение</label>";
-    str+="<input type='submit' class='submit' value='Отправить'";
+    str+="<input class='text-box single-line' id='Date_comfortable' name='Date_comfortable' type='text'>";
+    str += "<label>Оставьте сообщение</label>";
+    str += "<input class='text-box single-line' id='Message' name='Message' type='text'>";
+    str+="<input type='submit' class='submit' value='Отправить'>";
     str+="</form>";
    
 
@@ -32,20 +33,3 @@ Main_help_OBJECT.test_11 = () => {
     block.innerHTML = str;
 }
 
-/*
- @using (Html.BeginForm("Main_help_block","Home"))
-{
-    @Html.Label("Имя")
-    @Html.Editor("Name")
-    @Html.Label("Номер телефона +7")
-    @Html.Editor("Phone")
-    @Html.Label("Дата и время когда вам удобно")
-    @Html.Editor("Date_comfortable")
-    @Html.Label("Оставьте сообщение")
-    @Html.Editor("Message")
-      
-
-
-    <input type="submit" class="submit" value="Отправить" />
-    }
-    */

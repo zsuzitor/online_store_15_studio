@@ -50,6 +50,12 @@ List_objects_type_OBJECT.Load_objects_list_LOT = () => {
 
     }
 }
+
+List_objects_type_OBJECT.Load_search = () => {
+    var comments_submit = document.getElementById("List_objects_type_search_hidden");
+    
+
+}
 $(function () {
     $(window).scroll(function () {
         List_objects_type_OBJECT.Load_objects_list_LOT();
@@ -57,3 +63,7 @@ $(function () {
 
     });
 });
+
+
+
+document.addEventListener("DOMContentLoaded", List_objects_type_OBJECT.Load_search);

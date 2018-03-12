@@ -1095,6 +1095,9 @@ div._Slider_one_button_change{
     
     
 }
+div._Slider_one_button_change:hover{
+    opacity:.5;
+}
 div._Slider_one_button_change_curr{
 	width:20px;
 	height:20px;

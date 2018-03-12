@@ -283,6 +283,7 @@ namespace online_store.Models
         public int Id { get; set; }
         public int Purchase_id { get; set; }
         public int Object_id { get; set; }
+        public int Count_object { get; set; }
         public int Price { get; set; }
         public Purchase_connect()
         {
@@ -290,6 +291,7 @@ namespace online_store.Models
             Purchase_id = 0;
             Object_id = 0;
             Price = 0;
+            Count_object = 0;
 
         }
     }

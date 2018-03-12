@@ -1,7 +1,7 @@
 ﻿var Main_present_OBJECT = {};
 
 
-Main_present_OBJECT.test_11=()=> {
+Main_present_OBJECT.load_main_block = () => {
    
     var block = document.getElementById("layout_active_panel_id");
     var width = document.documentElement.clientWidth;

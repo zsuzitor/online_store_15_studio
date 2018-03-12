@@ -71,19 +71,24 @@ namespace online_store.Models
             var obj = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
             if (obj != null)
             {
-                if(count==-1|| count==0)
+                if(count==-1)
                 {
                     db.Baskets.Remove(obj);
                 }
                 else
                 {
-                    if (obj.Count_obj <= count)
+                    if (count != 0)
                     {
-                        db.Baskets.Remove(obj);
-                    }
-                    else
-                    {
-                        obj.Count_obj -= count;
+
+
+                        if (obj.Count_obj <= count)
+                        {
+                            db.Baskets.Remove(obj);
+                        }
+                        else
+                        {
+                            obj.Count_obj -= count;
+                        }
                     }
                 }
                
