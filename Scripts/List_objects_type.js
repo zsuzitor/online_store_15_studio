@@ -52,8 +52,11 @@ List_objects_type_OBJECT.Load_objects_list_LOT = () => {
 }
 
 List_objects_type_OBJECT.Load_search = () => {
-    var comments_submit = document.getElementById("List_objects_type_search_hidden");
-    
+    var hidden = document.getElementById("List_objects_type_search_hidden");
+    var form_params_search = document.getElementById("Menu_search_form_text_rearch");
+    form_params_search.innerHTML = hidden.innerHTML;
+    var form_submit = document.getElementById("Menu_search_form_main_form_submit_id");
+    form_submit.click();
 
 }
 $(function () {

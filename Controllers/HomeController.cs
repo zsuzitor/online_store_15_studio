@@ -54,13 +54,26 @@ namespace online_store.Controllers
 
             return View();
         }
+        //отображение формы для отправки и загрузки уже кнопки с поисков
         [AllowAnonymous]
-        public ActionResult Menu_search(string text_rearch = null)
+        public ActionResult Menu_search_form()
+        {
+            // TODO реализовать text_rearch
+            //дляя каждого типа своя менюшка
+            //ViewBag.text_rearch = text_rearch;
+            return PartialView();
+        }
+        //кнопка с поиском
+        [AllowAnonymous]
+        public JsonResult Menu_search(string text_rearch = null)
         {
             //TODO реализовать text_rearch
             //дляя каждого типа своя менюшка
-
-            return PartialView();
+            //сформировать меню и вернуть html(и все что нужно) строкой
+            //
+            string res = "123server_request";
+            return Json(res, JsonRequestBehavior.AllowGet);
+            //return res;
         }
         //отображение списка объектов дозагржается через ajax
         [AllowAnonymous]

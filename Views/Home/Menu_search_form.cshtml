@@ -1,0 +1,10 @@
+﻿@Scripts.Render("~/scripts/Menu_search_form.js")
+
+    
+<div id="Menu_search_form_main_form_id" title="Параметры поиска" class="Menu_search_form_main_form">
+    @using (Ajax.BeginForm("Menu_search", "Home",new AjaxOptions {  OnComplete = "Menu_search_form_OBJECT.request_from_server_load_form", UpdateTargetId = "Menu_search_form_main_form_id" },new { }))
+    {
+        @Html.Hidden("Menu_search_form_text_rearch", (string)ViewBag.text_rearch)
+        <input id="Menu_search_form_main_form_submit_id" type="submit" />
+    }
+</div>

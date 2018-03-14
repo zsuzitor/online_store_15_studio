@@ -121,8 +121,24 @@ Index_OBJECT.Load_slider = () => {
 Index_OBJECT.Hide_prev_next_block_slider_1=()=> {
     var prev = document.getElementById("Index_external_button_prev_slider_1_id");
     var next = document.getElementById("Index_external_button_next_slider_1_id");
+    if(prev!=null)
     prev.innerHTML = "";
+    if (next != null)
     next.innerHTML = "";
 }
-
-document.addEventListener("DOMContentLoaded", Index_OBJECT.Load_slider);
+Index_OBJECT.load_page = () => {
+    
+    Index_OBJECT.Load_slider();
+    // менюшка справа выезжает
+    var timeout_menu;
+    
+    var right_menu = document.getElementById("layout_panel_move_block_id");
+    timeout_menu = setTimeout(function () {
+        right_menu.style.right = '0';
+        timeout_menu = setTimeout(function () { right_menu.style.cssText = '' }, 4000);
+    },6000);
+    
+    //
+    
+}
+document.addEventListener("DOMContentLoaded", Index_OBJECT.load_page);

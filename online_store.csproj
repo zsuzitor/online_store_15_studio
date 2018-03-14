@@ -213,6 +213,7 @@
     <Content Include="Scripts\main_help.js" />
     <Content Include="Scripts\main_present.js" />
     <Content Include="Scripts\main_scripts.js" />
+    <Content Include="Scripts\Menu_search_form.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Object_view.js" />
     <Content Include="Scripts\Personal_record.js" />
@@ -292,6 +293,7 @@
     <Content Include="Views\Admin\Edit_count_current_object.cshtml" />
     <Content Include="Views\Admin\Delete_object.cshtml" />
     <Content Include="Views\Admin\Work_with_application_phone.cshtml" />
+    <Content Include="Views\Home\Menu_search_form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
