@@ -30,6 +30,7 @@
                 res= "<div class='_Slider_div_inline_block' style=" + ttt + img.innerHTML + "</div>"
             }
             else {
+                
                 res = "<div style=" + ttt + img.innerHTML + "</div>"
             }
             return res;
@@ -40,7 +41,7 @@
             slider.current_num_img = +slider.count_img_in_list + +slider.current_num_img;
         }
         var img = document.getElementById(slider.part_id_one_img + (slider.current_num_img - 1));
-
+       
 
         
         if (img != null) {
@@ -51,6 +52,7 @@
         else {
             //с конца
             img = document.getElementById(slider.part_id_one_img + (slider.count_img_in_list - 1));
+            console.log(slider.part_id_one_img + (slider.count_img_in_list - 1));
             div_.innerHTML += fff();
         }
         img = document.getElementById(slider.part_id_one_img + slider.current_num_img);

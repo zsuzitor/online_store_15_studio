@@ -1,5 +1,6 @@
 ﻿var Index_OBJECT = {};
-var slider;
+Index_OBJECT.slider1;
+Index_OBJECT.slider2;
 Index_OBJECT.up_slider = () => {
     var count_img_in_list_ = document.getElementById("count_id_slider_main_index").value;
     var width = document.documentElement.clientWidth;
@@ -7,9 +8,14 @@ Index_OBJECT.up_slider = () => {
         width = 960;
     }
     
-    width = width * 0.8 - width * 0.8 * 0.1;
-    slider = new Slider_(count_img_in_list_, "Index_block_type_1_id", "Index_main_slider_one_slide_id", 1000, width, 500, 0, true, "slider");
-    slider.up();
+    var width_sl1 = width * 0.8 - width * 0.8 * 0.1;
+    Index_OBJECT.slider1 = new Slider_(count_img_in_list_, "Index_block_type_1_id", "Index_main_slider_one_slide_id", 1000, width_sl1, 500, 0, true, "Index_OBJECT.slider1");
+    Index_OBJECT.slider1.up();
+
+    //
+    var width_sl2 = document.getElementById("Index_lvl3_slider_id").offsetWidth;
+    Index_OBJECT.slider2 = new Slider_(count_img_in_list_, "Index_lvl3_slider_id", "Index_main_slider_one_slide_iddfg", 1000, width_sl2, 400, 0, false, "Index_OBJECT.slider2");
+    Index_OBJECT.slider2.up();
    
    
 }

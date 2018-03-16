@@ -52,6 +52,10 @@ namespace online_store.Controllers
             ViewBag.Object_for_slider_1 = Search(text_rearch:null, count_return:10, Show_available_object: Show_available_o);
             ViewBag.count_obg_slider_1 = ViewBag.Object_for_slider_1.Count;
 
+            //
+            ViewBag.Object_for_slider_2 = Search(text_rearch: null, count_return: 10, Show_available_object: Show_available_o);
+            ViewBag.count_obg_slider_2 = ViewBag.Object_for_slider_1.Count;
+
             return View();
         }
         //отображение формы для отправки и загрузки уже кнопки с поисков
@@ -116,6 +120,14 @@ namespace online_store.Controllers
             var com_person = db.Comments.FirstOrDefault(x1 => x1.Object_id == id &&x1.Person_id== check_id && !string.IsNullOrEmpty(x1.Text));
             //var com_person = com.FirstOrDefault(x1 => x1.Person_id == check_id);
             //TODO определить админ ли зашел и если да передавать true
+            if (check_id != null)
+            {
+                var roles = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(check_id);
+                var check = roles.FirstOrDefault(x1 => x1 == "admin");
+                if (check != null)
+                    ViewBag.admin = true;
+            }
+            //TODO убрать
             ViewBag.admin = true;
             
             
@@ -254,7 +266,8 @@ namespace online_store.Controllers
            
             id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;//hz mb ostavit tak   
             if (string.IsNullOrEmpty(id))
-                return RedirectToAction("Not_found_page", "Home",new { });
+                
+            return RedirectToAction("Login", "Account", new { });
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);

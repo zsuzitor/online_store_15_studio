@@ -9,6 +9,7 @@
         {
 
             <div class="List_objects_one_object div_inline_block">
+                <div class="List_objects_one_object_hover">
                 <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
                     <div>
                         <div>
@@ -32,15 +33,15 @@
 
                     </div>
                 </a>
-                <div>
-                    <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", i.Db.Id)>
-                        @Html.Action("Object_follow", "Home", new { id = i.Db.Id })
+                    <div>
+                        <div class="div_inline_block" id=@string.Concat("Object_follow_block_all_id", i.Db.Id)>
+                            @Html.Action("Object_follow", "Home", new { id = i.Db.Id })
+                        </div>
+                        <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", i.Db.Id)>
+                            @Html.Action("Object_add_basket", "Home", new { id = i.Db.Id })
+                        </div>
+                        <div class="Add_mark_for_object_partial_class" id=@string.Concat("Add_mark_for_object_partial_id", i.Db.Id)>@Html.Action("Add_mark_for_object", "Home", new { id = i.Db.Id })</div>
                     </div>
-                    <div class="div_inline_block Object_add_basket_block_all_class" id=@string.Concat("Object_add_basket_block_all_id", i.Db.Id)>
-                        @Html.Action("Object_add_basket", "Home", new { id = i.Db.Id })
-                    </div>
-                    <div class="Add_mark_for_object_partial_class" id=@string.Concat("Add_mark_for_object_partial_id", i.Db.Id)>@Html.Action("Add_mark_for_object", "Home", new { id = i.Db.Id})</div>
-                    
                 </div>
             </div>
 

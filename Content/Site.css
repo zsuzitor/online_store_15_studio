@@ -18,7 +18,12 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-
+div.main_background{
+    background-attachment: fixed;
+     background-image: url(/Content/images/diamond_upholstery.png);
+    /*background-size: 100% 100%;*/
+   
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -292,9 +297,27 @@ div.List_objects_one_object {
     width: 250px;
     height: 600px;
    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    border:1px solid black;
+    
     margin-left:5px;
+position:relative;
 }
+div.List_objects_one_object_hover{
+    width: 100%;
+    height: 100%;
+    transition:1s;
+    background-color:white;
+     position:relative;
+     border:1px solid black;
+}
+div.List_objects_one_object_hover:hover{
+    z-index:3;
+    margin-left:-25px;
+    margin-top:-25px;
+    width: 300px;
+    height: 650px;
+}
+/*List_objects_one_object_empty скорее всего не нужно*/
+/*
 div.List_objects_one_object_empty {
     margin-top: 10px;
     width: 250px;
@@ -303,13 +326,8 @@ div.List_objects_one_object_empty {
     border:1px solid black;
       background-image: url(/Content/images/wasted_vert.png);
     background-size: 100% 100%
-}
-/*
-ul.List_objects_list_all li {
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 10px;
 }*/
+
 div.Object_follow_follow_img {
     /*height:50px;
     width:50px;*/
@@ -461,6 +479,15 @@ div.Object_view_small_img_change {
     height: 100px;
     width: 70px;
     cursor:pointer;
+    position:relative;
+    transition:1s;
+}
+div.Object_view_small_img_change:hover{
+    width:80px;
+    height:110px;
+     z-index:4;
+    margin-left:-5px;
+    margin-top:-5px;
 }
 div.Object_view_small_img_change_block {
     /*height: 450px;*/
@@ -469,6 +496,18 @@ div.Object_view_small_img_change_block {
 div.Object_view_main_img{
     width:300px;
     height:450px;
+    
+}
+#Object_view_main_image_id{
+    transition:1s;
+    position:relative;
+}
+#Object_view_main_image_id:hover{
+    width:400px;
+    height:550px;
+     z-index:4;
+    margin-left:-50px;
+    margin-top:-50px;
 }
 div.Object_view_main_img_under {
     width: 300px;
@@ -503,6 +542,8 @@ div.Object_view_comm_block_mark{
 }
 div.Object_view_mark_main {
     border: 2px solid black;
+    position:relative;
+   
 }
 .Object_view_one_comment_text_lable{
    
@@ -793,14 +834,40 @@ div.Purchase_view_one_purchase_block_img{
     float:left;
 }
 /*Index*/
+div.Index_lvl3_img{
+    width:70%;
+    height:400px;
+     background-image: url(/Content/images/wasted_hor.png);
+    background-size: 100% 100%;
+}
+div.Index_lvl3_slider{
+     width:29%;
+    height:400px;
+}
 
 div.Index_one_block_slider_1{
     height:300px;
     width:150px;
     margin-left:10px;
     background-color:white;
-    border:1px groove black;
+    
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    
+}
+div.Index_one_block_slider_1_hover{
+    position:relative;
+    border:1px groove black;
+     width:100%;
+    height:100%;
+    transition:1s;
+    background-color:white;
+}
+div.Index_one_block_slider_1_hover:hover{
+    width:200px;
+    height:350px;
+     z-index:4;
+    margin-left:-25px;
+    margin-top:-25px;
 }
 div.Index_one_block_slider_1_hid{
     height:100px;

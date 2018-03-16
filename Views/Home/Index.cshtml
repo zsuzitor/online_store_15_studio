@@ -13,7 +13,8 @@
     <div>@Html.Hidden("count_obg_slider_1_id", ((int)ViewBag.count_obg_slider_1).ToString())</div>
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
    
-   
+    <!--УРОВЕНЬ 1-->
+
     <div>
         
         @Html.Hidden("count_id_slider_main_index", ((int)ViewBag.count_id_slider_main_index))
@@ -55,7 +56,7 @@ num++;
     </div>
 
 
-
+    <!--УРОВЕНЬ 2-->
 
     @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
     {
@@ -75,27 +76,29 @@ num++;
             {
                 <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid">
                     <div class="div_inline_block Index_one_block_slider_1">
-                        <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id })>
-                            <div>
-                                <div class="Index_one_block_slider_1_img">
-
-                                    @if (i.Images.Count > 0)
-                                    {
-
-                                        <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
-                                    }
-                                    @if (i.Images.Count == 0)
-                                    {
-                                        <img src="/Content/images/camera_200.png" />
-                                    }
-
-                                </div>
+                        <div class="Index_one_block_slider_1_hover">
+                            <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id }) class="link_standart_for_div">
                                 <div>
-                                    @Html.Label(((string)i.Db.Name))
-                                    @Html.Label(((string)i.Db.Category))
+                                    <div class="Index_one_block_slider_1_img">
+
+                                        @if (i.Images.Count > 0)
+                                        {
+
+                                            <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Images[0].Image)) />
+                                        }
+                                        @if (i.Images.Count == 0)
+                                        {
+                                            <img src="/Content/images/camera_200.png" />
+                                        }
+
+                                    </div>
+                                    <div>
+                                        @Html.Label(((string)i.Db.Name))
+                                        @Html.Label(((string)i.Db.Category))
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
                     int_num_for_slider_1 += 1;
@@ -114,4 +117,53 @@ num++;
         </div>
     </div>
                     }
+    <!--УРОВЕНЬ 3-->
+    <div>
+        <div class="Index_lvl3_img"></div>
+        @{
+            if (ViewBag.Object_for_slider_1 != null && ViewBag.Object_for_slider_1.Count > 0)
+            {
+
+            }
+            num = 0;
+        }
+
+        
+
+        <div class="Index_lvl3_slider" id="Index_lvl3_slider_id">
+           
+
+        </div>
+        <div class="div_display_none">
+
+
+            @foreach (var i in ViewBag.main_list_slider)
+            {
+                <div id=@string.Concat("Index_main_slider_one_slide_iddfg", num)>
+                    <div class="Index_main_slider_one_view_block">
+                        <a href=@Url.Action((string)i.Action,((string)i.Controller)) class="link_standart_for_div">
+                            @if (!string.IsNullOrEmpty(i.Path_image))
+                            {
+                                <img src=@i.Path_image />
+                            }
+                            @if (string.IsNullOrEmpty(i.Path_image) && i.Byte_image.Count() > 0)
+                            {
+                                <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Byte_image)) />
+                            }
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+                num++;
+            }
+
+
+        </div>
+
+
+    </div>
+
 </div>

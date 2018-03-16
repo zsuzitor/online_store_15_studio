@@ -15,31 +15,33 @@
 
 </head>
 <body>
-    @Html.Action("Main_header", "Home")
-    <div id="layout_active_panel_id" class="layout_active_panel"></div>
-    <div onclick="up()" class="Main_header_back_to_top" id="Main_header_back_to_top_id"></div>
+    <div class="main_background">
+        @Html.Action("Main_header", "Home")
+        <div id="layout_active_panel_id" class="layout_active_panel"></div>
+        <div onclick="up()" class="Main_header_back_to_top" id="Main_header_back_to_top_id"></div>
 
-    <div class="div_body">@RenderBody()</div>
-    <div class="layout_panel_move_block" id="layout_panel_move_block_id">
-        @Html.Action("Main_help_block", "Home")
-        @Html.Action("Main_present_block", "Home")
-        @Html.Action("Admin_page_link", "Home")
-        @Html.Action("Menu_search_form", "Home")
-        
-        <!--Html.Action("Menu_search", "Home", new { text_rearch = ViewBag.text_rearch })--> 
+        <div class="div_body">@RenderBody()</div>
+        <div class="layout_panel_move_block" id="layout_panel_move_block_id">
+            @Html.Action("Main_help_block", "Home")
+            @Html.Action("Main_present_block", "Home")
+            @Html.Action("Admin_page_link", "Home")
+            @Html.Action("Menu_search_form", "Home")
+
+            <!--Html.Action("Menu_search", "Home", new { text_rearch = ViewBag.text_rearch })-->
+        </div>
+        <!--
+            Html.Action("Main_help_block", "Home")
+        Html.Action("Main_present_block", "Home")
+        Html.Action("Admin_page_link", "Home")
+        -->
+
+
+        <hr />
+        @Html.Action("Main_footer", "Home")
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
     </div>
-    <!--
-        Html.Action("Main_help_block", "Home")
-    Html.Action("Main_present_block", "Home")
-    Html.Action("Admin_page_link", "Home")
-    -->
-    
-    
-    <hr />
-    @Html.Action("Main_footer", "Home")
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
