@@ -10,7 +10,9 @@
 
 <div>
    
-    <div>@Html.Hidden("count_obg_slider_1_id", ((int)ViewBag.count_obg_slider_1).ToString())</div>
+    <div>@Html.Hidden("count_obg_slider_1_id", ((int)ViewBag.count_obg_slider_1).ToString())
+    
+    </div>
     @Html.ActionLink("лист продуктов", "List_objects_type", "Home", new { }, new { })
    
     <!--УРОВЕНЬ 1-->
@@ -31,14 +33,14 @@ int num = 0;
          
  @foreach (var i in ViewBag.main_list_slider)
 {
-<div id=@string.Concat("Index_main_slider_one_slide_id",num)>
+<div id=@string.Concat("Index_main_slider_one_slide_id", num)>
     <div class="Index_main_slider_one_view_block">
-        <a href=@Url.Action((string)i.Action,((string)i.Controller)) class="link_standart_for_div">
+        <a href=@Url.Action((string)i.Action, ((string)i.Controller)) class="link_standart_for_div">
             @if (!string.IsNullOrEmpty(i.Path_image))
             {
                 <img src=@i.Path_image />
             }
-            @if (string.IsNullOrEmpty(i.Path_image)&& i.Byte_image.Count()>0)
+            @if (string.IsNullOrEmpty(i.Path_image) && i.Byte_image.Count() > 0)
             {
                 <img src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Byte_image)) />
             }
@@ -49,8 +51,8 @@ int num = 0;
 
 </div>
 
-num++;
-}
+     num++;
+ }
         
        
     </div>
@@ -58,7 +60,7 @@ num++;
 
     <!--УРОВЕНЬ 2-->
 
-    @if (ViewBag.Object_for_slider_1 != null&& ViewBag.Object_for_slider_1.Count>0)
+    @if (ViewBag.Object_for_slider_1 != null && ViewBag.Object_for_slider_1.Count > 0)
     {
     <div class="Index_slider_1">
         <div id="Index_external_button_prev_slider_1_id" class="div_inline_block Index_external_button_prev_slider_1">
@@ -73,8 +75,8 @@ num++;
 
                 
                 @foreach (var i in ViewBag.Object_for_slider_1)
-            {
-                <div id=@string.Concat("Index_one_block_slider_1_id",int_num_for_slider_1) class="Index_one_block_slider_1_hid">
+                {
+                <div id=@string.Concat("Index_one_block_slider_1_id", int_num_for_slider_1) class="Index_one_block_slider_1_hid">
                     <div class="div_inline_block Index_one_block_slider_1">
                         <div class="Index_one_block_slider_1_hover">
                             <a href=@Url.Action("Object_view", "Home", new { id = i.Db.Id }) class="link_standart_for_div">
@@ -118,8 +120,14 @@ num++;
     </div>
                     }
     <!--УРОВЕНЬ 3-->
-    <div>
-        <div class="Index_lvl3_img"></div>
+    <div class="Index_lvl3_main_div">
+        <div class="div_inline_block Index_lvl3_img_block_main">
+            <div class="Index_lvl3_img"></div>
+            <div class="Index_lvl3_img"></div>
+            <div class="Index_lvl3_img"></div>
+        </div>
+        
+       
         @{
             if (ViewBag.Object_for_slider_1 != null && ViewBag.Object_for_slider_1.Count > 0)
             {
@@ -130,7 +138,7 @@ num++;
 
         
 
-        <div class="Index_lvl3_slider" id="Index_lvl3_slider_id">
+        <div class="Index_lvl3_slider div_inline_block" id="Index_lvl3_slider_id">
            
 
         </div>
@@ -139,9 +147,9 @@ num++;
 
             @foreach (var i in ViewBag.main_list_slider)
             {
-                <div id=@string.Concat("Index_main_slider_one_slide_iddfg", num)>
+                <div id=@string.Concat("Index_slider_one_slide_id_lvl2", num)>
                     <div class="Index_main_slider_one_view_block">
-                        <a href=@Url.Action((string)i.Action,((string)i.Controller)) class="link_standart_for_div">
+                        <a href=@Url.Action((string)i.Action, ((string)i.Controller)) class="link_standart_for_div">
                             @if (!string.IsNullOrEmpty(i.Path_image))
                             {
                                 <img src=@i.Path_image />
@@ -159,6 +167,64 @@ num++;
 
                 num++;
             }
+
+
+        </div>
+
+        <div class="div_inline_block Index_lvl4_img_block_main">
+            <div class="Index_lvl3_img"></div>
+            <div class="Index_lvl3_img"></div>
+            <div class="Index_lvl3_img"></div>
+        </div>
+        <div class="Index_lvl4_slider div_inline_block" id="Index_lvl4_slider_id">
+
+
+        </div>
+        <div class="div_display_none"><!---->
+            @{
+                num = 0;
+            }
+            
+            @if (((int)ViewBag.count_obg_slider_2) % 6 == 0)
+            {
+                @Html.Hidden("count_obg_slider_3", ((int)ViewBag.count_obg_slider_2) / 6)
+            }
+            @if (((int)ViewBag.count_obg_slider_2) % 6 != 0)
+            {
+               @Html.Hidden("count_obg_slider_3", ((int)ViewBag.count_obg_slider_2) / 6+1)
+            }
+            @for (int i = 0; i < ViewBag.Object_for_slider_2.Count;)
+            {
+               
+                //фотка и строка с ценой\скидкой
+                <div class="div_inline_block Index_slider_one_slide_id_lvl3_cl"  id=@string.Concat("Index_slider_one_slide_id_lvl3", num)>
+                    @for (int i2 = 0; i2 < 6 && i < ViewBag.Object_for_slider_2.Count; ++i2, ++i)
+                    {
+                        <div class="Index_slider_3_block_1_object">
+                            
+                                <a href=@Url.Action("Object_view","Home",new {id=ViewBag.Object_for_slider_2[i2].Db.Id }) class="link_standart_for_div">
+                                    <div class="Index_slider_3_block_1_object_img">
+                                        @if (ViewBag.Object_for_slider_2[i2].Images.Count < 1)
+                                        {
+                                            <img id="" src="/Content/images/camera_200.png" />
+
+                                        }
+                                        @if (ViewBag.Object_for_slider_2[i2].Images.Count > 0)
+                                        {
+
+                                            <img src=@String.Format("data:image/jpeg;base64," +
+                                            Convert.ToBase64String(ViewBag.Object_for_slider_2[i2].Images.Image)) />
+                                        }
+                                    </div>
+                            <p>@ViewBag.Object_for_slider_2[i2].Db.Price</p>
+                            </a>
+                        </div>
+                    }
+                </div>
+                num++;
+            }
+           
+            
 
 
         </div>

@@ -1,6 +1,7 @@
 ﻿var Index_OBJECT = {};
 Index_OBJECT.slider1;
 Index_OBJECT.slider2;
+Index_OBJECT.slider3;
 Index_OBJECT.up_slider = () => {
     var count_img_in_list_ = document.getElementById("count_id_slider_main_index").value;
     var width = document.documentElement.clientWidth;
@@ -14,8 +15,18 @@ Index_OBJECT.up_slider = () => {
 
     //
     var width_sl2 = document.getElementById("Index_lvl3_slider_id").offsetWidth;
-    Index_OBJECT.slider2 = new Slider_(count_img_in_list_, "Index_lvl3_slider_id", "Index_main_slider_one_slide_iddfg", 1000, width_sl2, 400, 0, false, "Index_OBJECT.slider2");
+    Index_OBJECT.slider2 = new Slider_(count_img_in_list_, "Index_lvl3_slider_id", "Index_slider_one_slide_id_lvl2", 1000, width_sl2, 800, 0, false, "Index_OBJECT.slider2");
     Index_OBJECT.slider2.up();
+
+    //
+    var count_img_in_list_3 = document.getElementById("count_obg_slider_3").value;
+    if (count_img_in_list_3 > 0) {
+        
+   var width_sl3 = document.getElementById("Index_lvl4_slider_id").offsetWidth;
+   Index_OBJECT.slider3 = new Slider_(document.getElementById("count_obg_slider_3").value, "Index_lvl4_slider_id", "Index_slider_one_slide_id_lvl3", 1000, width_sl3, 800, 0, false, "Index_OBJECT.slider3");
+   Index_OBJECT.slider3.up();
+  
+    }
    
    
 }

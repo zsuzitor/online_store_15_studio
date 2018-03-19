@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 10px;
+    
     padding-bottom: 20px;
     background-color:gainsboro;
     min-width:960px;
@@ -19,6 +19,7 @@
     padding-right: 15px;
 }
 div.main_background{
+    padding-top: 10px;
     background-attachment: fixed;
      background-image: url(/Content/images/diamond_upholstery.png);
     /*background-size: 100% 100%;*/
@@ -834,15 +835,41 @@ div.Purchase_view_one_purchase_block_img{
     float:left;
 }
 /*Index*/
+div.Index_slider_3_block_1_object{
+    width:200px;
+    height:220px;
+    margin-left:5px;
+    margin-top:5px;
+}
+div.Index_slider_3_block_1_object_img{
+    
+    height:200px;
+}
+div.Index_slider_one_slide_id_lvl3_cl{
+    width:100%;/*min-width:415px;*/
+}
+div.Index_lvl4_slider{
+    min-width:415px;
+    float:right;
+}
 div.Index_lvl3_img{
-    width:70%;
-    height:400px;
+    
+    height:270px;
      background-image: url(/Content/images/wasted_hor.png);
     background-size: 100% 100%;
 }
+div.Index_lvl3_img_block_main{
+    width:70%;
+}
+div.Index_lvl4_img_block_main{
+     width:30%;
+}
+div.Index_lvl3_main_div{
+    margin-top:40px;
+}
 div.Index_lvl3_slider{
      width:29%;
-    height:400px;
+    height:800px;
 }
 
 div.Index_one_block_slider_1{
@@ -970,7 +997,7 @@ div.Main_header_hover_section_for_block{
     position:absolute;
     background-color:white;
     overflow:hidden;
-    
+    box-shadow: 0 0 -10px rgba(0,0,0,0.5);
    
    /* display: none;*/
     z-index:4;
@@ -1109,43 +1136,81 @@ div.Main_footer_link_block{
     position:relative;
 }
 
-/*SLIDER*/
-/*block1----------может изменить остальной код*/
-
-/*block1  END*/
-/*block2 ссылку на картинку нужно изменить*/
-div._Slider_prev_butt{
+/*_SLIDER_*/
+div._Slider_prev_butt_{
 	cursor:pointer;
 	width:100px;
 	height:100px;
-	 background-image: url(/Content/images/prev_button_left.png);
+    position: absolute;
+}
+div._Slider_prev_butt{
+width:100%;
+	height:100%;
+	  background-image: url(/Content/images/prev_button_left.png);
     background-size: 100% 100%;
 }
+
 div._Slider_next_butt{
 	 background-image: url(/Content/images/next_button_right.png);
     background-size: 100% 100%;
+	width:100%;
+	height:100%;
+}
+div._Slider_next_butt_{
 	cursor:pointer;
 	width:100px;
 	height:100px;
+	position: absolute;
+}
+div._Slider_next_butt:hover{
+	animation:_Slider_next_button_animation 1s linear infinite;
+	
+}
+div._Slider_prev_butt:hover{
+	animation:_Slider_prev_button_animation 1s linear infinite;
+	
+}
+div._Slider_separator_div_prev_next_but{
+	height: 100%;
+	width:2px;
+	 background-color: black;
+	 margin-left: 100px;
+}
+@keyframes _Slider_next_button_animation{
+	0%{
+
+		margin-left: 0px;
+	}
+	100%{
+		margin-left: 25px;
+	}
+}
+@keyframes _Slider_prev_button_animation{
+	0%{
+
+		margin-left: 0px;
+	}
+	100%{
+		margin-left: -25px;
+	}
 }
 /*block2  END*/
 div._Slider_div_inline_block {
     display: inline-block;
     vertical-align: top;
-
 }
 div._Slider_main_block_slider{
      overflow: hidden;
       position:relative;    
 }
-#_Slider_3_view_block_id{
+
+div[id^="_Slider_3_view_block_id"]{
      position:relative;
     top: 0;
 }
 div._Slider_block_change_slide{
 	position:absolute;
 	display:none;
-   
 }
 div._Slider_one_button_change{
 	width:30px;
@@ -1158,12 +1223,11 @@ div._Slider_one_button_change{
 	 padding-left:5px;*/
 	border:1px solid white;
 	cursor:pointer;
-     -webkit-box-sizing:content-box;
-    
-    
+	-webkit-box-sizing:content-box;
 }
+
 div._Slider_one_button_change:hover{
-    opacity:.5;
+	 opacity:.5;
 }
 div._Slider_one_button_change_curr{
 	width:20px;
@@ -1173,16 +1237,15 @@ div._Slider_one_button_change_curr{
 	margin-top:5px;
 	 border-radius: 20px;
 }
-#_Slider_3_view_block_id:hover div._Slider_block_change_slide{
-	display:block;
-}
+
+
 div._Slider_next_prev_block{
 	border:2px solid black;
+height:100%;
 }
-#_Slider_3_view_block_id:hover #_Slider_next_prev_block_id{
-	display:block;
-}
-#_Slider_next_prev_block_id{
+
+
+div[id^="_Slider_next_prev_block_id"]{
 	position:absolute;
 	display:none;
 	width:205px;
@@ -1216,6 +1279,7 @@ div._Slider_cont_timer_false{
 	height:100%;
 	
 }
+
 
 /*Main_help_block*/
 div.Main_help_block_show_all_block_v{
