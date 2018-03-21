@@ -14,13 +14,22 @@ namespace online_store.Models
         public byte[] Image { get; set; }
         public string Info { get; set; }
         public bool Show_available_object { get; set; } = false;
-
+        public bool Private_record { get; set; } = false;
+        public bool Private_basket { get; set; } = false;
+        public bool Private_follow { get; set; } = false;
+        public bool Private_purchase { get; set; } = false;
+        public bool Private_comments { get; set; } = false;
         public  void Eq(ApplicationUser a)
         {
             Name = a.Name;
             Age = a.Age;
            Info = a.Info;
             Show_available_object = a.Show_available_object;
+            Private_record = a.Private_record;
+            Private_basket = a.Private_basket;
+            Private_follow = a.Private_follow;
+            Private_purchase = a.Private_purchase;
+            Private_comments = a.Private_comments;
             return;
         }
 

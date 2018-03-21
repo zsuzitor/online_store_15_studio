@@ -8,23 +8,29 @@
 
 
 <div class="div_inline_block Admin_page_menu_div">
-    <h3>
-        @Ajax.ActionLink("Добавить продукт", "Add_object", "Admin", new { },
+    <div class="Admin_page_menu_div_in">
+        <h3>
+            @Ajax.ActionLink("Добавить продукт", "Add_object", "Admin", new { },
         new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
-</h3>
-<h3>
-    @Ajax.ActionLink("Существующие типы купонов", "Discount_all_coupon", "Admin", new {  },
+        </h3>
+        <h3>
+            @Ajax.ActionLink("Существующие типы купонов", "Discount_all_coupon", "Admin", new { },
         new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
-</h3>
-<h3>
-    @Ajax.ActionLink("Создание типа купона", "Discount_coupon_create", "Admin", new { },
+        </h3>
+        <h3>
+            @Ajax.ActionLink("Создание типа купона", "Discount_coupon_create", "Admin", new { },
         new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
-</h3>
-<h3>
-    @Ajax.ActionLink("Просмотр заявок на связь по телефону", "Application_phone_list", "Admin", new { },
+        </h3>
+        <h3>
+            @Ajax.ActionLink("Просмотр заявок на связь по телефону", "Application_phone_list", "Admin", new { },
         new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
-</h3>
+        </h3>
+        <h3>
+        @Ajax.ActionLink("Страница клиента", "User_page", "Admin", new { },
+        new AjaxOptions { UpdateTargetId = "Admin_page_main_block_id" }, new { })
+        </h3>
 
+    </div>
 
 </div>
 

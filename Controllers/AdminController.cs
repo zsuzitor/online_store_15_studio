@@ -36,6 +36,21 @@ namespace online_store.Controllers
 
             return RedirectToAction("Index", "Home", new { });
         }
+        [HttpPost]
+        public ActionResult User_page(string id)
+        {
+            ViewBag.id = id;
+            return PartialView();
+            //return RedirectToAction("Index", "Home", new { });
+        }
+        
+        public ActionResult User_page()
+        {
+            
+            return PartialView();
+            //return RedirectToAction("Index", "Home", new { });
+        }
+
         public ActionResult Delete_object(int id)
         {
             ViewBag.id = id;

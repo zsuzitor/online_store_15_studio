@@ -263,28 +263,44 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Personal_record(string id)
         {
-           
-            id = string.IsNullOrEmpty(id) ? System.Web.HttpContext.Current.User.Identity.GetUserId() : id;//hz mb ostavit tak   
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            id = string.IsNullOrEmpty(id) ? check_id : id;//hz mb ostavit tak   
+            
             if (string.IsNullOrEmpty(id))
                 
-            return RedirectToAction("Login", "Account", new { });
+                return RedirectToAction("Login", "Account", new { });
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
             ViewBag.count_comment_from_one_load = 5;
-            ViewBag.count_purchase_from_one_load = 10; 
-            ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
-            ViewBag.Baskets.Reverse();
+            ViewBag.count_purchase_from_one_load = 10;
+            if (check_id == id || !res.Db.Private_record)//TODO еще убрать в res некоторые свойства
+            {
+                if (check_id == id || !res.Db.Private_basket)
+                {
+                    ViewBag.Baskets = db.Baskets.Where(x1 => x1.Person_id == id).ToList();
+                    ViewBag.Baskets.Reverse();
+                }
+                if (check_id == id || !res.Db.Private_follow)
+                {
+                    ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
+                    ViewBag.Follow.Reverse();
+                }
+                if (check_id == id || !res.Db.Private_comments)
+                {
+                    var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
+                    if (com != null)
+                        ViewBag.have_comments = true;
+                }
+                if (check_id == id || !res.Db.Private_purchase)
+                {
+                    var prc = db.Purchases.FirstOrDefault(x1 => x1.Person_id == id);
+                    if (prc != null)
+                        ViewBag.have_purchase = true;
+                }
+            }
 
-            ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
-            ViewBag.Follow.Reverse();
-
-            var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
-            if (com != null)
-                ViewBag.have_comments = true;
-            var prc = db.Purchases.FirstOrDefault(x1 => x1.Person_id == id);
-            if (prc != null)
-                ViewBag.have_purchase = true;
+               
 
 
             return View(res);

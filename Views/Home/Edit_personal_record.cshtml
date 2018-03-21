@@ -19,7 +19,14 @@
     <div>@Html.Label("Возраст:")@Html.EditorFor(x1 => x1.Age)</div>
     <div>@Html.Label("О себе:")@Html.TextAreaFor(x1 => x1.Info)</div>
     <div>@Html.Label("Показывать в поиске объекты которые на данный момент отсутствуют")@Html.EditorFor(x1 => x1.Show_available_object)</div>
-            
+
+    <h1>Настройки приватности</h1>
+    <div>@Html.Label("Сделать страницу приватной")@Html.EditorFor(x1 => x1.Private_record)</div>
+    <div>@Html.Label("Сделать скритой корзину")@Html.EditorFor(x1 => x1.Private_basket)</div>
+    <div>@Html.Label("Сделать скрытими предметы в вашем списке желаемого")@Html.EditorFor(x1 => x1.Private_follow)</div>
+    <div>@Html.Label("Сделать скрытими покупки")@Html.EditorFor(x1 => x1.Private_purchase)</div>
+    <div>@Html.Label("Сделать скритыми комментарии")@Html.EditorFor(x1 => x1.Private_comments)</div>
+
 
 
 

@@ -1,0 +1,27 @@
+﻿
+
+
+@if(string.IsNullOrEmpty((string)ViewBag.id)){
+    <h1>Укажите id</h1>
+    <div>
+        
+      @using (Ajax.BeginForm("User_page", "Admin", new AjaxOptions
+{
+UpdateTargetId = "Admin_page_main_block_id",
+
+LoadingElementId = "Main_preloader_id",
+LoadingElementDuration = 200
+}))
+{
+@Html.Editor("id")
+<input type="submit" , value="Загрузить" />
+}
+
+       
+    </div>
+
+            }
+@if (!string.IsNullOrEmpty((string)ViewBag.id))
+{
+    <h1>все хорошо</h1>
+}

@@ -1435,15 +1435,38 @@ div.Admin_page_link_small_block{
      box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 div.Admin_page_menu_div{
-    width:20%;
-    height:500px;
+    width:50px;
+    overflow:hidden;
     background-color:aquamarine;
+    min-height:500px;
+    transition:1s;
+    position:relative;
+
+}
+div.Admin_page_menu_div:hover{
+        width:27%;
+       
+        position:relative;
+        /* transition:1s;*/
+}
+div.Admin_page_menu_div:hover div.Admin_page_menu_div_in{
+    display:block;
+}
+div.Admin_page_menu_div_in{
+    min-width:200px;
+    display:none;
+    transition:1s;
+    
+}
+div.Admin_page_menu_div:hover + div.Admin_page_main_block{
+       width:65%;
 }
 div.Admin_page_main_block{
-    width:70%;
+    width:87%;
     margin-left:5%;
     min-height:500px;
     background-color:antiquewhite;
+    transition:1s;
 }
 
 /*Menu_search*/

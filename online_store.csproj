@@ -294,6 +294,7 @@
     <Content Include="Views\Admin\Delete_object.cshtml" />
     <Content Include="Views\Admin\Work_with_application_phone.cshtml" />
     <Content Include="Views\Home\Menu_search_form.cshtml" />
+    <Content Include="Views\Admin\User_page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
