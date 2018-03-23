@@ -286,7 +286,7 @@ namespace online_store.Controllers
                     ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
                     ViewBag.Follow.Reverse();
                 }
-                if (check_id == id || !res.Db.Private_comments)
+                if (check_id == id || (!res.Db.Private_comments&&res.Db.Private_record))
                 {
                     var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
                     if (com != null)
@@ -331,13 +331,31 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
         {
-            
+
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var res = new List<Comment_view>();
             //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = id;
-            ViewBag.Person_name =db.Users.First(x1=>x1.Id==id).Name;
-            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
+            ViewBag.Person_name = db.Users.First(x1 => x1.Id == id).Name;
+            List<Comment> com = null;
+            com = db.Comments.Where(x1 => x1.Person_id == id && !string.IsNullOrEmpty(x1.Text)).
+                OrderBy(x1 => x1.Id).Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
 
+            /*
+            if (check_id == id)
+            {
+                 com = db.Comments.Where(x1 => x1.Person_id == id&&!string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).
+                 Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
+
+            }
+            else
+            {
+                 com = db.Comments.Where(x1 => x1.Person_id == id && !string.IsNullOrEmpty(x1.Text)).
+               Join(db.Users, x_1 => x_1.Person_id, x_2 => x_2.Id, (x_1, x_2) => new { com = x_1, pers = x_2 }).
+               Where(x1 => !x1.pers.Private_comments && x1.pers.Private_record).Select(x1 => x1.com).OrderBy(x1 => x1.Id)
+               .Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
+            }
+           */
 
 
 
@@ -848,16 +866,18 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Load_comment_for_object_view(int object_id,int count_comment_on_page=0,int count_comment_from_one_load=20, int com_us_id=-1)
         {
+           
             var res = new List<Comment_view>();
             var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = check_id;
-            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id)
+            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).
+                Join(db.Users, x_1 => x_1.Person_id, x_2 => x_2.Id, (x_1, x_2) => new { com = x_1, pers = x_2 }).
+                Where(x1 => !x1.pers.Private_comments && x1.pers.Private_record).Select(x1 => x1.com).OrderBy(x1 => x1.Id)
                 .Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
-           
             //TODO определить админ ли зашел и если да передавать true
-           
-           
-            
+
+
+
             foreach (var i in com)
             {
                 if (i.Person_id != check_id)
