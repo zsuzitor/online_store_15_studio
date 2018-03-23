@@ -93,17 +93,18 @@ Home/Object_view      //TODO убрать строчку   ViewBag.admin = true;
 return Content("<xml>This is poorly formatted xml.</xml>", "text/xml");
 
 
+поменять id для identy на int -----    https://stackoverflow.com/questions/34505904/change-user-id-type-to-int-in-asp-net-identity-in-vs2015   
 
 TODO:
 admin_page  форму для перехода на страницу пользователя отрисовывать js?
-admin_page меню странно появляется, справа рабочую область сделать расширяемой
+//admin_page меню странно появляется, справа рабочую область сделать расширяемой
 админ может добавлять\удалять фолов корзину юзеров, (методы+) -представления
 страница работы с юзером (админ)(user_page)
 {
 //добавить возможность закрыть учетку или отдельные ее части
 убирать закрытие комменты из списка комментов(мб помечать их при создании)
 //--Edit_personal_record скрывать объекты
-Load_comment_for_object_view Load_comment_for_personal_record join`om проверять разрешено ли показывать коммент
++проверить Load_comment_for_object_view Load_comment_for_personal_record join`om проверять разрешено ли показывать коммент
 
 }
 {

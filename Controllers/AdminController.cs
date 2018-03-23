@@ -190,7 +190,7 @@ namespace online_store.Controllers
             return Redirect(Url.Action("Partial_message", "Home", new { message = "Удалено" }));
             //return PartialView();
         }
-        public ActionResult Delete_object_from_follow(int id_object,string id_user)
+        public ActionResult Delete_object_from_follow(int id_object,int id_user)
         {
             if (Functions_project.Delete_object_from_follow(id_object, id_user))
                 ViewBag.Message = "Удалено";
@@ -199,7 +199,7 @@ namespace online_store.Controllers
             return PartialView();
 
         }
-        public ActionResult Delete_object_from_basket(int id_object, string id_user)
+        public ActionResult Delete_object_from_basket(int id_object, int id_user)
         {
             if (Functions_project.Delete_object_from_basket(id_object, id_user))
                 ViewBag.Message = "Удалено";

@@ -6,8 +6,42 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace online_store.Models
 {
+    public class UserRole : IdentityUserRole<int>
+    {
+    }
+
+    public class UserClaim : IdentityUserClaim<int>
+    {
+    }
+
+    public class UserLogin : IdentityUserLogin<int>
+    {
+    }
+
+    public class Role : IdentityRole<int, UserRole>
+    {
+        public Role() { }
+        public Role(string name) { Name = name; }
+    }
+
+    public class UserStore : UserStore<ApplicationUser, Role, int,
+        UserLogin, UserRole, UserClaim>
+    {
+        public UserStore(ApplicationDbContext context) : base(context)
+        {
+        }
+    }
+
+    public class RoleStore : RoleStore<Role, int, UserRole>
+    {
+        public RoleStore(ApplicationDbContext context) : base(context)
+        {
+        }
+    }
+
+
     // В профиль пользователя можно добавить дополнительные данные, если указать больше свойств для класса ApplicationUser. Подробности см. на странице https://go.microsoft.com/fwlink/?LinkID=317594.
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<int, UserLogin, UserRole, UserClaim>
     {
         public string Name { get; set; }
         public int Age { get; set; }
@@ -33,7 +67,7 @@ namespace online_store.Models
             return;
         }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -42,7 +76,8 @@ namespace online_store.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Role, int,
+    UserLogin, UserRole, UserClaim>
     {
 
         public DbSet<Object_os> Objects { get; set; }
@@ -66,7 +101,7 @@ namespace online_store.Models
         
 
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
 

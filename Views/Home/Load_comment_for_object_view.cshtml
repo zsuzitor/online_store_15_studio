@@ -18,13 +18,13 @@
                 @if (i.Image_user != null && i.Image_user.Count() > 0)
                 {
                     <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
-                        <img id="Object_view_main_image_id" src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image_user)) />
+                        <img  src=@String.Format("data:image/jpeg;base64," + Convert.ToBase64String(i.Image_user)) />
                     </a>
                 }
                 @if (i.Image_user == null || i.Image_user.Count() < 0)
                 {
                     <a class="link_standart_for_div" href=@Url.Action("Personal_record","Home",new {id=i.Db.Person_id })>
-                        <img id="Object_view_main_image_id" src="/Content/images/camera_200.png" />
+                        <img  src="/Content/images/camera_200.png" />
                     </a>
                 }
 

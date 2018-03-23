@@ -65,7 +65,7 @@ namespace online_store.Models
             return res;
         }
         
-            public static bool Delete_object_from_basket(int id_object, string id_user,int count=-1)
+            public static bool Delete_object_from_basket(int id_object, int id_user,int count=-1)
         {
             bool res = false;
             var obj = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
@@ -100,7 +100,7 @@ namespace online_store.Models
 
             return res;
         }
-        public static bool Delete_object_from_follow(int id_object, string id_user)
+        public static bool Delete_object_from_follow(int id_object, int id_user)
         {
             bool res = false;
             var obj = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == id_user);
@@ -118,7 +118,7 @@ namespace online_store.Models
         public static bool Work_with_comment(int id_object, string text, int mark)
         {
 
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id_object && x1.Person_id == check_id);
             if (marks == null)
             {

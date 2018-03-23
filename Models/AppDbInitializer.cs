@@ -12,7 +12,8 @@ namespace online_store.Models
     {
         protected override void Seed(ApplicationDbContext context)
         {
-            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser, Role, int,
+        UserLogin, UserRole, UserClaim>(context));
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 

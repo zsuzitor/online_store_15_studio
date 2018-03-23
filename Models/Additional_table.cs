@@ -10,14 +10,14 @@ namespace online_store.Models
     public class Discount_coupon//конкретный купон
     {
         public int Id { get; set; }
-        public string User_id { get; set; }
+        public int User_id { get; set; }
         public int Discount_id { get; set; }
         public bool Spent { get; set; }
 
         public Discount_coupon()
         {
             Id = 0;
-            User_id = null;
+            User_id = 0;
             Discount_id = 0;
             Spent = false;
         }
@@ -48,7 +48,7 @@ namespace online_store.Models
 
         }
         //только создание без проверок
-        public Discount_coupon Create_coupon(string user_id)
+        public Discount_coupon Create_coupon(int user_id)
         {
             Discount_coupon res = null;
             if(Count_left<1)
@@ -67,7 +67,7 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         
-        public string User_id { get; set; }
+        public int User_id { get; set; }
         public int Object_id { get; set; }
 
 
@@ -76,7 +76,7 @@ namespace online_store.Models
         {
             Id = 0;
             Object_id = 0;
-            User_id = null;
+            User_id = 0;
             
 
         }
@@ -86,7 +86,7 @@ namespace online_store.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string User_id { get; set; }
+        public int User_id { get; set; }
         public bool Dispatch { get; set; }//нужно ли отправлять письма
         public DateTime Date { get; set; }
         
@@ -96,7 +96,7 @@ namespace online_store.Models
             Id = 0;
             Email = null;
             Name = null;
-            User_id = null;
+            User_id = 0;
             Dispatch = true;
             Date = DateTime.Now;
             
@@ -130,7 +130,7 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         public int Object_id { get; set; }
-        public string Person_id { get; set; }
+        public int Person_id { get; set; }
         public string Text { get; set; }
         private int? mark { get; set; }
         public int? Mark
@@ -162,7 +162,7 @@ namespace online_store.Models
         {
             Id = 0;
             Object_id = 0;
-            Person_id = null;
+            Person_id = 0;
             Text = null;
             mark = null;
         }
@@ -267,13 +267,13 @@ namespace online_store.Models
         public int Object_id { get; set; }
         public int Count_obj { get; set; }
         //public double Price { get; set; }
-        public string Person_id { get; set; }
+        public int Person_id { get; set; }
         public Connect_basket()
         {
             Count_obj = 1;
             Id = 0;
             Object_id = 0;
-            Person_id = "";
+            Person_id = 0;
             // Price = 0;
 
         }
@@ -299,13 +299,13 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         public DateTime Date_Time { get; set; }
-        public string Person_id { get; set; }
+        public int Person_id { get; set; }
         public int Price { get; set; }
         public Purchase()
         {
             Id = 0;
             Price = 0;
-             Person_id = null;
+             Person_id = 0;
             Date_Time = DateTime.Now;
 
         }
@@ -319,14 +319,14 @@ namespace online_store.Models
         //
         public int Id { get; set; }
         public int Mark { get; set; }
-        public string Person_id { get; set; }
+        public int Person_id { get; set; }
        
         public int Comment_id { get; set; }
         public Mark_for_comment()
         {
             Id = 0;
             Mark = 0;
-            Person_id = null;
+            Person_id = 0;
            
             Comment_id = 0;
            
@@ -353,13 +353,13 @@ namespace online_store.Models
     {
         public int Id { get; set; }
         public int Object_id { get; set; }
-        public string Person_id { get; set; }
+        public int Person_id { get; set; }
 
         public Follow_object()
         {
             Id = 0;
             Object_id = 0;
-            Person_id = "";
+            Person_id = 0;
 
         }
 

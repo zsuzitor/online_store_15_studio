@@ -44,8 +44,8 @@ namespace online_store.Controllers
                 new Image_link() { Path_image ="/Content/images/index/index_slider_7.jpg", Action =" ", Controller = "Home" } };
             
                 ViewBag.count_id_slider_main_index = 7;
-
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            ////////////////////////////////
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             bool Show_available_o = false;
             if (check_id != null)
                 Show_available_o = db.Users.First(x1 => x1.Id == check_id).Show_available_object;
@@ -83,7 +83,7 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult List_objects(string text_rearch = null,int count_object_from_one_load=10, int count_object_on_page=0)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             bool Show_available_o = false;
             if (check_id != null)
                 Show_available_o = db.Users.First(x1 => x1.Id == check_id).Show_available_object;
@@ -105,7 +105,7 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Object_view(int id)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Person_id = check_id;
             ViewBag.Count_comment_from_one_load = 10;
            var not_res = db.Objects.FirstOrDefault(x1 => x1.Id == id);
@@ -167,7 +167,7 @@ namespace online_store.Controllers
         public ActionResult Add_mark_for_object(int id)
         {
             
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Id = id;
            
             ViewBag.Mark_pers = 0;
@@ -193,7 +193,7 @@ namespace online_store.Controllers
         public ActionResult Change_mark_for_object(int id, int num)
         {
             //num,num_block_for_list для работы со списками объектов
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var marks = db.Comments.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
             if (marks == null)
             {
@@ -239,7 +239,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Edit_personal_record()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = db.Users.FirstOrDefault(x1=>x1.Id==check_id);
 
             return View(res);
@@ -249,7 +249,7 @@ namespace online_store.Controllers
         [HttpPost]
         public ActionResult Edit_personal_record(ApplicationUser a)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var pers = db.Users.FirstOrDefault(x1=>x1.Id==check_id);
             if (pers != null)
             {
@@ -261,14 +261,14 @@ namespace online_store.Controllers
         }
         //страница пользователя
         [AllowAnonymous]
-        public ActionResult Personal_record(string id)
+        public ActionResult Personal_record(int id)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            id = string.IsNullOrEmpty(id) ? check_id : id;//hz mb ostavit tak   
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
+            //id = string.IsNullOrEmpty(id) ? check_id : id;//hz mb ostavit tak   
             
-            if (string.IsNullOrEmpty(id))
+            //if (string.IsNullOrEmpty(id))
                 
-                return RedirectToAction("Login", "Account", new { });
+                //return RedirectToAction("Login", "Account", new { });
             ViewBag.Person_id = id;
             var not_res = db.Users.First(x1 => x1.Id == id);
             var res = new Person(not_res);
@@ -286,7 +286,7 @@ namespace online_store.Controllers
                     ViewBag.Follow = db.Follow_objects.Where(x1 => x1.Person_id == id).ToList();
                     ViewBag.Follow.Reverse();
                 }
-                if (check_id == id || !res.Db.Private_comments)
+                if (check_id == id || (!res.Db.Private_comments&&!res.Db.Private_record))
                 {
                     var com = db.Comments.FirstOrDefault(x1 => x1.Person_id == id);
                     if (com != null)
@@ -316,7 +316,7 @@ namespace online_store.Controllers
 
         //отображение списка покупок дозагржается через ajax
         [AllowAnonymous]
-        public ActionResult Load_purchase_list(string id, int count_purchase_on_page = 0, int count_purchase_from_one_load = 20)
+        public ActionResult Load_purchase_list(int id, int count_purchase_on_page = 0, int count_purchase_from_one_load = 20)
         {
             ViewBag.Person_id = id;
             var res = new List<Purchase>();
@@ -329,16 +329,32 @@ namespace online_store.Controllers
         }
         //отображение списка комментов дозагржается через ajax
         [AllowAnonymous]
-        public ActionResult Load_comment_for_personal_record(string id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
+        public ActionResult Load_comment_for_personal_record(int id ,int count_comment_on_page= 0, int count_comment_from_one_load = 20)
         {
-            
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = new List<Comment_view>();
             //var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             ViewBag.Person_id = id;
             ViewBag.Person_name =db.Users.First(x1=>x1.Id==id).Name;
-            var com = db.Comments.Where(x1 => !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
+            List<Comment> com = null;
+            com = db.Comments.Where(x1 => x1.Person_id == id && !string.IsNullOrEmpty(x1.Text)).
+                OrderBy(x1 => x1.Id).Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
 
+            /*
+            if (check_id == id)
+            {
+                 com = db.Comments.Where(x1 => x1.Person_id == id&&!string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id).
+                 Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
 
+            }
+            else
+            {
+                 com = db.Comments.Where(x1 => x1.Person_id == id && !string.IsNullOrEmpty(x1.Text)).
+               Join(db.Users, x_1 => x_1.Person_id, x_2 => x_2.Id, (x_1, x_2) => new { com = x_1, pers = x_2 }).
+               Where(x1 => !x1.pers.Private_comments && x1.pers.Private_record).Select(x1 => x1.com).OrderBy(x1 => x1.Id)
+               .Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
+            }
+           */
 
 
             foreach (var i in com)
@@ -371,13 +387,13 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Object_follow(int id, bool? click)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Id = id;
             ViewBag.Follow = false;
             //ViewBag.action = action;
 
 
-            if (!string.IsNullOrEmpty(check_id))
+            //if (!string.IsNullOrEmpty(check_id))
             {
                 var foll = db.Follow_objects.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
                 if (foll != null)
@@ -405,7 +421,7 @@ namespace online_store.Controllers
         [AllowAnonymous]
         public ActionResult Mark_for_comment( int comment_id, bool?click ,int mark=0)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Person_id = check_id;
             ViewBag.Comment_id = comment_id;
             if (click ==true&& check_id!=null)
@@ -452,7 +468,7 @@ namespace online_store.Controllers
             [Authorize]
         public ActionResult Delete_basket_havent()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();
             for(var i=0;i< res.Count; ++i)
             {
@@ -472,7 +488,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Coupons_activated(string name)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var coupon = db.Discount_type.FirstOrDefault(x1 => x1.Name == name);
             
             if (coupon != null)
@@ -495,7 +511,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Coupons_page()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var coupons = db.Discount_coupon.Where(x1 => x1.User_id == check_id).ToList();
             ViewBag.coupons_left = coupons.Where(x1 => x1.Spent == false).ToList();
             ViewBag.coupons_spent = coupons.Where(x1 => x1.Spent == true).ToList();
@@ -504,7 +520,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Notification_object(int id,bool click=false)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.id = id;
             var not=db.Object_notification.FirstOrDefault(x1 => x1.User_id == check_id && x1.Object_id == id);
             if (not == null)
@@ -540,7 +556,7 @@ namespace online_store.Controllers
                 [Authorize]
         public ActionResult Basket_page()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();//.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2);     //ToList() hz
             var summ_1 = res.Join(db.Objects, x1 => x1.Object_id, x2 => x2.Id, (x1, x2) => x2).ToList();
             bool error = false;
@@ -595,7 +611,7 @@ namespace online_store.Controllers
         public ActionResult Buy_basket()
         {
             bool error = false;
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var bsk = db.Baskets.Where(x1 => x1.Person_id == check_id).ToList();
             var bsk_obj = bsk.Join(db.Objects,x1=>x1.Object_id,x2=>x2.Id,(x1,x2)=>x2).ToList();
             int price = 0;
@@ -649,7 +665,7 @@ namespace online_store.Controllers
         //[ChildActionOnly]
         public ActionResult Basket_one_object_partial(int id)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var imgs = db.Images.Where(x1 => x1.What_something == "Object" && x1.Something_id == id.ToString()).ToList();
             var obj = db.Objects.First(x1 => x1.Id == id);
             var count = db.Baskets.First(x1=>x1.Person_id== check_id&&x1.Object_id==id);
@@ -661,7 +677,7 @@ namespace online_store.Controllers
 
             return PartialView(res);
         }
-       //часточное отображение объекта который зафоловил человек  --(personal_record)
+       //частичное отображение объекта который зафоловил человек  --(personal_record)
         [Authorize]
         public ActionResult Follow_one_object_partial(int id)
         {
@@ -684,7 +700,7 @@ namespace online_store.Controllers
             }
             if (ViewBag.Count_obj != 0)
             {
-                var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
                 ViewBag.InBasket = false;
                 //if (!string.IsNullOrEmpty(check_id))
                 //{
@@ -739,7 +755,7 @@ namespace online_store.Controllers
                 }
                 if (Count_obj >= count)
                 {
-                    var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                    var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
 
 
                     var bask = db.Baskets.FirstOrDefault(x1 => x1.Object_id == id && x1.Person_id == check_id);
@@ -772,7 +788,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Delete_object_from_basket(int id,int count_delete = -1)//-1 удалить все объекты  таким id
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = "";
             if (Functions_project.Delete_object_from_basket(id,check_id, count_delete))
             {
@@ -795,7 +811,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Delete_object_from_follow(int id)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var res = "";
             if(Functions_project.Delete_object_from_follow(id,check_id))
                 res = "Удалено";
@@ -810,7 +826,7 @@ namespace online_store.Controllers
         [Authorize]
         public ActionResult Delete_Comment(int id)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Person_id = check_id;
             ViewBag.comment_id = id;
             ViewBag.delete = false;
@@ -849,9 +865,11 @@ namespace online_store.Controllers
         public ActionResult Load_comment_for_object_view(int object_id,int count_comment_on_page=0,int count_comment_from_one_load=20, int com_us_id=-1)
         {
             var res = new List<Comment_view>();
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             ViewBag.Person_id = check_id;
-            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).OrderBy(x1 => x1.Id)
+            var com = db.Comments.Where(x1 => x1.Object_id == object_id && !string.IsNullOrEmpty(x1.Text)).
+                Join(db.Users, x_1=>x_1.Person_id,x_2=>x_2.Id,(x_1,x_2)=>new { com = x_1,pers=x_2 }).
+                Where(x1=>!x1.pers.Private_comments&& x1.pers.Private_record).Select(x1=>x1.com).OrderBy(x1 => x1.Id)
                 .Skip(count_comment_on_page).Take(count_comment_from_one_load).ToList();
            
             //TODO определить админ ли зашел и если да передавать true
@@ -901,7 +919,7 @@ namespace online_store.Controllers
         [HttpPost]
         public ActionResult Add_new_main_image(HttpPostedFileBase[] uploadImage)
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var imgs = Get_photo_post(uploadImage);
             var pers = db.Users.FirstOrDefault(x1 => x1.Id == check_id);
             if (pers != null)
@@ -924,7 +942,7 @@ namespace online_store.Controllers
         public ActionResult Main_present_block_save(Follow_email a)
         {
             //TODO проверять есть ли в бд такая почта?
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
             var em = db.Follow_email.FirstOrDefault(x1=>x1.User_id==check_id||x1.Email==a.Email);
             if (em == null)
             {
@@ -953,7 +971,7 @@ namespace online_store.Controllers
         [ChildActionOnly]
         public ActionResult Admin_page_link()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
 
             ViewBag.admin = false;
             if (check_id != null)
@@ -974,18 +992,19 @@ namespace online_store.Controllers
         [ChildActionOnly]
         public ActionResult Main_present_block()
         {
-            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            if (string.IsNullOrEmpty(check_id))
-            {
-                ViewBag.check = null;
-            }
-            else
-            {
+            var check_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
+            //TODO --int
+            //if (string.IsNullOrEmpty(check_id))
+            //{
+                //ViewBag.check = null;
+            //}
+            //else
+           // {
                 var t = db.Follow_email.FirstOrDefault(x1 => x1.User_id == check_id);
                 ViewBag.check = false;
                 if (t == null)
                     ViewBag.check = true;
-            }
+            //}
            
            
            
